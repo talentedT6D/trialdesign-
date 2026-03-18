@@ -4,18 +4,38 @@ import { Link } from "react-router-dom";
 const TICKER_TEXT = "INDIA'S FIRST VERTICAL FILM FESTIVAL\u00A0\u00A0\u00A0\u00A0";
 const REPEATED = Array(20).fill(TICKER_TEXT).join("");
 const EDGE_FONT_SIZE = "63.6px";
-const EDGE_COLOR = "#FAFF00";
-const EDGE_HEIGHT = "70px"; // height for horizontal edges to fit 63.6px text
+const EDGE_COLOR = "rgba(250, 255, 0, 0.5)";
+const EDGE_THICKNESS = "70px";
+
+const edgeTextStyle = {
+  fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
+  fontSize: EDGE_FONT_SIZE,
+  fontWeight: 300,
+  letterSpacing: "0.15em",
+  color: EDGE_COLOR,
+  lineHeight: EDGE_THICKNESS,
+  whiteSpace: "nowrap",
+};
 
 const LandingPage = () => {
   return (
     <div className="relative min-h-screen overflow-hidden" style={{ background: "#1a0000" }}>
-      {/* Background — fiery red cinematic gradient */}
+      {/* Background image */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: "url('/images/hero-bg.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+      {/* Background gradient overlay */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse at 60% 50%, #cc2200 0%, #8b0000 35%, #3d0000 65%, #1a0000 100%)",
+            "radial-gradient(ellipse at 60% 50%, rgba(204,34,0,0.85) 0%, rgba(139,0,0,0.9) 35%, rgba(61,0,0,0.95) 65%, rgba(26,0,0,1) 100%)",
         }}
       />
       {/* Extra glow highlights */}
@@ -30,23 +50,12 @@ const LandingPage = () => {
 
       {/* === SCROLLING BORDER TEXT — ALL 4 EDGES === */}
 
-      {/* TOP edge — scrolling right, text upside down */}
+      {/* TOP edge — scrolling, text upside down */}
       <div
         className="absolute top-0 left-0 right-0 overflow-hidden pointer-events-none"
-        style={{ height: EDGE_HEIGHT, zIndex: 20, transform: "rotate(180deg)" }}
+        style={{ height: EDGE_THICKNESS, zIndex: 20, transform: "rotate(180deg)" }}
       >
-        <div
-          className="whitespace-nowrap"
-          style={{
-            fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
-            fontSize: EDGE_FONT_SIZE,
-            fontWeight: 700,
-            letterSpacing: "0.15em",
-            color: EDGE_COLOR,
-            lineHeight: EDGE_HEIGHT,
-            animation: "scrollLeft 40s linear infinite",
-          }}
-        >
+        <div style={{ ...edgeTextStyle, animation: "scrollLeft 40s linear infinite" }}>
           {REPEATED}
         </div>
       </div>
@@ -54,97 +63,44 @@ const LandingPage = () => {
       {/* BOTTOM edge — scrolling left */}
       <div
         className="absolute bottom-0 left-0 right-0 overflow-hidden pointer-events-none"
-        style={{ height: EDGE_HEIGHT, zIndex: 20 }}
+        style={{ height: EDGE_THICKNESS, zIndex: 20 }}
       >
-        <div
-          className="whitespace-nowrap"
-          style={{
-            fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
-            fontSize: EDGE_FONT_SIZE,
-            fontWeight: 700,
-            letterSpacing: "0.15em",
-            color: EDGE_COLOR,
-            lineHeight: EDGE_HEIGHT,
-            animation: "scrollLeft 35s linear infinite",
-          }}
-        >
+        <div style={{ ...edgeTextStyle, animation: "scrollLeft 35s linear infinite" }}>
           {REPEATED}
         </div>
       </div>
 
-      {/* LEFT edge — scrolling up */}
+      {/* LEFT edge — scrolling upward */}
       <div
-        className="absolute left-0 top-0 bottom-0 pointer-events-none"
+        className="absolute left-0 top-0 pointer-events-none"
         style={{
-          width: EDGE_HEIGHT,
+          width: "100vh",
+          height: EDGE_THICKNESS,
           zIndex: 20,
+          transformOrigin: "0 0",
+          transform: "rotate(-90deg) translateX(-100vh)",
           overflow: "hidden",
         }}
       >
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            width: "100vh",
-            height: EDGE_HEIGHT,
-            transform: "rotate(-90deg)",
-            transformOrigin: "bottom left",
-            overflow: "hidden",
-          }}
-        >
-          <div
-            className="whitespace-nowrap"
-            style={{
-              fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
-              fontSize: EDGE_FONT_SIZE,
-              fontWeight: 700,
-              letterSpacing: "0.15em",
-              color: EDGE_COLOR,
-              lineHeight: EDGE_HEIGHT,
-              animation: "scrollLeft 45s linear infinite",
-            }}
-          >
-            {REPEATED}
-          </div>
+        <div style={{ ...edgeTextStyle, animation: "scrollLeft 45s linear infinite" }}>
+          {REPEATED}
         </div>
       </div>
 
-      {/* RIGHT edge — scrolling down */}
+      {/* RIGHT edge — scrolling downward */}
       <div
-        className="absolute right-0 top-0 bottom-0 pointer-events-none"
+        className="absolute right-0 top-0 pointer-events-none"
         style={{
-          width: EDGE_HEIGHT,
+          width: "100vh",
+          height: EDGE_THICKNESS,
           zIndex: 20,
+          transformOrigin: "100% 0",
+          transform: "rotate(90deg)",
           overflow: "hidden",
         }}
       >
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            width: "100vh",
-            height: EDGE_HEIGHT,
-            transform: "rotate(90deg)",
-            transformOrigin: "top right",
-            overflow: "hidden",
-          }}
-        >
-          <div
-            className="whitespace-nowrap"
-            style={{
-              fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
-              fontSize: EDGE_FONT_SIZE,
-              fontWeight: 700,
-              letterSpacing: "0.15em",
-              color: EDGE_COLOR,
-              lineHeight: EDGE_HEIGHT,
-              animation: "scrollLeft 45s linear infinite",
-            }}
-          >
-            {REPEATED}
-          </div>
+        <div style={{ ...edgeTextStyle, animation: "scrollLeft 45s linear infinite" }}>
+          {REPEATED}
         </div>
       </div>
 
@@ -166,7 +122,6 @@ const LandingPage = () => {
 
         {/* SCROLL logo box with year */}
         <div className="flex items-center gap-4 my-2">
-          {/* Year 20 */}
           <span
             style={{
               fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
@@ -178,7 +133,6 @@ const LandingPage = () => {
             20
           </span>
 
-          {/* Yellow SCROLL box */}
           <div
             className="flex items-center justify-center"
             style={{
@@ -204,7 +158,6 @@ const LandingPage = () => {
             </span>
           </div>
 
-          {/* Year 26 */}
           <span
             style={{
               fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
@@ -276,8 +229,16 @@ const LandingPage = () => {
         </div>
       </div>
 
-      {/* Keyframe animations */}
+      {/* Keyframe animations & fonts */}
       <style>{`
+        @font-face {
+          font-family: 'Obviously';
+          src: url('/fonts/Obviously-Narrow.woff2') format('woff2'),
+               url('/fonts/Obviously-Narrow.woff') format('woff');
+          font-weight: 300;
+          font-style: normal;
+          font-display: swap;
+        }
         @font-face {
           font-family: 'Obviously';
           src: url('/fonts/Obviously-Regular.woff2') format('woff2'),
@@ -299,7 +260,6 @@ const LandingPage = () => {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
         }
-
       `}</style>
     </div>
   );
