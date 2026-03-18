@@ -128,7 +128,7 @@ const SubmissionForm = () => {
       className="relative min-h-screen overflow-hidden"
       style={{
         background:
-          "linear-gradient(180deg, #0a0a0a 0%, #1a0000 15%, #5a0000 35%, #8b0000 50%, #cc2200 65%, #ff4500 80%, #ff8c00 90%, #ffd700 100%)",
+          "linear-gradient(180deg, #050505 0%, #0a0000 10%, #1a0000 25%, #3a0000 40%, #6b0000 55%, #a00000 68%, #cc2200 78%, #ff4500 88%, #ff8c00 95%, #ffd700 100%)",
       }}
     >
       {/* === SCROLLING BORDER TEXT — ALL 4 EDGES === */}
@@ -218,10 +218,12 @@ const SubmissionForm = () => {
           src="/images/festival-logo.png"
           alt="Indian Scroll Festival 2026"
           style={{
-            width: "120px",
-            height: "160px",
+            width: "110px",
+            height: "150px",
             objectFit: "contain",
-            marginBottom: "-10px",
+            marginBottom: "-20px",
+            position: "relative",
+            zIndex: 5,
           }}
         />
 
@@ -230,11 +232,11 @@ const SubmissionForm = () => {
             {/* Red card container */}
             <div
               style={{
-                background: "linear-gradient(180deg, #cc0000 0%, #ff2200 50%, #ff4500 100%)",
-                borderRadius: "20px",
-                padding: "40px 30px 40px",
+                background: "linear-gradient(180deg, #cc0000 0%, #ee1100 40%, #ff3300 70%, #ff4500 100%)",
+                borderRadius: "24px",
+                padding: "35px 28px 35px",
                 width: "100%",
-                maxWidth: "520px",
+                maxWidth: "440px",
               }}
             >
               <h2
@@ -270,9 +272,9 @@ const SubmissionForm = () => {
                     padding: "18px 20px",
                     background: "rgba(0,0,0,0.85)",
                     border: "none",
-                    borderRadius: "14px",
+                    borderRadius: "16px",
                     color: "#fff",
-                    fontSize: "1.1rem",
+                    fontSize: "1.05rem",
                     fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
                     textAlign: "center",
                     letterSpacing: "0.05em",
@@ -291,9 +293,9 @@ const SubmissionForm = () => {
                     padding: "18px 20px",
                     background: "rgba(0,0,0,0.85)",
                     border: "none",
-                    borderRadius: "14px",
+                    borderRadius: "16px",
                     color: "#fff",
-                    fontSize: "1.1rem",
+                    fontSize: "1.05rem",
                     fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
                     textAlign: "center",
                     letterSpacing: "0.05em",
@@ -312,9 +314,9 @@ const SubmissionForm = () => {
                     padding: "18px 20px",
                     background: "rgba(0,0,0,0.85)",
                     border: "none",
-                    borderRadius: "14px",
+                    borderRadius: "16px",
                     color: "#fff",
-                    fontSize: "1.1rem",
+                    fontSize: "1.05rem",
                     fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
                     textAlign: "center",
                     letterSpacing: "0.05em",
@@ -332,9 +334,9 @@ const SubmissionForm = () => {
                     padding: "18px 20px",
                     background: "rgba(0,0,0,0.85)",
                     border: "none",
-                    borderRadius: "14px",
+                    borderRadius: "16px",
                     color: "#fff",
-                    fontSize: "1.1rem",
+                    fontSize: "1.05rem",
                     fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
                     textAlign: "center",
                     letterSpacing: "0.05em",
@@ -371,11 +373,11 @@ const SubmissionForm = () => {
             {/* Step 2: Film details + upload */}
             <div
               style={{
-                background: "linear-gradient(180deg, #cc0000 0%, #ff2200 50%, #ff4500 100%)",
-                borderRadius: "20px",
-                padding: "40px 30px 40px",
+                background: "linear-gradient(180deg, #cc0000 0%, #ee1100 40%, #ff3300 70%, #ff4500 100%)",
+                borderRadius: "24px",
+                padding: "35px 28px 35px",
                 width: "100%",
-                maxWidth: "520px",
+                maxWidth: "440px",
               }}
             >
               <h2
@@ -411,9 +413,9 @@ const SubmissionForm = () => {
                     padding: "18px 20px",
                     background: "rgba(0,0,0,0.85)",
                     border: "none",
-                    borderRadius: "14px",
+                    borderRadius: "16px",
                     color: "#fff",
-                    fontSize: "1.1rem",
+                    fontSize: "1.05rem",
                     fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
                     textAlign: "center",
                     letterSpacing: "0.05em",
