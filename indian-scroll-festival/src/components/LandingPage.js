@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const TICKER_TEXT = "INDIA'S FIRST VERTICAL FILM FESTIVAL\u00A0\u00A0\u00A0\u00A0";
 const REPEATED = Array(20).fill(TICKER_TEXT).join("");
 const EDGE_FONT_SIZE = "63.6px";
-const EDGE_COLOR = "rgba(250, 255, 0, 0.5)";
+const EDGE_COLOR = "rgba(220, 50, 20, 0.6)";
 const EDGE_THICKNESS = "70px";
 
 const edgeTextStyle = {
@@ -35,7 +35,7 @@ const LandingPage = () => {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse at 60% 50%, rgba(204,34,0,0.45) 0%, rgba(139,0,0,0.5) 35%, rgba(61,0,0,0.6) 65%, rgba(26,0,0,0.75) 100%)",
+            "radial-gradient(ellipse at 60% 50%, rgba(204,34,0,0.15) 0%, rgba(139,0,0,0.2) 35%, rgba(61,0,0,0.3) 65%, rgba(26,0,0,0.45) 100%)",
         }}
       />
       {/* Extra glow highlights */}
@@ -43,8 +43,8 @@ const LandingPage = () => {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse at 70% 70%, rgba(255,120,0,0.2) 0%, transparent 50%), " +
-            "radial-gradient(ellipse at 30% 30%, rgba(200,0,0,0.15) 0%, transparent 50%)",
+            "radial-gradient(ellipse at 70% 70%, rgba(255,120,0,0.1) 0%, transparent 50%), " +
+            "radial-gradient(ellipse at 30% 30%, rgba(200,0,0,0.08) 0%, transparent 50%)",
         }}
       />
 
@@ -122,8 +122,8 @@ const LandingPage = () => {
           src="/images/festival-logo.png"
           alt="Indian Scroll Festival 2026"
           style={{
-            width: "270px",
-            height: "490px",
+            width: "240px",
+            height: "440px",
             objectFit: "contain",
           }}
         />
