@@ -244,24 +244,21 @@ const LandingPage = () => {
       <style>{`
         @font-face {
           font-family: 'Obviously';
-          src: url('/fonts/Obviously-Narrow.woff2') format('woff2'),
-               url('/fonts/Obviously-Narrow.woff') format('woff');
+          src: url('/fonts/fonnts.com-Obviously_Narw.otf') format('opentype');
           font-weight: 300;
           font-style: normal;
           font-display: swap;
         }
         @font-face {
           font-family: 'Obviously';
-          src: url('/fonts/Obviously-Regular.woff2') format('woff2'),
-               url('/fonts/Obviously-Regular.woff') format('woff');
+          src: url('/fonts/fonnts.com-Obviously_Narw.otf') format('opentype');
           font-weight: 400;
           font-style: normal;
           font-display: swap;
         }
         @font-face {
           font-family: 'Obviously';
-          src: url('/fonts/Obviously-Bold.woff2') format('woff2'),
-               url('/fonts/Obviously-Bold.woff') format('woff');
+          src: url('/fonts/fonnts.com-Obviously_Narw.otf') format('opentype');
           font-weight: 700;
           font-style: normal;
           font-display: swap;
