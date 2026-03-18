@@ -24,7 +24,7 @@ const LandingPage = () => {
       <div
         className="absolute inset-0"
         style={{
-          backgroundImage: "url('/images/F01 (1).png')",
+          backgroundImage: "url('/images/F01%20(1).png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -35,7 +35,7 @@ const LandingPage = () => {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse at 60% 50%, rgba(204,34,0,0.85) 0%, rgba(139,0,0,0.9) 35%, rgba(61,0,0,0.95) 65%, rgba(26,0,0,1) 100%)",
+            "radial-gradient(ellipse at 60% 50%, rgba(204,34,0,0.45) 0%, rgba(139,0,0,0.5) 35%, rgba(61,0,0,0.6) 65%, rgba(26,0,0,0.75) 100%)",
         }}
       />
       {/* Extra glow highlights */}
@@ -43,8 +43,8 @@ const LandingPage = () => {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse at 70% 70%, rgba(255,120,0,0.4) 0%, transparent 50%), " +
-            "radial-gradient(ellipse at 30% 30%, rgba(200,0,0,0.3) 0%, transparent 50%)",
+            "radial-gradient(ellipse at 70% 70%, rgba(255,120,0,0.2) 0%, transparent 50%), " +
+            "radial-gradient(ellipse at 30% 30%, rgba(200,0,0,0.15) 0%, transparent 50%)",
         }}
       />
 
