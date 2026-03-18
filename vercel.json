@@ -1,0 +1,9 @@
+{
+  "buildCommand": "cd indian-scroll-festival && npm install && npm run build",
+  "outputDirectory": "indian-scroll-festival/build",
+  "installCommand": "cd indian-scroll-festival && npm install",
+  "framework": "create-react-app",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}
