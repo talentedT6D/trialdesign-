@@ -2,7 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const TICKER_TEXT = "INDIA'S FIRST VERTICAL FILM FESTIVAL\u00A0\u00A0\u00A0\u00A0";
-const REPEATED = Array(10).fill(TICKER_TEXT).join("");
+const REPEATED = Array(20).fill(TICKER_TEXT).join("");
+const EDGE_FONT_SIZE = "63.6px";
+const EDGE_COLOR = "#FAFF00";
+const EDGE_HEIGHT = "70px"; // height for horizontal edges to fit 63.6px text
 
 const LandingPage = () => {
   return (
@@ -27,22 +30,21 @@ const LandingPage = () => {
 
       {/* === SCROLLING BORDER TEXT — ALL 4 EDGES === */}
 
-      {/* TOP edge — scrolling left */}
+      {/* TOP edge — scrolling right, text upside down */}
       <div
         className="absolute top-0 left-0 right-0 overflow-hidden pointer-events-none"
-        style={{ height: "40px", zIndex: 20 }}
+        style={{ height: EDGE_HEIGHT, zIndex: 20, transform: "rotate(180deg)" }}
       >
         <div
           className="whitespace-nowrap"
           style={{
             fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
-            fontSize: "14px",
+            fontSize: EDGE_FONT_SIZE,
             fontWeight: 700,
-            letterSpacing: "0.25em",
-            color: "rgba(255, 80, 0, 0.5)",
-            lineHeight: "40px",
-            animation: "scrollLeft 25s linear infinite",
-            transform: "rotate(180deg)",
+            letterSpacing: "0.15em",
+            color: EDGE_COLOR,
+            lineHeight: EDGE_HEIGHT,
+            animation: "scrollLeft 40s linear infinite",
           }}
         >
           {REPEATED}
@@ -52,18 +54,18 @@ const LandingPage = () => {
       {/* BOTTOM edge — scrolling left */}
       <div
         className="absolute bottom-0 left-0 right-0 overflow-hidden pointer-events-none"
-        style={{ height: "40px", zIndex: 20 }}
+        style={{ height: EDGE_HEIGHT, zIndex: 20 }}
       >
         <div
           className="whitespace-nowrap"
           style={{
             fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
-            fontSize: "14px",
+            fontSize: EDGE_FONT_SIZE,
             fontWeight: 700,
-            letterSpacing: "0.25em",
-            color: "rgba(255, 200, 0, 0.5)",
-            lineHeight: "40px",
-            animation: "scrollLeft 20s linear infinite",
+            letterSpacing: "0.15em",
+            color: EDGE_COLOR,
+            lineHeight: EDGE_HEIGHT,
+            animation: "scrollLeft 35s linear infinite",
           }}
         >
           {REPEATED}
@@ -72,55 +74,77 @@ const LandingPage = () => {
 
       {/* LEFT edge — scrolling up */}
       <div
-        className="absolute left-0 top-0 bottom-0 overflow-hidden pointer-events-none"
-        style={{ width: "40px", zIndex: 20 }}
+        className="absolute left-0 top-0 bottom-0 pointer-events-none"
+        style={{
+          width: EDGE_HEIGHT,
+          zIndex: 20,
+          overflow: "hidden",
+        }}
       >
         <div
           style={{
             position: "absolute",
-            top: 0,
-            left: "50%",
-            whiteSpace: "nowrap",
-            fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
-            fontSize: "14px",
-            fontWeight: 700,
-            letterSpacing: "0.25em",
-            color: "rgba(255, 80, 0, 0.45)",
-            transform: "rotate(-90deg) translateX(-100vh)",
-            transformOrigin: "top left",
-            width: "300vh",
-            lineHeight: "40px",
-            animation: "scrollVertUp 30s linear infinite",
+            bottom: 0,
+            left: 0,
+            width: "100vh",
+            height: EDGE_HEIGHT,
+            transform: "rotate(-90deg)",
+            transformOrigin: "bottom left",
+            overflow: "hidden",
           }}
         >
-          {REPEATED}
+          <div
+            className="whitespace-nowrap"
+            style={{
+              fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
+              fontSize: EDGE_FONT_SIZE,
+              fontWeight: 700,
+              letterSpacing: "0.15em",
+              color: EDGE_COLOR,
+              lineHeight: EDGE_HEIGHT,
+              animation: "scrollLeft 45s linear infinite",
+            }}
+          >
+            {REPEATED}
+          </div>
         </div>
       </div>
 
       {/* RIGHT edge — scrolling down */}
       <div
-        className="absolute right-0 top-0 bottom-0 overflow-hidden pointer-events-none"
-        style={{ width: "40px", zIndex: 20 }}
+        className="absolute right-0 top-0 bottom-0 pointer-events-none"
+        style={{
+          width: EDGE_HEIGHT,
+          zIndex: 20,
+          overflow: "hidden",
+        }}
       >
         <div
           style={{
             position: "absolute",
             top: 0,
             right: 0,
-            whiteSpace: "nowrap",
-            fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
-            fontSize: "14px",
-            fontWeight: 700,
-            letterSpacing: "0.25em",
-            color: "rgba(255, 80, 0, 0.45)",
-            transform: "rotate(90deg) translateY(-40px)",
-            transformOrigin: "top left",
-            width: "300vh",
-            lineHeight: "40px",
-            animation: "scrollVertDown 30s linear infinite",
+            width: "100vh",
+            height: EDGE_HEIGHT,
+            transform: "rotate(90deg)",
+            transformOrigin: "top right",
+            overflow: "hidden",
           }}
         >
-          {REPEATED}
+          <div
+            className="whitespace-nowrap"
+            style={{
+              fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
+              fontSize: EDGE_FONT_SIZE,
+              fontWeight: 700,
+              letterSpacing: "0.15em",
+              color: EDGE_COLOR,
+              lineHeight: EDGE_HEIGHT,
+              animation: "scrollLeft 45s linear infinite",
+            }}
+          >
+            {REPEATED}
+          </div>
         </div>
       </div>
 
@@ -276,15 +300,6 @@ const LandingPage = () => {
           100% { transform: translateX(-50%); }
         }
 
-        @keyframes scrollVertUp {
-          0% { transform: rotate(-90deg) translateX(0); }
-          100% { transform: rotate(-90deg) translateX(-50%); }
-        }
-
-        @keyframes scrollVertDown {
-          0% { transform: rotate(90deg) translateY(-40px) translateX(0); }
-          100% { transform: rotate(90deg) translateY(-40px) translateX(-50%); }
-        }
       `}</style>
     </div>
   );
