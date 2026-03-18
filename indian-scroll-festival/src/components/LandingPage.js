@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+const TICKER_TEXT = "INDIA'S FIRST VERTICAL FILM FESTIVAL\u00A0\u00A0\u00A0\u00A0";
+const REPEATED = Array(10).fill(TICKER_TEXT).join("");
+
 const LandingPage = () => {
   return (
     <div className="relative min-h-screen overflow-hidden" style={{ background: "#1a0000" }}>
@@ -22,47 +25,102 @@ const LandingPage = () => {
         }}
       />
 
-      {/* Left side vertical text */}
+      {/* === SCROLLING BORDER TEXT — ALL 4 EDGES === */}
+
+      {/* TOP edge — scrolling left */}
       <div
-        className="absolute left-0 top-0 bottom-0 flex items-center pointer-events-none"
-        style={{ width: "60px" }}
+        className="absolute top-0 left-0 right-0 overflow-hidden pointer-events-none"
+        style={{ height: "40px", zIndex: 20 }}
       >
         <div
           className="whitespace-nowrap"
           style={{
-            fontFamily: "Bebas Neue, sans-serif",
+            fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
             fontSize: "14px",
-            letterSpacing: "0.3em",
-            color: "rgba(255, 0, 0, 0.35)",
-            transform: "rotate(-90deg)",
-            transformOrigin: "center center",
-            width: "100vh",
-            textAlign: "center",
+            fontWeight: 700,
+            letterSpacing: "0.25em",
+            color: "rgba(255, 80, 0, 0.5)",
+            lineHeight: "40px",
+            animation: "scrollLeft 25s linear infinite",
+            transform: "rotate(180deg)",
           }}
         >
-          INDIA'S FIRST VERTICAL FILM FESTIVAL INDIA'S FIRST VERTICAL FILM FESTIVAL INDIA'S FIRST VERTICAL FILM FESTIVAL
+          {REPEATED}
         </div>
       </div>
 
-      {/* Right side vertical text */}
+      {/* BOTTOM edge — scrolling left */}
       <div
-        className="absolute right-0 top-0 bottom-0 flex items-center pointer-events-none"
-        style={{ width: "60px" }}
+        className="absolute bottom-0 left-0 right-0 overflow-hidden pointer-events-none"
+        style={{ height: "40px", zIndex: 20 }}
       >
         <div
           className="whitespace-nowrap"
           style={{
-            fontFamily: "Bebas Neue, sans-serif",
+            fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
             fontSize: "14px",
-            letterSpacing: "0.3em",
-            color: "rgba(255, 0, 0, 0.35)",
-            transform: "rotate(90deg)",
-            transformOrigin: "center center",
-            width: "100vh",
-            textAlign: "center",
+            fontWeight: 700,
+            letterSpacing: "0.25em",
+            color: "rgba(255, 200, 0, 0.5)",
+            lineHeight: "40px",
+            animation: "scrollLeft 20s linear infinite",
           }}
         >
-          INDIA'S FIRST VERTICAL FILM FESTIVAL INDIA'S FIRST VERTICAL FILM FESTIVAL INDIA'S FIRST VERTICAL FILM FESTIVAL
+          {REPEATED}
+        </div>
+      </div>
+
+      {/* LEFT edge — scrolling up */}
+      <div
+        className="absolute left-0 top-0 bottom-0 overflow-hidden pointer-events-none"
+        style={{ width: "40px", zIndex: 20 }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: "50%",
+            whiteSpace: "nowrap",
+            fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
+            fontSize: "14px",
+            fontWeight: 700,
+            letterSpacing: "0.25em",
+            color: "rgba(255, 80, 0, 0.45)",
+            transform: "rotate(-90deg) translateX(-100vh)",
+            transformOrigin: "top left",
+            width: "300vh",
+            lineHeight: "40px",
+            animation: "scrollVertUp 30s linear infinite",
+          }}
+        >
+          {REPEATED}
+        </div>
+      </div>
+
+      {/* RIGHT edge — scrolling down */}
+      <div
+        className="absolute right-0 top-0 bottom-0 overflow-hidden pointer-events-none"
+        style={{ width: "40px", zIndex: 20 }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            whiteSpace: "nowrap",
+            fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
+            fontSize: "14px",
+            fontWeight: 700,
+            letterSpacing: "0.25em",
+            color: "rgba(255, 80, 0, 0.45)",
+            transform: "rotate(90deg) translateY(-40px)",
+            transformOrigin: "top left",
+            width: "300vh",
+            lineHeight: "40px",
+            animation: "scrollVertDown 30s linear infinite",
+          }}
+        >
+          {REPEATED}
         </div>
       </div>
 
@@ -71,7 +129,7 @@ const LandingPage = () => {
         {/* INDIAN title */}
         <h1
           style={{
-            fontFamily: "Bebas Neue, sans-serif",
+            fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
             fontSize: "clamp(3rem, 8vw, 6rem)",
             color: "#ffd700",
             letterSpacing: "0.15em",
@@ -87,7 +145,7 @@ const LandingPage = () => {
           {/* Year 20 */}
           <span
             style={{
-              fontFamily: "Bebas Neue, sans-serif",
+              fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
               fontSize: "clamp(1.5rem, 3vw, 2.5rem)",
               color: "#ffd700",
               letterSpacing: "0.1em",
@@ -108,7 +166,7 @@ const LandingPage = () => {
           >
             <span
               style={{
-                fontFamily: "Bebas Neue, sans-serif",
+                fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
                 fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
                 fontWeight: 700,
                 color: "#000000",
@@ -125,7 +183,7 @@ const LandingPage = () => {
           {/* Year 26 */}
           <span
             style={{
-              fontFamily: "Bebas Neue, sans-serif",
+              fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
               fontSize: "clamp(1.5rem, 3vw, 2.5rem)",
               color: "#ffd700",
               letterSpacing: "0.1em",
@@ -138,13 +196,9 @@ const LandingPage = () => {
         {/* Decorative zigzag / wave pattern */}
         <div className="flex justify-center my-1">
           <svg width="180" height="40" viewBox="0 0 180 40" fill="none">
-            {/* Row 1: zigzag */}
             <path d="M10 8 L20 2 L30 8 L40 2 L50 8 L60 2 L70 8 L80 2 L90 8 L100 2 L110 8 L120 2 L130 8 L140 2 L150 8 L160 2 L170 8" stroke="#ffd700" strokeWidth="2" fill="none" />
-            {/* Row 2: zigzag */}
             <path d="M10 16 L20 10 L30 16 L40 10 L50 16 L60 10 L70 16 L80 10 L90 16 L100 10 L110 16 L120 10 L130 16 L140 10 L150 16 L160 10 L170 16" stroke="#ffd700" strokeWidth="2" fill="none" />
-            {/* Row 3: scallops */}
             <path d="M10 28 Q20 20 30 28 Q40 20 50 28 Q60 20 70 28 Q80 20 90 28 Q100 20 110 28 Q120 20 130 28 Q140 20 150 28 Q160 20 170 28" stroke="#ffd700" strokeWidth="2" fill="none" />
-            {/* Row 4: scallops */}
             <path d="M10 36 Q20 28 30 36 Q40 28 50 36 Q60 28 70 36 Q80 28 90 36 Q100 28 110 36 Q120 28 130 36 Q140 28 150 36 Q160 28 170 36" stroke="#ffd700" strokeWidth="2" fill="none" />
           </svg>
         </div>
@@ -152,7 +206,7 @@ const LandingPage = () => {
         {/* FESTIVAL title */}
         <h1
           style={{
-            fontFamily: "Bebas Neue, sans-serif",
+            fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
             fontSize: "clamp(3rem, 8vw, 6rem)",
             color: "#ffd700",
             letterSpacing: "0.15em",
@@ -168,7 +222,7 @@ const LandingPage = () => {
           <button
             className="px-12 py-4 rounded-full text-xl font-bold tracking-widest cursor-pointer border-none"
             style={{
-              fontFamily: "Bebas Neue, sans-serif",
+              fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
               fontSize: "clamp(1.2rem, 2.5vw, 1.8rem)",
               color: "#ffd700",
               background: "linear-gradient(180deg, #cc2200 0%, #ff4500 50%, #ff6a00 100%)",
@@ -183,7 +237,6 @@ const LandingPage = () => {
 
         {/* Social icons */}
         <div className="flex items-center gap-5 mt-8">
-          {/* Instagram */}
           <button className="text-yellow-400 hover:text-yellow-300 transition-colors bg-transparent border-none cursor-pointer p-0" aria-label="Instagram">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffd700" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
@@ -191,7 +244,6 @@ const LandingPage = () => {
               <circle cx="17.5" cy="6.5" r="1.5" fill="#ffd700" stroke="none" />
             </svg>
           </button>
-          {/* X (Twitter) */}
           <button className="text-yellow-400 hover:text-yellow-300 transition-colors bg-transparent border-none cursor-pointer p-0" aria-label="X">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="#ffd700">
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -200,33 +252,38 @@ const LandingPage = () => {
         </div>
       </div>
 
-      {/* Bottom scrolling ticker */}
-      <div
-        className="absolute bottom-0 left-0 right-0 overflow-hidden whitespace-nowrap"
-        style={{
-          fontFamily: "Bebas Neue, sans-serif",
-          fontSize: "clamp(0.9rem, 1.5vw, 1.2rem)",
-          color: "rgba(255, 215, 0, 0.6)",
-          letterSpacing: "0.2em",
-          padding: "8px 0",
-          background: "rgba(0,0,0,0.3)",
-        }}
-      >
-        <div
-          className="inline-block"
-          style={{
-            animation: "ticker 20s linear infinite",
-          }}
-        >
-          INDIA'S FIRST VERTICAL FILM FESTIVAL&nbsp;&nbsp;&nbsp;&nbsp;INDIA'S FIRST VERTICAL FILM FESTIVAL&nbsp;&nbsp;&nbsp;&nbsp;INDIA'S FIRST VERTICAL FILM FESTIVAL&nbsp;&nbsp;&nbsp;&nbsp;INDIA'S FIRST VERTICAL FILM FESTIVAL&nbsp;&nbsp;&nbsp;&nbsp;INDIA'S FIRST VERTICAL FILM FESTIVAL&nbsp;&nbsp;&nbsp;&nbsp;INDIA'S FIRST VERTICAL FILM FESTIVAL&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
-      </div>
-
-      {/* Ticker animation */}
+      {/* Keyframe animations */}
       <style>{`
-        @keyframes ticker {
+        @font-face {
+          font-family: 'Obviously';
+          src: url('/fonts/Obviously-Regular.woff2') format('woff2'),
+               url('/fonts/Obviously-Regular.woff') format('woff');
+          font-weight: 400;
+          font-style: normal;
+          font-display: swap;
+        }
+        @font-face {
+          font-family: 'Obviously';
+          src: url('/fonts/Obviously-Bold.woff2') format('woff2'),
+               url('/fonts/Obviously-Bold.woff') format('woff');
+          font-weight: 700;
+          font-style: normal;
+          font-display: swap;
+        }
+
+        @keyframes scrollLeft {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
+        }
+
+        @keyframes scrollVertUp {
+          0% { transform: rotate(-90deg) translateX(0); }
+          100% { transform: rotate(-90deg) translateX(-50%); }
+        }
+
+        @keyframes scrollVertDown {
+          0% { transform: rotate(90deg) translateY(-40px) translateX(0); }
+          100% { transform: rotate(90deg) translateY(-40px) translateX(-50%); }
         }
       `}</style>
     </div>
