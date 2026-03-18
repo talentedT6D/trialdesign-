@@ -122,8 +122,9 @@ const LandingPage = () => {
           src="/images/festival-logo.png"
           alt="Indian Scroll Festival 2026"
           style={{
-            width: "clamp(280px, 45vw, 550px)",
-            height: "auto",
+            width: "328px",
+            height: "597px",
+            objectFit: "contain",
           }}
         />
 
