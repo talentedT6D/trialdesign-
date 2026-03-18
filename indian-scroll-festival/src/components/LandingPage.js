@@ -117,93 +117,15 @@ const LandingPage = () => {
 
       {/* Main centered content */}
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4">
-        {/* INDIAN title */}
-        <h1
+        {/* Festival logo image */}
+        <img
+          src="/images/festival-logo.png"
+          alt="Indian Scroll Festival 2026"
           style={{
-            fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
-            fontSize: "clamp(3rem, 8vw, 6rem)",
-            color: "#ffd700",
-            letterSpacing: "0.15em",
-            margin: 0,
-            lineHeight: 1,
+            width: "clamp(280px, 45vw, 550px)",
+            height: "auto",
           }}
-        >
-          INDIAN
-        </h1>
-
-        {/* SCROLL logo box with year */}
-        <div className="flex items-center gap-4 my-2">
-          <span
-            style={{
-              fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
-              fontSize: "clamp(1.5rem, 3vw, 2.5rem)",
-              color: "#ffd700",
-              letterSpacing: "0.1em",
-            }}
-          >
-            20
-          </span>
-
-          <div
-            className="flex items-center justify-center"
-            style={{
-              backgroundColor: "#ffd700",
-              padding: "16px 24px",
-              width: "clamp(80px, 12vw, 140px)",
-              height: "clamp(140px, 22vw, 240px)",
-            }}
-          >
-            <span
-              style={{
-                fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
-                fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
-                fontWeight: 700,
-                color: "#000000",
-                writingMode: "vertical-lr",
-                textOrientation: "mixed",
-                letterSpacing: "0.05em",
-                lineHeight: 1,
-              }}
-            >
-              SCROLL
-            </span>
-          </div>
-
-          <span
-            style={{
-              fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
-              fontSize: "clamp(1.5rem, 3vw, 2.5rem)",
-              color: "#ffd700",
-              letterSpacing: "0.1em",
-            }}
-          >
-            26
-          </span>
-        </div>
-
-        {/* Decorative zigzag / wave pattern */}
-        <div className="flex justify-center my-1">
-          <svg width="180" height="40" viewBox="0 0 180 40" fill="none">
-            <path d="M10 8 L20 2 L30 8 L40 2 L50 8 L60 2 L70 8 L80 2 L90 8 L100 2 L110 8 L120 2 L130 8 L140 2 L150 8 L160 2 L170 8" stroke="#ffd700" strokeWidth="2" fill="none" />
-            <path d="M10 16 L20 10 L30 16 L40 10 L50 16 L60 10 L70 16 L80 10 L90 16 L100 10 L110 16 L120 10 L130 16 L140 10 L150 16 L160 10 L170 16" stroke="#ffd700" strokeWidth="2" fill="none" />
-            <path d="M10 28 Q20 20 30 28 Q40 20 50 28 Q60 20 70 28 Q80 20 90 28 Q100 20 110 28 Q120 20 130 28 Q140 20 150 28 Q160 20 170 28" stroke="#ffd700" strokeWidth="2" fill="none" />
-            <path d="M10 36 Q20 28 30 36 Q40 28 50 36 Q60 28 70 36 Q80 28 90 36 Q100 28 110 36 Q120 28 130 36 Q140 28 150 36 Q160 28 170 36" stroke="#ffd700" strokeWidth="2" fill="none" />
-          </svg>
-        </div>
-
-        {/* FESTIVAL title */}
-        <h1
-          style={{
-            fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
-            fontSize: "clamp(3rem, 8vw, 6rem)",
-            color: "#ffd700",
-            letterSpacing: "0.15em",
-            margin: 0,
-            lineHeight: 1,
-          }}
-        >
-          FESTIVAL
-        </h1>
+        />
 
         {/* CTA Button */}
         <Link to="/submission" className="mt-10">
