@@ -89,18 +89,29 @@ const LandingPage = () => {
 
       {/* RIGHT edge — scrolling downward */}
       <div
-        className="absolute right-0 top-0 pointer-events-none"
+        className="absolute top-0 right-0 pointer-events-none"
         style={{
-          width: "100vh",
-          height: EDGE_THICKNESS,
+          width: EDGE_THICKNESS,
+          height: "100vh",
           zIndex: 20,
-          transformOrigin: "100% 0",
-          transform: "rotate(90deg)",
           overflow: "hidden",
         }}
       >
+        <div
+          style={{
+            width: "100vh",
+            height: EDGE_THICKNESS,
+            position: "absolute",
+            top: 0,
+            left: EDGE_THICKNESS,
+            transformOrigin: "0 0",
+            transform: "rotate(90deg)",
+            overflow: "hidden",
+          }}
+        >
         <div style={{ ...edgeTextStyle, animation: "scrollLeft 45s linear infinite" }}>
           {REPEATED}
+        </div>
         </div>
       </div>
 
