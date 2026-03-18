@@ -3,153 +3,232 @@ import { Link } from "react-router-dom";
 
 const LandingPage = () => {
   return (
-    <div className="min-h-screen bg-festival-dark">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
-        {/* Background gradient overlay */}
+    <div className="relative min-h-screen overflow-hidden" style={{ background: "#1a0000" }}>
+      {/* Background — fiery red cinematic gradient */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse at 60% 50%, #cc2200 0%, #8b0000 35%, #3d0000 65%, #1a0000 100%)",
+        }}
+      />
+      {/* Extra glow highlights */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse at 70% 70%, rgba(255,120,0,0.4) 0%, transparent 50%), " +
+            "radial-gradient(ellipse at 30% 30%, rgba(200,0,0,0.3) 0%, transparent 50%)",
+        }}
+      />
+
+      {/* Left side vertical text */}
+      <div
+        className="absolute left-0 top-0 bottom-0 flex items-center pointer-events-none"
+        style={{ width: "60px" }}
+      >
         <div
-          className="absolute inset-0"
+          className="whitespace-nowrap"
           style={{
-            background:
-              "linear-gradient(180deg, #0a0a0a 0%, #1a0000 30%, #8b0000 60%, #ff4500 85%, #ffd700 100%)",
+            fontFamily: "Bebas Neue, sans-serif",
+            fontSize: "14px",
+            letterSpacing: "0.3em",
+            color: "rgba(255, 0, 0, 0.35)",
+            transform: "rotate(-90deg)",
+            transformOrigin: "center center",
+            width: "100vh",
+            textAlign: "center",
           }}
-        />
+        >
+          INDIA'S FIRST VERTICAL FILM FESTIVAL INDIA'S FIRST VERTICAL FILM FESTIVAL INDIA'S FIRST VERTICAL FILM FESTIVAL
+        </div>
+      </div>
 
-        {/* Decorative film reel / spotlight effect */}
+      {/* Right side vertical text */}
+      <div
+        className="absolute right-0 top-0 bottom-0 flex items-center pointer-events-none"
+        style={{ width: "60px" }}
+      >
         <div
-          className="absolute top-0 left-0 w-full h-full opacity-20"
+          className="whitespace-nowrap"
           style={{
-            backgroundImage:
-              "radial-gradient(ellipse at 20% 50%, rgba(255,0,0,0.3) 0%, transparent 60%)",
+            fontFamily: "Bebas Neue, sans-serif",
+            fontSize: "14px",
+            letterSpacing: "0.3em",
+            color: "rgba(255, 0, 0, 0.35)",
+            transform: "rotate(90deg)",
+            transformOrigin: "center center",
+            width: "100vh",
+            textAlign: "center",
           }}
-        />
+        >
+          INDIA'S FIRST VERTICAL FILM FESTIVAL INDIA'S FIRST VERTICAL FILM FESTIVAL INDIA'S FIRST VERTICAL FILM FESTIVAL
+        </div>
+      </div>
 
-        {/* Content */}
-        <div className="relative z-10 text-center px-4">
-          {/* Festival Logo Icon */}
-          <div className="mb-6 flex justify-center">
-            <div
-              className="w-24 h-24 border-4 flex items-center justify-center"
-              style={{ borderColor: "#ffd700" }}
-            >
-              <span
-                className="text-5xl font-bold"
-                style={{
-                  fontFamily: "Bebas Neue, sans-serif",
-                  color: "#ffd700",
-                }}
-              >
-                ISF
-              </span>
-            </div>
-          </div>
+      {/* Main centered content */}
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4">
+        {/* INDIAN title */}
+        <h1
+          style={{
+            fontFamily: "Bebas Neue, sans-serif",
+            fontSize: "clamp(3rem, 8vw, 6rem)",
+            color: "#ffd700",
+            letterSpacing: "0.15em",
+            margin: 0,
+            lineHeight: 1,
+          }}
+        >
+          INDIAN
+        </h1>
 
-          <h1
-            className="text-6xl md:text-8xl font-bold tracking-wider mb-2"
-            style={{ fontFamily: "Bebas Neue, sans-serif", color: "#ffd700" }}
-          >
-            INDIAN
-          </h1>
-          <h1
-            className="text-7xl md:text-9xl font-bold tracking-wider mb-2"
+        {/* SCROLL logo box with year */}
+        <div className="flex items-center gap-4 my-2">
+          {/* Year 20 */}
+          <span
             style={{
               fontFamily: "Bebas Neue, sans-serif",
+              fontSize: "clamp(1.5rem, 3vw, 2.5rem)",
               color: "#ffd700",
-              textShadow: "0 0 40px rgba(255,215,0,0.5)",
+              letterSpacing: "0.1em",
             }}
           >
-            SCROLL
-          </h1>
-          <h1
-            className="text-6xl md:text-8xl font-bold tracking-wider mb-8"
-            style={{ fontFamily: "Bebas Neue, sans-serif", color: "#ffd700" }}
+            20
+          </span>
+
+          {/* Yellow SCROLL box */}
+          <div
+            className="flex items-center justify-center"
+            style={{
+              backgroundColor: "#ffd700",
+              padding: "16px 24px",
+              width: "clamp(80px, 12vw, 140px)",
+              height: "clamp(140px, 22vw, 240px)",
+            }}
           >
-            FESTIVAL
-          </h1>
-
-          <p className="text-lg md:text-xl text-white/80 mb-4 max-w-xl mx-auto">
-            India's First Vertical Film Festival
-          </p>
-          <p className="text-sm text-white/60 mb-8 max-w-md mx-auto">
-            Submit your vertical short film (under 120 seconds) and get featured
-            on the big screen.
-          </p>
-
-          <Link to="/submission">
-            <button className="btn-festival text-xl px-10 py-4">
-              START SUBMISSION
-            </button>
-          </Link>
-
-          {/* Festival details */}
-          <div className="mt-12 flex flex-wrap justify-center gap-8 text-white/70">
-            <div className="text-center">
-              <p
-                className="text-2xl font-bold"
-                style={{ color: "#ffd700", fontFamily: "Bebas Neue" }}
-              >
-                120 SEC
-              </p>
-              <p className="text-xs uppercase tracking-wider">Max Duration</p>
-            </div>
-            <div className="text-center">
-              <p
-                className="text-2xl font-bold"
-                style={{ color: "#ffd700", fontFamily: "Bebas Neue" }}
-              >
-                200 MB
-              </p>
-              <p className="text-xs uppercase tracking-wider">Max File Size</p>
-            </div>
-            <div className="text-center">
-              <p
-                className="text-2xl font-bold"
-                style={{ color: "#ffd700", fontFamily: "Bebas Neue" }}
-              >
-                ₹499
-              </p>
-              <p className="text-xs uppercase tracking-wider">
-                Submission Fee
-              </p>
-            </div>
+            <span
+              style={{
+                fontFamily: "Bebas Neue, sans-serif",
+                fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
+                fontWeight: 700,
+                color: "#000000",
+                writingMode: "vertical-lr",
+                textOrientation: "mixed",
+                letterSpacing: "0.05em",
+                lineHeight: 1,
+              }}
+            >
+              SCROLL
+            </span>
           </div>
-        </div>
 
-        {/* Zigzag decorative border at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 zigzag-border" />
-      </section>
-
-      {/* About Section */}
-      <section
-        className="py-20 px-4"
-        style={{ background: "linear-gradient(180deg, #1a0000, #0a0a0a)" }}
-      >
-        <div className="max-w-4xl mx-auto text-center">
-          <h2
-            className="text-5xl mb-8"
-            style={{ fontFamily: "Bebas Neue", color: "#ffd700" }}
+          {/* Year 26 */}
+          <span
+            style={{
+              fontFamily: "Bebas Neue, sans-serif",
+              fontSize: "clamp(1.5rem, 3vw, 2.5rem)",
+              color: "#ffd700",
+              letterSpacing: "0.1em",
+            }}
           >
-            CREATE FOR THE BIG SCREEN
-          </h2>
-          <p className="text-white/70 text-lg leading-relaxed mb-6">
-            The Indian Scroll Festival celebrates the art of vertical
-            storytelling. Whether you're an aspiring filmmaker or a seasoned
-            professional, this is your chance to showcase your creativity on the
-            biggest stage.
-          </p>
-          <p className="text-white/70 text-lg leading-relaxed">
-            Submit your vertical short film, pay a nominal fee of ₹499, and your
-            work could be featured at India's first-ever vertical film festival.
-          </p>
+            26
+          </span>
         </div>
-      </section>
 
-      {/* Footer */}
-      <footer className="py-8 px-4 border-t border-white/10 text-center">
-        <p className="text-white/40 text-sm">
-          &copy; 2026 Indian Scroll Festival. All rights reserved.
-        </p>
-      </footer>
+        {/* Decorative zigzag / wave pattern */}
+        <div className="flex justify-center my-1">
+          <svg width="180" height="40" viewBox="0 0 180 40" fill="none">
+            {/* Row 1: zigzag */}
+            <path d="M10 8 L20 2 L30 8 L40 2 L50 8 L60 2 L70 8 L80 2 L90 8 L100 2 L110 8 L120 2 L130 8 L140 2 L150 8 L160 2 L170 8" stroke="#ffd700" strokeWidth="2" fill="none" />
+            {/* Row 2: zigzag */}
+            <path d="M10 16 L20 10 L30 16 L40 10 L50 16 L60 10 L70 16 L80 10 L90 16 L100 10 L110 16 L120 10 L130 16 L140 10 L150 16 L160 10 L170 16" stroke="#ffd700" strokeWidth="2" fill="none" />
+            {/* Row 3: scallops */}
+            <path d="M10 28 Q20 20 30 28 Q40 20 50 28 Q60 20 70 28 Q80 20 90 28 Q100 20 110 28 Q120 20 130 28 Q140 20 150 28 Q160 20 170 28" stroke="#ffd700" strokeWidth="2" fill="none" />
+            {/* Row 4: scallops */}
+            <path d="M10 36 Q20 28 30 36 Q40 28 50 36 Q60 28 70 36 Q80 28 90 36 Q100 28 110 36 Q120 28 130 36 Q140 28 150 36 Q160 28 170 36" stroke="#ffd700" strokeWidth="2" fill="none" />
+          </svg>
+        </div>
+
+        {/* FESTIVAL title */}
+        <h1
+          style={{
+            fontFamily: "Bebas Neue, sans-serif",
+            fontSize: "clamp(3rem, 8vw, 6rem)",
+            color: "#ffd700",
+            letterSpacing: "0.15em",
+            margin: 0,
+            lineHeight: 1,
+          }}
+        >
+          FESTIVAL
+        </h1>
+
+        {/* CTA Button */}
+        <Link to="/submission" className="mt-10">
+          <button
+            className="px-12 py-4 rounded-full text-xl font-bold tracking-widest cursor-pointer border-none"
+            style={{
+              fontFamily: "Bebas Neue, sans-serif",
+              fontSize: "clamp(1.2rem, 2.5vw, 1.8rem)",
+              color: "#ffd700",
+              background: "linear-gradient(180deg, #cc2200 0%, #ff4500 50%, #ff6a00 100%)",
+              boxShadow: "0 0 30px rgba(255,69,0,0.6), inset 0 1px 0 rgba(255,255,255,0.15)",
+              letterSpacing: "0.15em",
+              border: "2px solid rgba(255,215,0,0.4)",
+            }}
+          >
+            SIGN UP TO SUBMIT
+          </button>
+        </Link>
+
+        {/* Social icons */}
+        <div className="flex items-center gap-5 mt-8">
+          {/* Instagram */}
+          <a href="#" className="text-yellow-400 hover:text-yellow-300 transition-colors" aria-label="Instagram">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffd700" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+              <circle cx="12" cy="12" r="5" />
+              <circle cx="17.5" cy="6.5" r="1.5" fill="#ffd700" stroke="none" />
+            </svg>
+          </a>
+          {/* X (Twitter) */}
+          <a href="#" className="text-yellow-400 hover:text-yellow-300 transition-colors" aria-label="X">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="#ffd700">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      {/* Bottom scrolling ticker */}
+      <div
+        className="absolute bottom-0 left-0 right-0 overflow-hidden whitespace-nowrap"
+        style={{
+          fontFamily: "Bebas Neue, sans-serif",
+          fontSize: "clamp(0.9rem, 1.5vw, 1.2rem)",
+          color: "rgba(255, 215, 0, 0.6)",
+          letterSpacing: "0.2em",
+          padding: "8px 0",
+          background: "rgba(0,0,0,0.3)",
+        }}
+      >
+        <div
+          className="inline-block"
+          style={{
+            animation: "ticker 20s linear infinite",
+          }}
+        >
+          INDIA'S FIRST VERTICAL FILM FESTIVAL&nbsp;&nbsp;&nbsp;&nbsp;INDIA'S FIRST VERTICAL FILM FESTIVAL&nbsp;&nbsp;&nbsp;&nbsp;INDIA'S FIRST VERTICAL FILM FESTIVAL&nbsp;&nbsp;&nbsp;&nbsp;INDIA'S FIRST VERTICAL FILM FESTIVAL&nbsp;&nbsp;&nbsp;&nbsp;INDIA'S FIRST VERTICAL FILM FESTIVAL&nbsp;&nbsp;&nbsp;&nbsp;INDIA'S FIRST VERTICAL FILM FESTIVAL&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+      </div>
+
+      {/* Ticker animation */}
+      <style>{`
+        @keyframes ticker {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
     </div>
   );
 };
