@@ -122,14 +122,14 @@ const LandingPage = () => {
           src="/images/festival-logo.png"
           alt="Indian Scroll Festival 2026"
           style={{
-            width: "328px",
-            height: "597px",
+            width: "270px",
+            height: "490px",
             objectFit: "contain",
           }}
         />
 
         {/* CTA Button */}
-        <Link to="/submission" className="mt-10">
+        <Link to="/submission" className="mt-6">
           <button
             className="px-12 py-4 rounded-full text-xl font-bold tracking-widest cursor-pointer border-none"
             style={{
@@ -147,7 +147,7 @@ const LandingPage = () => {
         </Link>
 
         {/* Social icons */}
-        <div className="flex items-center gap-5 mt-8">
+        <div className="flex items-center gap-5 mt-5">
           <button className="text-yellow-400 hover:text-yellow-300 transition-colors bg-transparent border-none cursor-pointer p-0" aria-label="Instagram">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffd700" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
