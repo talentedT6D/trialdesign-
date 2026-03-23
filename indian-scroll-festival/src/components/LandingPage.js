@@ -122,7 +122,7 @@ const LandingPage = () => {
               letterSpacing: "0em",
               lineHeight: "0.95",
               margin: "10px 0 30px 0",
-              textShadow: "0 0 8px #FAFF00, 0 0 20px rgba(250,255,0,0.3)",
+              textShadow: "none",
               position: "relative",
               zIndex: 2,
             }}
