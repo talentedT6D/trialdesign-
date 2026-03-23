@@ -150,7 +150,7 @@ const SubmissionForm = () => {
               letterSpacing: "0em",
               lineHeight: "0.95",
               margin: "10px 0 30px 0",
-              textShadow: "none",
+              textShadow: "0 0 20px rgba(255,80,40,0.3)",
               position: "relative",
               zIndex: 2,
             }}
