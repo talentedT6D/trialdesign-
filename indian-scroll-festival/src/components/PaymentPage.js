@@ -20,8 +20,7 @@ const PaymentPage = () => {
     <div
       className="min-h-screen flex flex-col items-center justify-center px-4"
       style={{
-        background:
-          "linear-gradient(180deg, #0a0a0a 0%, #1a0000 30%, #8b0000 60%, #ff4500 85%, #ffd700 100%)",
+        background: "url('/images/F02.2 (1) (1).png') center/cover no-repeat",
       }}
     >
       {/* Logo */}

@@ -38,7 +38,9 @@ const LandingPage = () => {
   return (
     <div
       className="relative min-h-screen overflow-hidden"
-      style={{ background: "#918980" }}
+      style={{
+        background: "url('/images/F02.2 (1) (1).png') center/cover no-repeat",
+      }}
     >
       {/* Festival logo — top left */}
       <img
