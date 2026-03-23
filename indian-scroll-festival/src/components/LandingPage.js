@@ -39,7 +39,7 @@ const LandingPage = () => {
     <div
       className="relative min-h-screen overflow-hidden"
       style={{
-        background: "linear-gradient(180deg, #8b0000 0%, #4a0000 30%, #1a0000 70%, #0a0000 100%)",
+        background: "url('/images/F02.2 (1) (1).png') center/cover no-repeat",
       }}
     >
       {/* Festival logo — top left */}
