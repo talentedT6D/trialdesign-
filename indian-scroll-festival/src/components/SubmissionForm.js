@@ -1,29 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-const TICKER_TEXT = "INDIA'S FIRST VERTICAL FILM FESTIVAL\u00A0\u00A0\u00A0\u00A0";
-const REPEATED = Array(20).fill(TICKER_TEXT).join("");
-const EDGE_FONT_SIZE = "63.6px";
-const EDGE_COLOR = "rgba(220, 50, 20, 0.6)";
-const EDGE_THICKNESS = "70px";
-
-const edgeTextStyle = {
-  fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
-  fontSize: EDGE_FONT_SIZE,
-  fontWeight: 400,
-  letterSpacing: "0.15em",
-  color: EDGE_COLOR,
-  lineHeight: EDGE_THICKNESS,
-  whiteSpace: "nowrap",
-};
+import { useNavigate, useLocation } from "react-router-dom";
 
 const SubmissionForm = () => {
   const navigate = useNavigate();
-  const [step, setStep] = useState(1);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [contact, setContact] = useState("");
-  const [howHeard, setHowHeard] = useState("");
+  const location = useLocation();
+  const userInfo = location.state || {};
+  const [name] = useState(userInfo.name || "");
+  const [email] = useState(userInfo.email || "");
   const [file, setFile] = useState(null);
   const [submissionTitle, setSubmissionTitle] = useState("");
   const [category, setCategory] = useState("");
@@ -51,15 +34,6 @@ const SubmissionForm = () => {
     }
   };
 
-  const handleNext = () => {
-    if (!name || !email || !contact) {
-      setError("Please fill in all required fields.");
-      return;
-    }
-    setError("");
-    setStep(2);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!file || !submissionTitle || !category) {
@@ -77,406 +51,203 @@ const SubmissionForm = () => {
     });
   };
 
+  const inputStyle = {
+    width: "100%",
+    padding: "20px 24px",
+    background: "rgba(0,0,0,0.75)",
+    border: "none",
+    borderRadius: "16px",
+    color: "#fff",
+    fontSize: "1.1rem",
+    fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
+    textAlign: "center",
+    letterSpacing: "0.05em",
+    outline: "none",
+    boxSizing: "border-box",
+  };
+
   return (
     <div
       className="relative min-h-screen overflow-hidden"
-      style={{
-        background:
-          "linear-gradient(180deg, #050505 0%, #0a0000 10%, #1a0000 25%, #3a0000 40%, #6b0000 55%, #a00000 68%, #cc2200 78%, #ff4500 88%, #ff8c00 95%, #ffd700 100%)",
-      }}
+      style={{ background: "#918980" }}
     >
-      {/* === SCROLLING BORDER TEXT — ALL 4 EDGES === */}
-
-      {/* TOP edge — scrolling, text upside down */}
-      <div
-        className="absolute top-0 left-0 right-0 overflow-hidden pointer-events-none"
-        style={{ height: EDGE_THICKNESS, zIndex: 20, transform: "rotate(180deg)" }}
-      >
-        <div style={{ ...edgeTextStyle, animation: "scrollLeft 40s linear infinite" }}>
-          {REPEATED}
-        </div>
-      </div>
-
-      {/* BOTTOM edge — scrolling left */}
-      <div
-        className="absolute bottom-0 left-0 right-0 overflow-hidden pointer-events-none"
-        style={{ height: EDGE_THICKNESS, zIndex: 20 }}
-      >
-        <div style={{ ...edgeTextStyle, color: "rgba(255, 200, 0, 0.7)", animation: "scrollLeft 35s linear infinite" }}>
-          {REPEATED}
-        </div>
-      </div>
-
-      {/* LEFT edge — scrolling upward */}
-      <div
-        className="absolute left-0 top-0 pointer-events-none"
+      {/* Festival logo — top left */}
+      <img
+        src="/images/festival-logo.png"
+        alt="Indian Scroll Festival 2026"
         style={{
-          width: "100vh",
-          height: EDGE_THICKNESS,
-          zIndex: 20,
-          transformOrigin: "0 0",
-          transform: "rotate(-90deg) translateX(-100vh)",
-          overflow: "hidden",
+          position: "absolute",
+          top: "24px",
+          left: "24px",
+          width: "100px",
+          height: "180px",
+          objectFit: "contain",
+          zIndex: 30,
         }}
-      >
-        <div style={{ ...edgeTextStyle, animation: "scrollLeft 45s linear infinite" }}>
-          {REPEATED}
-        </div>
-      </div>
-
-      {/* RIGHT edge — scrolling downward */}
-      <div
-        className="absolute top-0 right-0 pointer-events-none"
-        style={{
-          width: EDGE_THICKNESS,
-          height: "100vh",
-          zIndex: 20,
-          overflow: "hidden",
-        }}
-      >
-        <div
-          style={{
-            width: "100vh",
-            height: EDGE_THICKNESS,
-            position: "absolute",
-            top: 0,
-            left: EDGE_THICKNESS,
-            transformOrigin: "0 0",
-            transform: "rotate(90deg)",
-            overflow: "hidden",
-          }}
-        >
-          <div style={{ ...edgeTextStyle, animation: "scrollLeft 45s linear infinite" }}>
-            {REPEATED}
-          </div>
-        </div>
-      </div>
-
-      {/* Back button — top left */}
-      <button
-        onClick={() => step === 1 ? navigate("/") : setStep(1)}
-        className="absolute bg-transparent border-none cursor-pointer p-0"
-        style={{ top: "85px", left: "85px", zIndex: 30 }}
-        aria-label="Go back"
-      >
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#cc2200" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-          <polyline points="14 16 10 12 14 8" />
-        </svg>
-      </button>
+      />
 
       {/* Main content */}
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4" style={{ paddingTop: "80px", paddingBottom: "80px" }}>
-        {/* Festival logo — smaller version */}
-        <img
-          src="/images/festival-logo.png"
-          alt="Indian Scroll Festival 2026"
+      <div
+        className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4"
+        style={{ paddingTop: "40px", paddingBottom: "40px" }}
+      >
+        {/* Dark maroon card */}
+        <div
           style={{
-            width: "110px",
-            height: "150px",
-            objectFit: "contain",
-            marginBottom: "-20px",
+            background: "linear-gradient(180deg, #3d0a0a 0%, #4a1010 40%, #511515 70%, #581a1a 100%)",
+            borderRadius: "24px",
+            padding: "30px 32px 40px",
+            width: "100%",
+            maxWidth: "480px",
             position: "relative",
-            zIndex: 5,
+            boxShadow: "0 8px 40px rgba(0,0,0,0.4)",
           }}
-        />
+        >
+          {/* Back button */}
+          <button
+            onClick={() => navigate("/")}
+            className="bg-transparent border-none cursor-pointer p-0"
+            style={{ position: "absolute", top: "20px", left: "20px" }}
+            aria-label="Go back"
+          >
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#cc2200"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+              <polyline points="14 16 10 12 14 8" />
+            </svg>
+          </button>
 
-        {step === 1 ? (
-          <>
-            {/* Red card container */}
+          {/* Title */}
+          <h2
+            className="text-center"
+            style={{
+              fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
+              fontSize: "clamp(2.2rem, 5vw, 3.2rem)",
+              color: "#f5e6d0",
+              fontWeight: 700,
+              fontStyle: "italic",
+              letterSpacing: "0.03em",
+              margin: "10px 0 30px 0",
+              textShadow: "0 0 30px rgba(255,100,50,0.3)",
+            }}
+          >
+            FILM DETAILS
+          </h2>
+
+          {error && (
+            <div
+              className="mb-4 px-4 py-2 bg-black/40 text-red-300 text-center text-sm"
+              style={{ borderRadius: "10px" }}
+            >
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
+            <input
+              type="text"
+              placeholder="Film Title"
+              value={submissionTitle}
+              onChange={(e) => setSubmissionTitle(e.target.value)}
+              required
+              style={inputStyle}
+            />
+
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              required
+              style={{
+                ...inputStyle,
+                color: category ? "#fff" : "rgba(255,255,255,0.45)",
+                appearance: "none",
+              }}
+            >
+              <option value="" disabled>
+                Select Category
+              </option>
+              {categories.map((cat) => (
+                <option key={cat} value={cat} style={{ background: "#1a0000" }}>
+                  {cat}
+                </option>
+              ))}
+            </select>
+
+            {/* File Upload */}
             <div
               style={{
-                background: "linear-gradient(180deg, #cc0000 0%, #ee1100 40%, #ff3300 70%, #ff4500 100%)",
-                borderRadius: "24px",
-                padding: "35px 28px 35px",
-                width: "100%",
-                maxWidth: "440px",
+                background: "rgba(0,0,0,0.75)",
+                borderRadius: "16px",
+                padding: "20px",
+                textAlign: "center",
+                cursor: "pointer",
+                border: "2px dashed rgba(255,215,0,0.3)",
               }}
             >
-              <h2
-                className="text-center mb-8"
-                style={{
-                  fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
-                  fontSize: "clamp(1.8rem, 4vw, 2.4rem)",
-                  color: "#ffd700",
-                  fontWeight: 700,
-                  fontStyle: "italic",
-                  letterSpacing: "0.05em",
-                  margin: "0 0 30px 0",
-                }}
-              >
-                SUBMISSION FORM
-              </h2>
-
-              {error && (
-                <div className="mb-4 px-4 py-2 bg-black/40 text-red-300 text-center text-sm" style={{ borderRadius: "10px" }}>
-                  {error}
-                </div>
-              )}
-
-              <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                <input
-                  type="text"
-                  placeholder="Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                  style={{
-                    width: "100%",
-                    padding: "18px 20px",
-                    background: "rgba(0,0,0,0.85)",
-                    border: "none",
-                    borderRadius: "16px",
-                    color: "#fff",
-                    fontSize: "1.05rem",
-                    fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
-                    textAlign: "center",
-                    letterSpacing: "0.05em",
-                    outline: "none",
-                    boxSizing: "border-box",
-                  }}
-                />
-                <input
-                  type="email"
-                  placeholder="Email ID"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  style={{
-                    width: "100%",
-                    padding: "18px 20px",
-                    background: "rgba(0,0,0,0.85)",
-                    border: "none",
-                    borderRadius: "16px",
-                    color: "#fff",
-                    fontSize: "1.05rem",
-                    fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
-                    textAlign: "center",
-                    letterSpacing: "0.05em",
-                    outline: "none",
-                    boxSizing: "border-box",
-                  }}
-                />
-                <input
-                  type="tel"
-                  placeholder="Contact"
-                  value={contact}
-                  onChange={(e) => setContact(e.target.value)}
-                  required
-                  style={{
-                    width: "100%",
-                    padding: "18px 20px",
-                    background: "rgba(0,0,0,0.85)",
-                    border: "none",
-                    borderRadius: "16px",
-                    color: "#fff",
-                    fontSize: "1.05rem",
-                    fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
-                    textAlign: "center",
-                    letterSpacing: "0.05em",
-                    outline: "none",
-                    boxSizing: "border-box",
-                  }}
-                />
-                <input
-                  type="text"
-                  placeholder="How'd You Hear About Us?"
-                  value={howHeard}
-                  onChange={(e) => setHowHeard(e.target.value)}
-                  style={{
-                    width: "100%",
-                    padding: "18px 20px",
-                    background: "rgba(0,0,0,0.85)",
-                    border: "none",
-                    borderRadius: "16px",
-                    color: "#fff",
-                    fontSize: "1.05rem",
-                    fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
-                    textAlign: "center",
-                    letterSpacing: "0.05em",
-                    outline: "none",
-                    boxSizing: "border-box",
-                  }}
-                />
-              </div>
+              <input
+                type="file"
+                accept="video/*"
+                onChange={handleFileChange}
+                className="hidden"
+                id="fileUpload"
+              />
+              <label htmlFor="fileUpload" className="cursor-pointer">
+                {file ? (
+                  <div>
+                    <p style={{ color: "#fff", fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif", margin: 0 }}>{file.name}</p>
+                    <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.85rem", marginTop: "4px" }}>
+                      {(file.size / (1024 * 1024)).toFixed(2)} MB
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "1rem", margin: "0 0 4px 0", fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif" }}>
+                      Upload Your Film
+                    </p>
+                    <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.8rem", margin: 0 }}>
+                      Max 200MB | Video files only
+                    </p>
+                  </div>
+                )}
+              </label>
             </div>
+          </form>
+        </div>
 
-            {/* NEXT button */}
-            <button
-              onClick={handleNext}
-              className="cursor-pointer border-none"
-              style={{
-                marginTop: "20px",
-                padding: "16px 80px",
-                borderRadius: "50px",
-                background: "linear-gradient(180deg, rgba(255,215,0,0.3) 0%, rgba(255,165,0,0.25) 100%)",
-                border: "2px solid rgba(255,215,0,0.3)",
-                color: "#ffd700",
-                fontSize: "clamp(1.4rem, 3vw, 2rem)",
-                fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
-                fontWeight: 700,
-                letterSpacing: "0.15em",
-                boxShadow: "0 0 30px rgba(255,165,0,0.2)",
-              }}
-            >
-              NEXT
-            </button>
-          </>
-        ) : (
-          <>
-            {/* Step 2: Film details + upload */}
-            <div
-              style={{
-                background: "linear-gradient(180deg, #cc0000 0%, #ee1100 40%, #ff3300 70%, #ff4500 100%)",
-                borderRadius: "24px",
-                padding: "35px 28px 35px",
-                width: "100%",
-                maxWidth: "440px",
-              }}
-            >
-              <h2
-                className="text-center"
-                style={{
-                  fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
-                  fontSize: "clamp(1.8rem, 4vw, 2.4rem)",
-                  color: "#ffd700",
-                  fontWeight: 700,
-                  fontStyle: "italic",
-                  letterSpacing: "0.05em",
-                  margin: "0 0 30px 0",
-                }}
-              >
-                FILM DETAILS
-              </h2>
-
-              {error && (
-                <div className="mb-4 px-4 py-2 bg-black/40 text-red-300 text-center text-sm" style={{ borderRadius: "10px" }}>
-                  {error}
-                </div>
-              )}
-
-              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                <input
-                  type="text"
-                  placeholder="Film Title"
-                  value={submissionTitle}
-                  onChange={(e) => setSubmissionTitle(e.target.value)}
-                  required
-                  style={{
-                    width: "100%",
-                    padding: "18px 20px",
-                    background: "rgba(0,0,0,0.85)",
-                    border: "none",
-                    borderRadius: "16px",
-                    color: "#fff",
-                    fontSize: "1.05rem",
-                    fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
-                    textAlign: "center",
-                    letterSpacing: "0.05em",
-                    outline: "none",
-                    boxSizing: "border-box",
-                  }}
-                />
-
-                <select
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  required
-                  style={{
-                    width: "100%",
-                    padding: "18px 20px",
-                    background: "rgba(0,0,0,0.85)",
-                    border: "none",
-                    borderRadius: "14px",
-                    color: category ? "#fff" : "rgba(255,255,255,0.5)",
-                    fontSize: "1.1rem",
-                    fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
-                    textAlign: "center",
-                    letterSpacing: "0.05em",
-                    outline: "none",
-                    boxSizing: "border-box",
-                    appearance: "none",
-                  }}
-                >
-                  <option value="" disabled>
-                    Select Category
-                  </option>
-                  {categories.map((cat) => (
-                    <option key={cat} value={cat} style={{ background: "#1a0000" }}>
-                      {cat}
-                    </option>
-                  ))}
-                </select>
-
-                {/* File Upload */}
-                <div
-                  style={{
-                    background: "rgba(0,0,0,0.85)",
-                    borderRadius: "14px",
-                    padding: "20px",
-                    textAlign: "center",
-                    cursor: "pointer",
-                    border: "2px dashed rgba(255,215,0,0.3)",
-                  }}
-                >
-                  <input
-                    type="file"
-                    accept="video/*"
-                    onChange={handleFileChange}
-                    className="hidden"
-                    id="fileUpload"
-                  />
-                  <label htmlFor="fileUpload" className="cursor-pointer">
-                    {file ? (
-                      <div>
-                        <p style={{ color: "#fff", fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif", margin: 0 }}>{file.name}</p>
-                        <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.85rem", marginTop: "4px" }}>
-                          {(file.size / (1024 * 1024)).toFixed(2)} MB
-                        </p>
-                      </div>
-                    ) : (
-                      <div>
-                        <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "1rem", margin: "0 0 4px 0", fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif" }}>
-                          Upload Your Film
-                        </p>
-                        <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.8rem", margin: 0 }}>
-                          Max 200MB | Video files only
-                        </p>
-                      </div>
-                    )}
-                  </label>
-                </div>
-
-                <button
-                  type="submit"
-                  className="cursor-pointer border-none"
-                  style={{
-                    marginTop: "8px",
-                    padding: "16px 40px",
-                    borderRadius: "50px",
-                    background: "linear-gradient(180deg, rgba(255,215,0,0.3) 0%, rgba(255,165,0,0.25) 100%)",
-                    border: "2px solid rgba(255,215,0,0.3)",
-                    color: "#ffd700",
-                    fontSize: "clamp(1.4rem, 3vw, 2rem)",
-                    fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
-                    fontWeight: 700,
-                    letterSpacing: "0.15em",
-                    boxShadow: "0 0 30px rgba(255,165,0,0.2)",
-                    width: "100%",
-                  }}
-                >
-                  SUBMIT FILM
-                </button>
-              </form>
-            </div>
-          </>
-        )}
+        {/* SUBMIT button */}
+        <button
+          onClick={handleSubmit}
+          className="cursor-pointer border-none"
+          style={{
+            marginTop: "24px",
+            padding: "18px 80px",
+            borderRadius: "50px",
+            background: "#ffd700",
+            color: "#2a1000",
+            fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)",
+            fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
+            fontWeight: 900,
+            letterSpacing: "0.1em",
+            boxShadow: "0 0 40px rgba(255,215,0,0.5), 0 0 80px rgba(255,215,0,0.2)",
+            border: "none",
+          }}
+        >
+          SUBMIT FILM
+        </button>
       </div>
 
       {/* Social icons — bottom right */}
       <div
         className="absolute flex items-center gap-4"
-        style={{ bottom: "85px", right: "85px", zIndex: 30 }}
+        style={{ bottom: "30px", right: "30px", zIndex: 30 }}
       >
         <button className="bg-transparent border-none cursor-pointer p-0" aria-label="Instagram">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ffd700" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -492,13 +263,8 @@ const SubmissionForm = () => {
         </button>
       </div>
 
-      {/* Keyframe animations */}
+      {/* Placeholder styles */}
       <style>{`
-        @keyframes scrollLeft {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-
         input::placeholder, select option:disabled {
           color: rgba(255, 255, 255, 0.45);
         }
