@@ -199,7 +199,7 @@ const LandingPage = () => {
             border: "none",
           }}
         >
-          NEXT
+          <span style={{ marginTop: "-6px" }}>NEXT</span>
         </button>
 
       </div>
