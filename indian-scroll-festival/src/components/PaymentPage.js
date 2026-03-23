@@ -212,6 +212,7 @@ const PaymentPage = () => {
             maxWidth: "90vw",
             height: "69px",
             padding: "0 40px",
+            whiteSpace: "nowrap",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -220,7 +221,7 @@ const PaymentPage = () => {
               ? "linear-gradient(180deg, #ffd700 0%, #e6c200 100%)"
               : "rgba(200,180,160,0.4)",
             color: category ? "#000000" : "rgba(80,50,40,0.6)",
-            fontSize: "clamp(28px, 4vw, 42px)",
+            fontSize: "clamp(24px, 3.5vw, 36px)",
             fontFamily: "'obviously-wide', 'Bebas Neue', sans-serif",
             fontWeight: 900,
             letterSpacing: "0.03em",
