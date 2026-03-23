@@ -86,7 +86,7 @@ const PaymentPage = () => {
         >
           <span
             className="text-3xl font-bold"
-            style={{ fontFamily: "Bebas Neue, sans-serif", color: "#ffd700" }}
+            style={{ fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif", color: "#ffd700" }}
           >
             ISF
           </span>
@@ -95,7 +95,7 @@ const PaymentPage = () => {
 
       <h2
         className="text-4xl md:text-5xl mb-2 text-center"
-        style={{ fontFamily: "Bebas Neue", color: "#ffd700" }}
+        style={{ fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif", color: "#ffd700" }}
       >
         PAYMENT
       </h2>
@@ -124,7 +124,7 @@ const PaymentPage = () => {
             <span className="text-white/70">Submission Fee</span>
             <span
               className="text-3xl font-bold"
-              style={{ fontFamily: "Bebas Neue", color: "#ffd700" }}
+              style={{ fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif", color: "#ffd700" }}
             >
               ₹499
             </span>

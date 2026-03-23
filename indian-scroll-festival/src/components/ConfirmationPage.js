@@ -31,7 +31,7 @@ const ConfirmationPage = () => {
         >
           <span
             className="text-3xl font-bold"
-            style={{ fontFamily: "Bebas Neue, sans-serif", color: "#ffd700" }}
+            style={{ fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif", color: "#ffd700" }}
           >
             ISF
           </span>
@@ -41,7 +41,7 @@ const ConfirmationPage = () => {
       <h2
         className="text-5xl md:text-7xl mb-2 text-center"
         style={{
-          fontFamily: "Bebas Neue",
+          fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
           color: "#ffd700",
           textShadow: "0 0 30px rgba(255,215,0,0.5)",
         }}
@@ -51,7 +51,7 @@ const ConfirmationPage = () => {
       <h2
         className="text-5xl md:text-7xl mb-6 text-center"
         style={{
-          fontFamily: "Bebas Neue",
+          fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
           color: "#ffd700",
           textShadow: "0 0 30px rgba(255,215,0,0.5)",
         }}
@@ -107,7 +107,7 @@ const ConfirmationPage = () => {
       <div className="w-full max-w-md mt-6">
         <p
           className="text-center mb-3 text-xl"
-          style={{ fontFamily: "Bebas Neue", color: "#ffd700" }}
+          style={{ fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif", color: "#ffd700" }}
         >
           REFER A FRIEND
         </p>

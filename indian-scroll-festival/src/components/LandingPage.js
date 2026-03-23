@@ -8,9 +8,9 @@ const EDGE_COLOR = "rgba(220, 50, 20, 0.6)";
 const EDGE_THICKNESS = "70px";
 
 const edgeTextStyle = {
-  fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
+  fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
   fontSize: EDGE_FONT_SIZE,
-  fontWeight: 300,
+  fontWeight: 400,
   letterSpacing: "0.15em",
   color: EDGE_COLOR,
   lineHeight: EDGE_THICKNESS,
@@ -133,7 +133,7 @@ const LandingPage = () => {
           <button
             className="px-12 py-4 rounded-full text-xl font-bold tracking-widest cursor-pointer border-none"
             style={{
-              fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
+              fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
               fontSize: "clamp(1.2rem, 2.5vw, 1.8rem)",
               color: "#ffd700",
               background: "linear-gradient(180deg, #cc2200 0%, #ff4500 50%, #ff6a00 100%)",
@@ -165,28 +165,6 @@ const LandingPage = () => {
 
       {/* Keyframe animations & fonts */}
       <style>{`
-        @font-face {
-          font-family: 'Obviously';
-          src: url('/fonts/fonnts.com-Obviously_Narw.otf') format('opentype');
-          font-weight: 300;
-          font-style: normal;
-          font-display: swap;
-        }
-        @font-face {
-          font-family: 'Obviously';
-          src: url('/fonts/fonnts.com-Obviously_Narw.otf') format('opentype');
-          font-weight: 400;
-          font-style: normal;
-          font-display: swap;
-        }
-        @font-face {
-          font-family: 'Obviously';
-          src: url('/fonts/fonnts.com-Obviously_Narw.otf') format('opentype');
-          font-weight: 700;
-          font-style: normal;
-          font-display: swap;
-        }
-
         @keyframes scrollLeft {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }

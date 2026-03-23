@@ -11,9 +11,9 @@ const EDGE_COLOR = "rgba(220, 50, 20, 0.6)";
 const EDGE_THICKNESS = "70px";
 
 const edgeTextStyle = {
-  fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
+  fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
   fontSize: EDGE_FONT_SIZE,
-  fontWeight: 300,
+  fontWeight: 400,
   letterSpacing: "0.15em",
   color: EDGE_COLOR,
   lineHeight: EDGE_THICKNESS,
@@ -242,7 +242,7 @@ const SubmissionForm = () => {
               <h2
                 className="text-center mb-8"
                 style={{
-                  fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
+                  fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
                   fontSize: "clamp(1.8rem, 4vw, 2.4rem)",
                   color: "#ffd700",
                   fontWeight: 700,
@@ -275,7 +275,7 @@ const SubmissionForm = () => {
                     borderRadius: "16px",
                     color: "#fff",
                     fontSize: "1.05rem",
-                    fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
+                    fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
                     textAlign: "center",
                     letterSpacing: "0.05em",
                     outline: "none",
@@ -296,7 +296,7 @@ const SubmissionForm = () => {
                     borderRadius: "16px",
                     color: "#fff",
                     fontSize: "1.05rem",
-                    fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
+                    fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
                     textAlign: "center",
                     letterSpacing: "0.05em",
                     outline: "none",
@@ -317,7 +317,7 @@ const SubmissionForm = () => {
                     borderRadius: "16px",
                     color: "#fff",
                     fontSize: "1.05rem",
-                    fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
+                    fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
                     textAlign: "center",
                     letterSpacing: "0.05em",
                     outline: "none",
@@ -337,7 +337,7 @@ const SubmissionForm = () => {
                     borderRadius: "16px",
                     color: "#fff",
                     fontSize: "1.05rem",
-                    fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
+                    fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
                     textAlign: "center",
                     letterSpacing: "0.05em",
                     outline: "none",
@@ -359,7 +359,7 @@ const SubmissionForm = () => {
                 border: "2px solid rgba(255,215,0,0.3)",
                 color: "#ffd700",
                 fontSize: "clamp(1.4rem, 3vw, 2rem)",
-                fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
+                fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
                 fontWeight: 700,
                 letterSpacing: "0.15em",
                 boxShadow: "0 0 30px rgba(255,165,0,0.2)",
@@ -383,7 +383,7 @@ const SubmissionForm = () => {
               <h2
                 className="text-center"
                 style={{
-                  fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
+                  fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
                   fontSize: "clamp(1.8rem, 4vw, 2.4rem)",
                   color: "#ffd700",
                   fontWeight: 700,
@@ -416,7 +416,7 @@ const SubmissionForm = () => {
                     borderRadius: "16px",
                     color: "#fff",
                     fontSize: "1.05rem",
-                    fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
+                    fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
                     textAlign: "center",
                     letterSpacing: "0.05em",
                     outline: "none",
@@ -436,7 +436,7 @@ const SubmissionForm = () => {
                     borderRadius: "14px",
                     color: category ? "#fff" : "rgba(255,255,255,0.5)",
                     fontSize: "1.1rem",
-                    fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
+                    fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
                     textAlign: "center",
                     letterSpacing: "0.05em",
                     outline: "none",
@@ -475,14 +475,14 @@ const SubmissionForm = () => {
                   <label htmlFor="fileUpload" className="cursor-pointer">
                     {file ? (
                       <div>
-                        <p style={{ color: "#fff", fontFamily: "'Obviously', 'Bebas Neue', sans-serif", margin: 0 }}>{file.name}</p>
+                        <p style={{ color: "#fff", fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif", margin: 0 }}>{file.name}</p>
                         <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.85rem", marginTop: "4px" }}>
                           {(file.size / (1024 * 1024)).toFixed(2)} MB
                         </p>
                       </div>
                     ) : (
                       <div>
-                        <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "1rem", margin: "0 0 4px 0", fontFamily: "'Obviously', 'Bebas Neue', sans-serif" }}>
+                        <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "1rem", margin: "0 0 4px 0", fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif" }}>
                           Upload Your Film
                         </p>
                         <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.8rem", margin: 0 }}>
@@ -519,7 +519,7 @@ const SubmissionForm = () => {
                     border: "2px solid rgba(255,215,0,0.3)",
                     color: "#ffd700",
                     fontSize: "clamp(1.4rem, 3vw, 2rem)",
-                    fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
+                    fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
                     fontWeight: 700,
                     letterSpacing: "0.15em",
                     boxShadow: "0 0 30px rgba(255,165,0,0.2)",
@@ -559,28 +559,6 @@ const SubmissionForm = () => {
 
       {/* Keyframe animations & fonts */}
       <style>{`
-        @font-face {
-          font-family: 'Obviously';
-          src: url('/fonts/fonnts.com-Obviously_Narw.otf') format('opentype');
-          font-weight: 300;
-          font-style: normal;
-          font-display: swap;
-        }
-        @font-face {
-          font-family: 'Obviously';
-          src: url('/fonts/fonnts.com-Obviously_Narw.otf') format('opentype');
-          font-weight: 400;
-          font-style: normal;
-          font-display: swap;
-        }
-        @font-face {
-          font-family: 'Obviously';
-          src: url('/fonts/fonnts.com-Obviously_Narw.otf') format('opentype');
-          font-weight: 700;
-          font-style: normal;
-          font-display: swap;
-        }
-
         @keyframes scrollLeft {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
