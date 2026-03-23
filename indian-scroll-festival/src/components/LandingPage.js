@@ -232,7 +232,8 @@ const LandingPage = () => {
       {/* Placeholder styles */}
       <style>{`
         input::placeholder {
-          color: rgba(255, 255, 255, 0.45);
+          color: #FFFFFF;
+          text-shadow: 0 0 12.8px #FF0504;
         }
         .noisy-text {
           filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' result='noise'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='noise' scale='1.5' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3C/svg%3E#t");
