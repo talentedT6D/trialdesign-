@@ -72,13 +72,27 @@ const LandingPage = () => {
             maxWidth: "480px",
             position: "relative",
             boxShadow: "0 8px 40px rgba(0,0,0,0.4)",
+            overflow: "hidden",
           }}
         >
+          {/* Noise overlay */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              borderRadius: "24px",
+              opacity: 0.12,
+              pointerEvents: "none",
+              zIndex: 1,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+              backgroundRepeat: "repeat",
+            }}
+          />
           {/* Back button */}
           <button
             onClick={() => window.history.back()}
             className="bg-transparent border-none cursor-pointer p-0"
-            style={{ position: "absolute", top: "20px", left: "20px" }}
+            style={{ position: "absolute", top: "20px", left: "20px", zIndex: 2 }}
             aria-label="Go back"
           >
             <svg
@@ -98,7 +112,7 @@ const LandingPage = () => {
 
           {/* Title */}
           <h2
-            className="text-center"
+            className="text-center noisy-text"
             style={{
               fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
               fontSize: "clamp(2.2rem, 5vw, 3.2rem)",
@@ -108,6 +122,8 @@ const LandingPage = () => {
               letterSpacing: "0.03em",
               margin: "10px 0 30px 0",
               textShadow: "0 0 30px rgba(255,100,50,0.3)",
+              position: "relative",
+              zIndex: 2,
             }}
           >
             SUBMISSION FORM
@@ -122,7 +138,7 @@ const LandingPage = () => {
             </div>
           )}
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "18px", position: "relative", zIndex: 2 }}>
             <input
               type="text"
               placeholder="Name"
@@ -217,6 +233,9 @@ const LandingPage = () => {
       <style>{`
         input::placeholder {
           color: rgba(255, 255, 255, 0.45);
+        }
+        .noisy-text {
+          filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' result='noise'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='noise' scale='1.5' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3C/svg%3E#t");
         }
       `}</style>
     </div>
