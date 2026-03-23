@@ -96,6 +96,7 @@ const SubmissionForm = () => {
             borderRadius: "24px",
             padding: "30px 32px 40px",
             width: "639px",
+            minHeight: "600px",
             maxWidth: "90vw",
             position: "relative",
             boxShadow: "0 8px 40px rgba(0,0,0,0.5)",
