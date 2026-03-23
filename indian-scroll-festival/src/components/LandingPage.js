@@ -116,12 +116,12 @@ const LandingPage = () => {
             style={{
               fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
               fontSize: "clamp(2.2rem, 5vw, 3.2rem)",
-              color: "#f5e6d0",
+              color: "#FFFFFF",
               fontWeight: 700,
               fontStyle: "italic",
-              letterSpacing: "0.03em",
+              letterSpacing: "0em",
               margin: "10px 0 30px 0",
-              textShadow: "0 0 30px rgba(255,100,50,0.3)",
+              textShadow: "0 0 5.7px #FAFF00",
               position: "relative",
               zIndex: 2,
             }}
