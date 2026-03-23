@@ -75,19 +75,6 @@ const LandingPage = () => {
             overflow: "hidden",
           }}
         >
-          {/* Noise overlay */}
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              borderRadius: "24px",
-              opacity: 0.12,
-              pointerEvents: "none",
-              zIndex: 1,
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-              backgroundRepeat: "repeat",
-            }}
-          />
           {/* Back button */}
           <button
             onClick={() => window.history.back()}
@@ -112,12 +99,12 @@ const LandingPage = () => {
 
           {/* Title */}
           <h2
-            className="text-center noisy-text"
+            className="text-center"
             style={{
               fontFamily: "'obviously-condensed', 'Bebas Neue', sans-serif",
               fontSize: "clamp(2.2rem, 5vw, 3.2rem)",
               color: "#FFFFFF",
-              fontWeight: 700,
+              fontWeight: 400,
               fontStyle: "normal",
               letterSpacing: "0em",
               margin: "10px 0 30px 0",
@@ -235,10 +222,7 @@ const LandingPage = () => {
           color: #FFFFFF;
           text-shadow: 0 0 12.8px #FF0504;
         }
-        .noisy-text {
-          filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' result='noise'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='noise' scale='1.5' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3C/svg%3E#t");
-        }
-      `}</style>
+`}</style>
     </div>
   );
 };
