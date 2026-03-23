@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { db, storage } from "../firebase-config";
 import { useNavigate } from "react-router-dom";
 
 const TICKER_TEXT = "INDIA'S FIRST VERTICAL FILM FESTIVAL\u00A0\u00A0\u00A0\u00A0";
@@ -31,8 +28,6 @@ const SubmissionForm = () => {
   const [submissionTitle, setSubmissionTitle] = useState("");
   const [category, setCategory] = useState("");
   const [error, setError] = useState("");
-  const [uploading, setUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
 
   const categories = [
     "Drama",
@@ -65,62 +60,21 @@ const SubmissionForm = () => {
     setStep(2);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!file || !submissionTitle || !category) {
       setError("Please fill all fields and upload a file.");
       return;
     }
 
-    setUploading(true);
-    setError("");
-
-    try {
-      const storageRef = ref(storage, `submissions/${Date.now()}_${file.name}`);
-      const uploadTask = uploadBytesResumable(storageRef, file);
-
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setUploadProgress(Math.round(progress));
-        },
-        (uploadError) => {
-          setError("Upload failed. Please try again.");
-          setUploading(false);
-          console.error(uploadError);
-        },
-        async () => {
-          const fileUrl = await getDownloadURL(uploadTask.snapshot.ref);
-
-          const docRef = await addDoc(collection(db, "submissions"), {
-            name,
-            email,
-            contact,
-            howHeard,
-            submissionTitle,
-            fileUrl,
-            category,
-            status: "Pending",
-            createdAt: new Date().toISOString(),
-          });
-
-          navigate("/payment", {
-            state: {
-              submissionId: docRef.id,
-              name,
-              email,
-              submissionTitle,
-            },
-          });
-        }
-      );
-    } catch (err) {
-      setError("Error submitting form. Please try again.");
-      setUploading(false);
-      console.error(err);
-    }
+    navigate("/confirmation", {
+      state: {
+        name,
+        email,
+        submissionTitle,
+        category,
+      },
+    });
   };
 
   return (
@@ -493,24 +447,9 @@ const SubmissionForm = () => {
                   </label>
                 </div>
 
-                {/* Upload progress */}
-                {uploading && (
-                  <div style={{ width: "100%", background: "rgba(0,0,0,0.5)", height: "10px", borderRadius: "5px", overflow: "hidden" }}>
-                    <div
-                      style={{
-                        width: `${uploadProgress}%`,
-                        height: "100%",
-                        background: "linear-gradient(90deg, #ff4500, #ffd700)",
-                        transition: "width 0.3s ease",
-                      }}
-                    />
-                  </div>
-                )}
-
                 <button
                   type="submit"
                   className="cursor-pointer border-none"
-                  disabled={uploading}
                   style={{
                     marginTop: "8px",
                     padding: "16px 40px",
@@ -526,12 +465,8 @@ const SubmissionForm = () => {
                     width: "100%",
                   }}
                 >
-                  {uploading ? `UPLOADING... ${uploadProgress}%` : "SUBMIT FILM"}
+                  SUBMIT FILM
                 </button>
-
-                <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.75rem", textAlign: "center", marginTop: "4px" }}>
-                  Submission fee of ₹499 will be collected on the next page
-                </p>
               </form>
             </div>
           </>
@@ -557,7 +492,7 @@ const SubmissionForm = () => {
         </button>
       </div>
 
-      {/* Keyframe animations & fonts */}
+      {/* Keyframe animations */}
       <style>{`
         @keyframes scrollLeft {
           0% { transform: translateX(0); }

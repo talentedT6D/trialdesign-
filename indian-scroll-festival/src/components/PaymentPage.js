@@ -1,73 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../firebase-config";
 
 const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { submissionId, name, email, submissionTitle } =
-    location.state || {};
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const { name, email, submissionTitle } = location.state || {};
 
-  const handlePayment = () => {
-    setLoading(true);
-    setError("");
-
-    const options = {
-      key: process.env.REACT_APP_RAZORPAY_KEY_ID || "YOUR_RAZORPAY_KEY_ID",
-      amount: 499 * 100, // 499 INR in paise
-      currency: "INR",
-      name: "Indian Scroll Festival",
-      description: "Film Submission Fee",
-      handler: async function (response) {
-        try {
-          // Update submission with payment info
-          if (submissionId) {
-            const submissionRef = doc(db, "submissions", submissionId);
-            await updateDoc(submissionRef, {
-              paymentId: response.razorpay_payment_id,
-              paymentStatus: "Completed",
-              status: "Submitted",
-              paidAt: new Date().toISOString(),
-            });
-          }
-
-          navigate("/confirmation", {
-            state: {
-              name,
-              email,
-              submissionTitle,
-              paymentId: response.razorpay_payment_id,
-            },
-          });
-        } catch (err) {
-          setError("Payment recorded but failed to update submission. Contact support.");
-          console.error(err);
-        }
+  const handleContinue = () => {
+    navigate("/confirmation", {
+      state: {
+        name,
+        email,
+        submissionTitle,
       },
-      prefill: {
-        name: name || "",
-        email: email || "",
-      },
-      theme: {
-        color: "#ffd700",
-      },
-      modal: {
-        ondismiss: function () {
-          setLoading(false);
-        },
-      },
-    };
-
-    if (window.Razorpay) {
-      const rzp = new window.Razorpay(options);
-      rzp.open();
-    } else {
-      setError("Payment gateway not loaded. Please refresh and try again.");
-      setLoading(false);
-    }
+    });
   };
 
   return (
@@ -131,22 +77,15 @@ const PaymentPage = () => {
           </div>
         </div>
 
-        {error && (
-          <div className="mb-4 px-4 py-2 bg-red-900/80 border border-red-500 text-red-200 text-sm text-center">
-            {error}
-          </div>
-        )}
-
         <button
           className="btn-festival w-full py-4 text-xl"
-          onClick={handlePayment}
-          disabled={loading}
+          onClick={handleContinue}
         >
-          {loading ? "PROCESSING..." : "PAY ₹499 NOW"}
+          CONTINUE
         </button>
 
         <p className="text-white/40 text-xs text-center mt-4">
-          Powered by Razorpay | Secure Payment
+          Payment integration coming soon
         </p>
       </div>
 
