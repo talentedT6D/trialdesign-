@@ -23,8 +23,8 @@ const LandingPage = () => {
   const inputStyle = {
     width: "100%",
     padding: "20px 24px",
-    background: "rgba(0,0,0,0.75)",
-    border: "none",
+    background: "rgba(0,0,0,0.65)",
+    border: "1px solid rgba(255,255,255,0.08)",
     borderRadius: "16px",
     color: "#fff",
     fontSize: "1.1rem",
@@ -39,7 +39,7 @@ const LandingPage = () => {
     <div
       className="relative min-h-screen overflow-hidden"
       style={{
-        background: "url('/images/F02.2 (1) (1).png') center/cover no-repeat",
+        background: "linear-gradient(180deg, #8b0000 0%, #4a0000 30%, #1a0000 70%, #0a0000 100%)",
       }}
     >
       {/* Festival logo — top left */}
@@ -65,16 +65,29 @@ const LandingPage = () => {
         {/* Dark maroon card */}
         <div
           style={{
-            background: "linear-gradient(180deg, #3d0a0a 0%, #4a1010 40%, #511515 70%, #581a1a 100%)",
+            background: "linear-gradient(180deg, #3d0a0a 0%, #381010 40%, #2e0e0e 70%, #2a0c0c 100%)",
             borderRadius: "24px",
             padding: "30px 32px 40px",
             width: "100%",
             maxWidth: "480px",
             position: "relative",
-            boxShadow: "0 8px 40px rgba(0,0,0,0.4)",
+            boxShadow: "0 8px 40px rgba(0,0,0,0.5)",
             overflow: "hidden",
           }}
         >
+          {/* Noise overlay */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              borderRadius: "24px",
+              opacity: 0.15,
+              pointerEvents: "none",
+              zIndex: 1,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+              backgroundRepeat: "repeat",
+            }}
+          />
           {/* Back button */}
           <button
             onClick={() => window.history.back()}
@@ -102,13 +115,14 @@ const LandingPage = () => {
             className="text-center"
             style={{
               fontFamily: "'obviously-condensed', 'Bebas Neue', sans-serif",
-              fontSize: "clamp(2.2rem, 5vw, 3.2rem)",
+              fontSize: "clamp(3rem, 10vw, 5rem)",
               color: "#FFFFFF",
-              fontWeight: 400,
+              fontWeight: 700,
               fontStyle: "normal",
               letterSpacing: "0em",
+              lineHeight: "0.95",
               margin: "10px 0 30px 0",
-              textShadow: "0 0 5.7px #FAFF00",
+              textShadow: "0 0 8px #FAFF00, 0 0 20px rgba(250,255,0,0.3)",
               position: "relative",
               zIndex: 2,
             }}
@@ -165,16 +179,16 @@ const LandingPage = () => {
           onClick={handleNext}
           className="cursor-pointer border-none"
           style={{
-            marginTop: "24px",
+            marginTop: "28px",
             padding: "18px 100px",
             borderRadius: "50px",
-            background: "#ffd700",
-            color: "#2a1000",
+            background: "linear-gradient(180deg, #ffd700 0%, #e6c200 100%)",
+            color: "#1a0800",
             fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)",
             fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
             fontWeight: 900,
             letterSpacing: "0.1em",
-            boxShadow: "0 0 40px rgba(255,215,0,0.5), 0 0 80px rgba(255,215,0,0.2)",
+            boxShadow: "0 0 30px rgba(255,215,0,0.6), 0 0 60px rgba(255,215,0,0.3), 0 4px 80px rgba(255,200,0,0.4)",
             border: "none",
           }}
         >
