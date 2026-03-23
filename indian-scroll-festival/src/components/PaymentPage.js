@@ -210,22 +210,29 @@ const PaymentPage = () => {
             marginTop: "28px",
             width: "639px",
             maxWidth: "90vw",
-            padding: "20px 40px",
+            height: "69px",
+            padding: "0 40px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
             borderRadius: "50px",
-            background: "linear-gradient(180deg, #d4a500 0%, #b8900a 100%)",
-            color: "#1a0800",
-            fontSize: "clamp(36px, 6vw, 60px)",
+            background: category
+              ? "linear-gradient(180deg, #ffd700 0%, #e6c200 100%)"
+              : "rgba(200,180,160,0.4)",
+            color: category ? "#000000" : "rgba(80,50,40,0.6)",
+            fontSize: "clamp(28px, 4vw, 42px)",
             fontFamily: "'obviously-wide', 'Bebas Neue', sans-serif",
             fontWeight: 900,
             letterSpacing: "0.03em",
             lineHeight: "1",
             textAlign: "center",
-            boxShadow: "0 0 40px rgba(255,185,0,0.5), 0 0 80px rgba(255,185,0,0.25), 0 8px 60px rgba(200,150,0,0.4)",
+            boxShadow: category
+              ? "0 0 30px rgba(255,215,0,0.6), 0 0 60px rgba(255,215,0,0.3), 0 4px 80px rgba(255,200,0,0.4)"
+              : "none",
             border: "none",
-            opacity: category ? 1 : 0.5,
           }}
         >
-          PAY 499 AND SUBMIT
+          <span style={{ marginTop: "-4px" }}>PAY 499 AND SUBMIT</span>
         </button>
       </div>
 
