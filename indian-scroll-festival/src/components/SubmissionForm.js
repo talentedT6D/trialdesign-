@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const SubmissionForm = () => {
@@ -9,19 +9,9 @@ const SubmissionForm = () => {
   const [email] = useState(userInfo.email || "");
   const [file, setFile] = useState(null);
   const [submissionTitle, setSubmissionTitle] = useState("");
-  const [category, setCategory] = useState("");
   const [error, setError] = useState("");
-
-  const categories = [
-    "Drama",
-    "Comedy",
-    "Horror",
-    "Documentary",
-    "Animation",
-    "Experimental",
-    "Music Video",
-    "Other",
-  ];
+  const [dragging, setDragging] = useState(false);
+  const fileInputRef = useRef(null);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -34,28 +24,34 @@ const SubmissionForm = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleDrop = (e) => {
     e.preventDefault();
-    if (!file || !submissionTitle || !category) {
+    setDragging(false);
+    const droppedFile = e.dataTransfer.files[0];
+    if (droppedFile && droppedFile.size <= 200 * 1024 * 1024) {
+      setFile(droppedFile);
+      setError("");
+    } else {
+      setFile(null);
+      setError("File size must be under 200MB.");
+    }
+  };
+
+  const handleSubmit = () => {
+    if (!file || !submissionTitle) {
       setError("Please fill all fields and upload a file.");
       return;
     }
-
     navigate("/confirmation", {
-      state: {
-        name,
-        email,
-        submissionTitle,
-        category,
-      },
+      state: { name, email, submissionTitle },
     });
   };
 
   const inputStyle = {
     width: "100%",
     padding: "20px 24px",
-    background: "rgba(0,0,0,0.75)",
-    border: "none",
+    background: "rgba(0,0,0,0.65)",
+    border: "1px solid rgba(255,255,255,0.08)",
     borderRadius: "16px",
     color: "#fff",
     fontSize: "1.1rem",
@@ -96,20 +92,35 @@ const SubmissionForm = () => {
         {/* Dark maroon card */}
         <div
           style={{
-            background: "linear-gradient(180deg, #3d0a0a 0%, #4a1010 40%, #511515 70%, #581a1a 100%)",
+            background: "linear-gradient(180deg, #3d0a0a 0%, #381010 40%, #2e0e0e 70%, #2a0c0c 100%)",
             borderRadius: "24px",
             padding: "30px 32px 40px",
-            width: "100%",
-            maxWidth: "480px",
+            width: "639px",
+            maxWidth: "90vw",
             position: "relative",
-            boxShadow: "0 8px 40px rgba(0,0,0,0.4)",
+            boxShadow: "0 8px 40px rgba(0,0,0,0.5)",
+            overflow: "hidden",
           }}
         >
+          {/* Noise overlay */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              borderRadius: "24px",
+              opacity: 0.15,
+              pointerEvents: "none",
+              zIndex: 1,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+              backgroundRepeat: "repeat",
+            }}
+          />
+
           {/* Back button */}
           <button
             onClick={() => navigate("/")}
             className="bg-transparent border-none cursor-pointer p-0"
-            style={{ position: "absolute", top: "20px", left: "20px" }}
+            style={{ position: "absolute", top: "20px", left: "20px", zIndex: 2 }}
             aria-label="Go back"
           >
             <svg
@@ -131,118 +142,152 @@ const SubmissionForm = () => {
           <h2
             className="text-center"
             style={{
-              fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
-              fontSize: "clamp(2.2rem, 5vw, 3.2rem)",
-              color: "#f5e6d0",
+              fontFamily: "'obviously-condensed', 'Bebas Neue', sans-serif",
+              fontSize: "clamp(3rem, 10vw, 5rem)",
+              color: "#FFFFFF",
               fontWeight: 700,
-              fontStyle: "italic",
-              letterSpacing: "0.03em",
+              fontStyle: "normal",
+              letterSpacing: "0em",
+              lineHeight: "0.95",
               margin: "10px 0 30px 0",
-              textShadow: "0 0 30px rgba(255,100,50,0.3)",
+              textShadow: "none",
+              position: "relative",
+              zIndex: 2,
             }}
           >
-            FILM DETAILS
+            SUBMISSION FORM
           </h2>
 
           {error && (
             <div
               className="mb-4 px-4 py-2 bg-black/40 text-red-300 text-center text-sm"
-              style={{ borderRadius: "10px" }}
+              style={{ borderRadius: "10px", position: "relative", zIndex: 2 }}
             >
               {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "18px", position: "relative", zIndex: 2 }}>
+            {/* Submission Title */}
             <input
               type="text"
-              placeholder="Film Title"
+              placeholder="Submission Title"
               value={submissionTitle}
               onChange={(e) => setSubmissionTitle(e.target.value)}
               required
               style={inputStyle}
             />
 
-            <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              required
-              style={{
-                ...inputStyle,
-                color: category ? "#fff" : "rgba(255,255,255,0.45)",
-                appearance: "none",
-              }}
-            >
-              <option value="" disabled>
-                Select Category
-              </option>
-              {categories.map((cat) => (
-                <option key={cat} value={cat} style={{ background: "#1a0000" }}>
-                  {cat}
-                </option>
-              ))}
-            </select>
-
-            {/* File Upload */}
+            {/* Upload Area */}
             <div
+              onClick={() => fileInputRef.current?.click()}
+              onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
+              onDragLeave={() => setDragging(false)}
+              onDrop={handleDrop}
               style={{
-                background: "rgba(0,0,0,0.75)",
+                background: "rgba(0,0,0,0.65)",
                 borderRadius: "16px",
-                padding: "20px",
+                padding: "30px 20px",
                 textAlign: "center",
                 cursor: "pointer",
-                border: "2px dashed rgba(255,215,0,0.3)",
+                border: dragging ? "1px solid rgba(255,215,0,0.5)" : "1px solid rgba(255,255,255,0.08)",
               }}
             >
               <input
+                ref={fileInputRef}
                 type="file"
                 accept="video/*"
                 onChange={handleFileChange}
-                className="hidden"
-                id="fileUpload"
+                style={{ display: "none" }}
               />
-              <label htmlFor="fileUpload" className="cursor-pointer">
-                {file ? (
-                  <div>
-                    <p style={{ color: "#fff", fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif", margin: 0 }}>{file.name}</p>
-                    <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.85rem", marginTop: "4px" }}>
-                      {(file.size / (1024 * 1024)).toFixed(2)} MB
-                    </p>
-                  </div>
-                ) : (
-                  <div>
-                    <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "1rem", margin: "0 0 4px 0", fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif" }}>
-                      Upload Your Film
-                    </p>
-                    <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.8rem", margin: 0 }}>
-                      Max 200MB | Video files only
-                    </p>
-                  </div>
-                )}
-              </label>
+              {file ? (
+                <div>
+                  <p style={{ color: "#fff", fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif", fontSize: "1.1rem", margin: 0 }}>
+                    {file.name}
+                  </p>
+                  <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.85rem", marginTop: "8px" }}>
+                    {(file.size / (1024 * 1024)).toFixed(2)} MB
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  <p style={{
+                    color: "rgba(255,255,255,0.7)",
+                    fontSize: "1.2rem",
+                    margin: "0 0 4px 0",
+                    fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
+                    letterSpacing: "0.05em",
+                  }}>
+                    Upload Submission
+                  </p>
+                  <p style={{
+                    color: "rgba(255,255,255,0.4)",
+                    fontSize: "0.8rem",
+                    margin: "0 0 20px 0",
+                    fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
+                  }}>
+                    (Click Or Drag And Drop)
+                  </p>
+                  {/* Upload icon */}
+                  <svg
+                    width="40"
+                    height="40"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="rgba(255,255,255,0.5)"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{ margin: "0 auto 20px" }}
+                  >
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                    <polyline points="8 12 12 8 16 12" />
+                    <line x1="12" y1="8" x2="12" y2="16" />
+                  </svg>
+                  <p style={{
+                    color: "rgba(255,255,255,0.5)",
+                    fontSize: "0.8rem",
+                    margin: 0,
+                    fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
+                    letterSpacing: "0.03em",
+                    lineHeight: "1.5",
+                  }}>
+                    Submissions Must Be Under 120 Seconds In Duration
+                    <br />
+                    And Smaller Than 200 MB In File Size.
+                  </p>
+                </div>
+              )}
             </div>
-          </form>
+          </div>
         </div>
 
-        {/* SUBMIT button */}
+        {/* NEXT button */}
         <button
           onClick={handleSubmit}
           className="cursor-pointer border-none"
           style={{
-            marginTop: "24px",
-            padding: "18px 80px",
+            marginTop: "28px",
+            width: "639px",
+            maxWidth: "90vw",
+            height: "69px",
+            padding: "0",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            lineHeight: "1",
             borderRadius: "50px",
-            background: "#ffd700",
-            color: "#2a1000",
-            fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)",
-            fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
+            background: "linear-gradient(180deg, #ffd700 0%, #e6c200 100%)",
+            color: "#000000",
+            fontSize: "51px",
+            fontFamily: "'obviously-wide', 'Bebas Neue', sans-serif",
             fontWeight: 900,
             letterSpacing: "0.1em",
-            boxShadow: "0 0 40px rgba(255,215,0,0.5), 0 0 80px rgba(255,215,0,0.2)",
+            boxShadow: "0 0 30px rgba(255,215,0,0.6), 0 0 60px rgba(255,215,0,0.3), 0 4px 80px rgba(255,200,0,0.4)",
             border: "none",
           }}
         >
-          SUBMIT FILM
+          <span style={{ marginTop: "-6px" }}>NEXT</span>
         </button>
       </div>
 
@@ -267,8 +312,9 @@ const SubmissionForm = () => {
 
       {/* Placeholder styles */}
       <style>{`
-        input::placeholder, select option:disabled {
-          color: rgba(255, 255, 255, 0.45);
+        input::placeholder {
+          color: #FFFFFF;
+          text-shadow: 0 0 12.8px #FF0504;
         }
       `}</style>
     </div>
