@@ -70,7 +70,6 @@ const LandingPage = () => {
             padding: "30px 32px 40px",
             width: "639px",
             maxWidth: "90vw",
-            minHeight: "740px",
             position: "relative",
             boxShadow: "0 8px 40px rgba(0,0,0,0.5)",
             overflow: "hidden",
