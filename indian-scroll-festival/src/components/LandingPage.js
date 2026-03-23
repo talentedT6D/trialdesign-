@@ -180,7 +180,10 @@ const LandingPage = () => {
           className="cursor-pointer border-none"
           style={{
             marginTop: "28px",
-            padding: "18px 100px",
+            width: "639px",
+            maxWidth: "90vw",
+            height: "69px",
+            padding: "0",
             borderRadius: "50px",
             background: "linear-gradient(180deg, #ffd700 0%, #e6c200 100%)",
             color: "#1a0800",
@@ -194,6 +197,7 @@ const LandingPage = () => {
         >
           NEXT
         </button>
+
       </div>
 
       {/* Social icons — bottom right */}
