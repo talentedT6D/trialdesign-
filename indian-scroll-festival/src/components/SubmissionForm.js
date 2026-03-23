@@ -42,7 +42,7 @@ const SubmissionForm = () => {
       setError("Please fill all fields and upload a file.");
       return;
     }
-    navigate("/confirmation", {
+    navigate("/payment", {
       state: { name, email, submissionTitle },
     });
   };

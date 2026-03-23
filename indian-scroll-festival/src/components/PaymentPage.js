@@ -1,95 +1,263 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { name, email, submissionTitle } = location.state || {};
+  const [category, setCategory] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
-  const handleContinue = () => {
+  const categories = ["Comedy", "Edits", "Emotional", "Food", "AI"];
+
+  const handleSubmit = () => {
+    if (!category) return;
     navigate("/confirmation", {
-      state: {
-        name,
-        email,
-        submissionTitle,
-      },
+      state: { name, email, submissionTitle, category },
     });
   };
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center px-4"
+      className="relative min-h-screen overflow-hidden"
       style={{
         background: "url('/images/F02.2 (1) (1).png') center/cover no-repeat",
       }}
     >
-      {/* Logo */}
-      <div className="mb-6 flex justify-center">
-        <div
-          className="w-16 h-16 border-2 flex items-center justify-center"
-          style={{ borderColor: "#ffd700" }}
-        >
-          <span
-            className="text-3xl font-bold"
-            style={{ fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif", color: "#ffd700" }}
-          >
-            ISF
-          </span>
-        </div>
-      </div>
+      {/* Festival logo — top left */}
+      <img
+        src="/images/festival-logo.png"
+        alt="Indian Scroll Festival 2026"
+        style={{
+          position: "absolute",
+          top: "72px",
+          left: "72px",
+          width: "100px",
+          height: "180px",
+          objectFit: "contain",
+          zIndex: 30,
+        }}
+      />
 
-      <h2
-        className="text-4xl md:text-5xl mb-2 text-center"
-        style={{ fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif", color: "#ffd700" }}
-      >
-        PAYMENT
-      </h2>
-
-      {/* Payment Card */}
+      {/* Main content */}
       <div
-        className="w-full max-w-md mt-8 p-8"
-        style={{ background: "rgba(0,0,0,0.6)", border: "2px solid #ff0000" }}
+        className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4"
+        style={{ paddingTop: "40px", paddingBottom: "40px" }}
       >
-        <div className="space-y-4 mb-8">
-          <div className="flex justify-between text-white/70">
-            <span>Film Title</span>
-            <span className="text-white font-semibold">
-              {submissionTitle || "Your Film"}
-            </span>
-          </div>
-          <div className="flex justify-between text-white/70">
-            <span>Filmmaker</span>
-            <span className="text-white font-semibold">{name || "—"}</span>
-          </div>
+        {/* Dark maroon card */}
+        <div
+          style={{
+            background: "linear-gradient(180deg, #3d0a0a 0%, #381010 40%, #2e0e0e 70%, #2a0c0c 100%)",
+            borderRadius: "24px",
+            padding: "30px 32px 40px",
+            width: "639px",
+            maxWidth: "90vw",
+            position: "relative",
+            boxShadow: "0 8px 40px rgba(0,0,0,0.5)",
+            overflow: "hidden",
+          }}
+        >
+          {/* Noise overlay */}
           <div
-            className="h-px w-full"
-            style={{ background: "rgba(255,0,0,0.3)" }}
+            style={{
+              position: "absolute",
+              inset: 0,
+              borderRadius: "24px",
+              opacity: 0.15,
+              pointerEvents: "none",
+              zIndex: 1,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+              backgroundRepeat: "repeat",
+            }}
           />
-          <div className="flex justify-between items-center">
-            <span className="text-white/70">Submission Fee</span>
-            <span
-              className="text-3xl font-bold"
-              style={{ fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif", color: "#ffd700" }}
+
+          {/* Back button */}
+          <button
+            onClick={() => navigate("/submission", { state: { name, email } })}
+            className="bg-transparent border-none cursor-pointer p-0"
+            style={{ position: "absolute", top: "20px", left: "20px", zIndex: 2 }}
+            aria-label="Go back"
+          >
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#cc2200"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              ₹499
-            </span>
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+              <polyline points="14 16 10 12 14 8" />
+            </svg>
+          </button>
+
+          {/* Title */}
+          <h2
+            className="text-center"
+            style={{
+              fontFamily: "'obviously-condensed', 'Bebas Neue', sans-serif",
+              fontSize: "clamp(3rem, 10vw, 5rem)",
+              color: "#FFFFFF",
+              fontWeight: 700,
+              fontStyle: "normal",
+              letterSpacing: "0em",
+              lineHeight: "0.95",
+              margin: "10px 0 30px 0",
+              textShadow: "none",
+              position: "relative",
+              zIndex: 2,
+            }}
+          >
+            SUBMISSION FORM
+          </h2>
+
+          {/* Custom Category Dropdown */}
+          <div style={{ position: "relative", zIndex: 3 }}>
+            {/* Dropdown trigger */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              style={{
+                width: "100%",
+                padding: "20px 24px",
+                background: "rgba(0,0,0,0.65)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                borderRadius: isOpen ? "16px 16px 0 0" : "16px",
+                color: category ? "#fff" : "rgba(255,255,255,0.7)",
+                fontSize: "1.1rem",
+                fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
+                textAlign: "center",
+                letterSpacing: "0.05em",
+                outline: "none",
+                boxSizing: "border-box",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "relative",
+              }}
+            >
+              <span>{category || "Category"}</span>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#fff"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{
+                  position: "absolute",
+                  right: "20px",
+                  transition: "transform 0.2s",
+                  transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+                }}
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+
+            {/* Dropdown options */}
+            {isOpen && (
+              <div
+                style={{
+                  width: "100%",
+                  background: "rgba(0,0,0,0.85)",
+                  borderRadius: "0 0 16px 16px",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  borderTop: "none",
+                  overflow: "hidden",
+                }}
+              >
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => {
+                      setCategory(cat);
+                      setIsOpen(false);
+                    }}
+                    style={{
+                      width: "100%",
+                      padding: "14px 24px",
+                      background: "transparent",
+                      border: "none",
+                      color: "rgba(255,255,255,0.7)",
+                      fontSize: "1.1rem",
+                      fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
+                      textAlign: "center",
+                      letterSpacing: "0.05em",
+                      cursor: "pointer",
+                      borderBottom: "1px solid rgba(255,255,255,0.05)",
+                    }}
+                    onMouseEnter={(e) => (e.target.style.background = "rgba(255,255,255,0.05)")}
+                    onMouseLeave={(e) => (e.target.style.background = "transparent")}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
+        {/* PAY 499 AND SUBMIT button */}
         <button
-          className="btn-festival w-full py-4 text-xl"
-          onClick={handleContinue}
+          onClick={handleSubmit}
+          className="cursor-pointer border-none"
+          style={{
+            marginTop: "28px",
+            width: "639px",
+            maxWidth: "90vw",
+            height: "69px",
+            padding: "0",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            lineHeight: "1",
+            borderRadius: "50px",
+            background: "linear-gradient(180deg, #ffd700 0%, #e6c200 100%)",
+            color: "#000000",
+            fontSize: "clamp(28px, 4vw, 42px)",
+            fontFamily: "'obviously-wide', 'Bebas Neue', sans-serif",
+            fontWeight: 900,
+            letterSpacing: "0.05em",
+            boxShadow: "0 0 30px rgba(255,215,0,0.6), 0 0 60px rgba(255,215,0,0.3), 0 4px 80px rgba(255,200,0,0.4)",
+            border: "none",
+            opacity: category ? 1 : 0.5,
+          }}
         >
-          CONTINUE
+          <span style={{ marginTop: "-6px" }}>PAY 499 AND SUBMIT</span>
         </button>
-
-        <p className="text-white/40 text-xs text-center mt-4">
-          Payment integration coming soon
-        </p>
       </div>
 
-      {/* Zigzag border */}
-      <div className="w-full mt-auto zigzag-border" />
+      {/* Social icons — bottom right */}
+      <div
+        className="absolute flex items-center gap-4"
+        style={{ bottom: "30px", right: "30px", zIndex: 30 }}
+      >
+        <button className="bg-transparent border-none cursor-pointer p-0" aria-label="Instagram">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ffd700" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+            <circle cx="12" cy="12" r="5" />
+            <circle cx="17.5" cy="6.5" r="1.5" fill="#ffd700" stroke="none" />
+          </svg>
+        </button>
+        <button className="bg-transparent border-none cursor-pointer p-0" aria-label="X">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="#ffd700">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Placeholder styles */}
+      <style>{`
+        input::placeholder {
+          color: #FFFFFF;
+          text-shadow: 0 0 12.8px #FF0504;
+        }
+      `}</style>
     </div>
   );
 };
