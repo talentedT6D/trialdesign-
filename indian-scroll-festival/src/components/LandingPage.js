@@ -114,11 +114,11 @@ const LandingPage = () => {
           <h2
             className="text-center noisy-text"
             style={{
-              fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
+              fontFamily: "'obviously-condensed', 'Bebas Neue', sans-serif",
               fontSize: "clamp(2.2rem, 5vw, 3.2rem)",
               color: "#FFFFFF",
               fontWeight: 700,
-              fontStyle: "italic",
+              fontStyle: "normal",
               letterSpacing: "0em",
               margin: "10px 0 30px 0",
               textShadow: "0 0 5.7px #FAFF00",
