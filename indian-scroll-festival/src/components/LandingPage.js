@@ -48,8 +48,8 @@ const LandingPage = () => {
         alt="Indian Scroll Festival 2026"
         style={{
           position: "absolute",
-          top: "24px",
-          left: "24px",
+          top: "72px",
+          left: "72px",
           width: "100px",
           height: "180px",
           objectFit: "contain",
