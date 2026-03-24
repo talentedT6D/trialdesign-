@@ -59,47 +59,50 @@ const PaymentPage = () => {
           }}
         >
 
-          {/* Back button */}
-          <button
-            onClick={() => navigate("/submission", { state: { name, email } })}
-            className="bg-transparent border-none cursor-pointer p-0"
-            style={{ position: "relative", zIndex: 2, marginBottom: "0px" }}
-            aria-label="Go back"
-          >
-            <svg
-              width="32"
-              height="32"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#cc2200"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-              <polyline points="14 16 10 12 14 8" />
-            </svg>
-          </button>
+          {/* Back button + Title wrapper */}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
+            <div style={{ display: "flex", flexDirection: "column", width: "fit-content" }}>
+              <button
+                onClick={() => navigate("/submission", { state: { name, email } })}
+                className="bg-transparent border-none cursor-pointer p-0"
+                style={{ position: "relative", zIndex: 2, alignSelf: "flex-start", marginBottom: "4px" }}
+                aria-label="Go back"
+              >
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#cc2200"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                  <polyline points="14 16 10 12 14 8" />
+                </svg>
+              </button>
 
-          {/* Title */}
-          <h2
-            className="text-center"
-            style={{
-              fontFamily: "'obviously-condensed', 'Bebas Neue', sans-serif",
-              fontSize: "clamp(3rem, 10vw, 5rem)",
-              color: "#FFFFFF",
-              fontWeight: 500,
-              fontStyle: "normal",
-              letterSpacing: "0em",
-              lineHeight: "0.95",
-              margin: "10px 0 30px 0",
-              textShadow: "none",
-              position: "relative",
-              zIndex: 2,
-            }}
-          >
+              {/* Title */}
+              <h2
+                style={{
+                  fontFamily: "'obviously-condensed', 'Bebas Neue', sans-serif",
+                  fontSize: "clamp(3rem, 10vw, 5rem)",
+                  color: "#FFFFFF",
+                  fontWeight: 500,
+                  fontStyle: "normal",
+                  letterSpacing: "0em",
+                  lineHeight: "0.95",
+                  margin: "0 0 30px 0",
+                  textShadow: "none",
+                  position: "relative",
+                  zIndex: 2,
+                }}
+              >
             SUBMISSION FORM
-          </h2>
+              </h2>
+            </div>
+          </div>
 
           {/* Custom Category Dropdown */}
           <div style={{ position: "relative", zIndex: 3 }}>
