@@ -105,7 +105,7 @@ const LandingPage = () => {
               fontFamily: "'obviously-condensed', 'Bebas Neue', sans-serif",
               fontSize: "clamp(3rem, 10vw, 5rem)",
               color: "#FFFFFF",
-              fontWeight: 700,
+              fontWeight: 500,
               fontStyle: "normal",
               letterSpacing: "0em",
               lineHeight: "0.95",
