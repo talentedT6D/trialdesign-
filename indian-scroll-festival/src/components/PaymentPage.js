@@ -50,7 +50,7 @@ const PaymentPage = () => {
             background: "rgba(0, 0, 0, 0.5)",
             borderRadius: "24px",
             padding: "30px 32px 40px",
-            width: "590px",
+            width: "570px",
             minHeight: "600px",
             maxWidth: "90vw",
             position: "relative",
@@ -196,7 +196,7 @@ const PaymentPage = () => {
           className="cursor-pointer border-none"
           style={{
             marginTop: "28px",
-            width: "590px",
+            width: "570px",
             maxWidth: "90vw",
             height: "69px",
             padding: "0 40px",
