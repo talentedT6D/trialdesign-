@@ -87,7 +87,7 @@ const PaymentPage = () => {
               <h2
                 style={{
                   fontFamily: "'obviously-condensed', 'Bebas Neue', sans-serif",
-                  fontSize: "112px",
+                  fontSize: "100px",
                   color: "#FFFFFF",
                   fontWeight: 500,
                   fontStyle: "normal",
