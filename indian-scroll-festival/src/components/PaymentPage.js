@@ -50,7 +50,7 @@ const PaymentPage = () => {
             background: "rgba(0, 0, 0, 0.5)",
             borderRadius: "24px",
             padding: "30px 32px 40px",
-            width: "570px",
+            width: "550px",
             minHeight: "600px",
             maxWidth: "90vw",
             position: "relative",
@@ -63,7 +63,7 @@ const PaymentPage = () => {
           <button
             onClick={() => navigate("/submission", { state: { name, email } })}
             className="bg-transparent border-none cursor-pointer p-0"
-            style={{ position: "absolute", top: "20px", left: "20px", zIndex: 2 }}
+            style={{ position: "relative", zIndex: 2, marginBottom: "0px" }}
             aria-label="Go back"
           >
             <svg
@@ -196,7 +196,7 @@ const PaymentPage = () => {
           className="cursor-pointer border-none"
           style={{
             marginTop: "28px",
-            width: "570px",
+            width: "550px",
             maxWidth: "90vw",
             height: "69px",
             padding: "0 40px",
