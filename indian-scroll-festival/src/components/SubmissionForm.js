@@ -92,7 +92,7 @@ const SubmissionForm = () => {
         {/* Dark maroon card */}
         <div
           style={{
-            background: "linear-gradient(180deg, #3d0a0a 0%, #381010 40%, #2e0e0e 70%, #2a0c0c 100%)",
+            background: "rgba(0, 0, 0, 0.5)",
             borderRadius: "24px",
             padding: "30px 32px 40px",
             width: "639px",
