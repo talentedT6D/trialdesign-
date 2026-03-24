@@ -104,7 +104,7 @@ const LandingPage = () => {
               <h2
                 style={{
               fontFamily: "'obviously-condensed', 'Bebas Neue', sans-serif",
-              fontSize: "clamp(3rem, 10vw, 5rem)",
+              fontSize: "112px",
               color: "#FFFFFF",
               fontWeight: 500,
               fontStyle: "normal",
