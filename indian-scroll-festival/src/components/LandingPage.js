@@ -29,7 +29,7 @@ const LandingPage = () => {
     color: "#fff",
     fontSize: "1.1rem",
     fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
-    textAlign: "center",
+    textAlign: "left",
     letterSpacing: "0.05em",
     outline: "none",
     boxSizing: "border-box",
@@ -68,7 +68,7 @@ const LandingPage = () => {
             background: "rgba(0, 0, 0, 0.5)",
             borderRadius: "24px",
             padding: "30px 32px 40px",
-            width: "550px",
+            width: "535px",
             minHeight: "600px",
             maxWidth: "90vw",
             position: "relative",
@@ -171,7 +171,7 @@ const LandingPage = () => {
           className="cursor-pointer border-none"
           style={{
             marginTop: "28px",
-            width: "550px",
+            width: "535px",
             maxWidth: "90vw",
             height: "69px",
             padding: "0",
