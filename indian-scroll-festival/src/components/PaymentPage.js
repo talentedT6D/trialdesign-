@@ -91,19 +91,116 @@ const CategoryCard = ({ cat, category, setCategory }) => (
   </button>
 );
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
 const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { name, email, contact, howHeard, submissionTitle } = location.state || {};
   const [category, setCategory] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const categories = ["Comedy", "Edits", "AI", "Food", "Emotional"];
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!category) return;
-    navigate("/confirmation", {
-      state: { name, email, submissionTitle, category },
-    });
+    if (loading) return; // prevent double-click
+
+    setLoading(true);
+    setError("");
+
+    try {
+      // Step 1: Create Razorpay order via backend
+      const orderRes = await fetch(`${API_URL}/api/create-order`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+      const orderData = await orderRes.json();
+
+      if (!orderData.success) {
+        setError("Failed to initiate payment. Please try again.");
+        setLoading(false);
+        return;
+      }
+
+      // Step 2: Open Razorpay Checkout
+      const options = {
+        key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: "Indian Scroll Festival",
+        description: "Submission Fee - ₹499",
+        order_id: orderData.order_id,
+        prefill: {
+          name: name,
+          email: email,
+          contact: contact,
+        },
+        theme: {
+          color: "#cc2200",
+        },
+        handler: async function (response) {
+          // Step 3: Verify payment + save to Supabase via backend
+          try {
+            const verifyRes = await fetch(`${API_URL}/api/verify-payment`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                formData: {
+                  name,
+                  email,
+                  contact,
+                  howHeard,
+                  submissionTitle,
+                  category,
+                },
+              }),
+            });
+
+            const verifyData = await verifyRes.json();
+
+            if (verifyData.success) {
+              navigate("/confirmation", {
+                state: {
+                  name,
+                  email,
+                  submissionTitle,
+                  category,
+                  paymentId: verifyData.payment_id,
+                },
+              });
+            } else {
+              setError("Payment verification failed. Contact support if amount was deducted.");
+              setLoading(false);
+            }
+          } catch {
+            setError("Verification error. Contact support if amount was deducted.");
+            setLoading(false);
+          }
+        },
+        modal: {
+          ondismiss: function () {
+            setLoading(false);
+          },
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.on("payment.failed", function (response) {
+        setError(
+          response.error?.description || "Payment failed. Please try again."
+        );
+        setLoading(false);
+      });
+      rzp.open();
+    } catch {
+      setError("Something went wrong. Please try again.");
+      setLoading(false);
+    }
   };
 
   return (
@@ -242,12 +339,35 @@ const PaymentPage = () => {
           </div>
         </div>
 
+        {/* Error message */}
+        {error && (
+          <div
+            style={{
+              marginTop: "16px",
+              padding: "12px 20px",
+              background: "rgba(0,0,0,0.5)",
+              borderRadius: "12px",
+              color: "#ff6b6b",
+              textAlign: "center",
+              fontSize: "0.95rem",
+              fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
+              letterSpacing: "0.03em",
+              width: "535px",
+              maxWidth: "90vw",
+              boxSizing: "border-box",
+            }}
+          >
+            {error}
+          </div>
+        )}
+
         {/* PAY 499 AND SUBMIT button */}
         <button
           onClick={handleSubmit}
+          disabled={loading}
           className="cursor-pointer border-none"
           style={{
-            marginTop: "28px",
+            marginTop: error ? "12px" : "28px",
             width: "535px",
             maxWidth: "90vw",
             height: "69px",
@@ -257,10 +377,14 @@ const PaymentPage = () => {
             alignItems: "center",
             justifyContent: "center",
             borderRadius: "50px",
-            background: category
-              ? "linear-gradient(180deg, #ffd700 0%, #e6c200 100%)"
-              : "rgba(200,180,160,0.4)",
-            color: category ? "#000000" : "rgba(80,50,40,0.6)",
+            background: loading
+              ? "rgba(200,180,160,0.6)"
+              : category
+                ? "linear-gradient(180deg, #ffd700 0%, #e6c200 100%)"
+                : "rgba(200,180,160,0.4)",
+            color: loading
+              ? "rgba(80,50,40,0.8)"
+              : category ? "#000000" : "rgba(80,50,40,0.6)",
             fontSize: "clamp(20px, 2.8vw, 30px)",
             overflow: "hidden",
             fontFamily: "'obviously-wide', 'Bebas Neue', sans-serif",
@@ -268,13 +392,17 @@ const PaymentPage = () => {
             letterSpacing: "0.03em",
             lineHeight: "1",
             textAlign: "center",
-            boxShadow: category
+            boxShadow: !loading && category
               ? "0 0 30px rgba(255,215,0,0.6), 0 0 60px rgba(255,215,0,0.3), 0 4px 80px rgba(255,200,0,0.4)"
               : "none",
             border: "none",
+            opacity: loading ? 0.7 : 1,
+            cursor: loading ? "not-allowed" : "pointer",
           }}
         >
-          <span style={{ marginTop: "-4px" }}>PAY 499 AND SUBMIT</span>
+          <span style={{ marginTop: "-4px" }}>
+            {loading ? "PROCESSING..." : "PAY 499 AND SUBMIT"}
+          </span>
         </button>
       </div>
 
