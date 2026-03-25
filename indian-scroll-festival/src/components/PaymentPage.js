@@ -94,7 +94,7 @@ const CategoryCard = ({ cat, category, setCategory }) => (
 const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { name, email, submissionTitle } = location.state || {};
+  const { name, email, contact, howHeard, submissionTitle } = location.state || {};
   const [category, setCategory] = useState("");
 
   const categories = ["Comedy", "Edits", "AI", "Food", "Emotional"];
@@ -151,7 +151,7 @@ const PaymentPage = () => {
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
             <div style={{ display: "flex", flexDirection: "column", width: "fit-content" }}>
               <button
-                onClick={() => navigate("/submission", { state: { name, email } })}
+                onClick={() => navigate("/submission", { state: { name, email, contact, howHeard, submissionTitle } })}
                 className="bg-transparent border-none cursor-pointer p-0"
                 style={{ position: "relative", zIndex: 2, alignSelf: "flex-start", marginBottom: "4px" }}
                 aria-label="Go back"

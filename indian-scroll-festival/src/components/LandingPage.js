@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [contact, setContact] = useState("");
-  const [howHeard, setHowHeard] = useState("");
+  const location = useLocation();
+  const prev = location.state || {};
+  const [name, setName] = useState(prev.name || "");
+  const [email, setEmail] = useState(prev.email || "");
+  const [contact, setContact] = useState(prev.contact || "");
+  const [howHeard, setHowHeard] = useState(prev.howHeard || "");
   const [error, setError] = useState("");
 
   const handleNext = () => {

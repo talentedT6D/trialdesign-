@@ -7,8 +7,10 @@ const SubmissionForm = () => {
   const userInfo = location.state || {};
   const [name] = useState(userInfo.name || "");
   const [email] = useState(userInfo.email || "");
+  const [contact] = useState(userInfo.contact || "");
+  const [howHeard] = useState(userInfo.howHeard || "");
   const [file, setFile] = useState(null);
-  const [submissionTitle, setSubmissionTitle] = useState("");
+  const [submissionTitle, setSubmissionTitle] = useState(userInfo.submissionTitle || "");
   const [error, setError] = useState("");
   const [dragging, setDragging] = useState(false);
   const fileInputRef = useRef(null);
@@ -43,7 +45,7 @@ const SubmissionForm = () => {
       return;
     }
     navigate("/payment", {
-      state: { name, email, submissionTitle },
+      state: { name, email, contact, howHeard, submissionTitle },
     });
   };
 
@@ -108,7 +110,7 @@ const SubmissionForm = () => {
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
             <div style={{ display: "flex", flexDirection: "column", width: "fit-content" }}>
               <button
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/", { state: { name, email, contact, howHeard } })}
                 className="bg-transparent border-none cursor-pointer p-0"
                 style={{ position: "relative", zIndex: 2, alignSelf: "flex-start", marginBottom: "4px" }}
                 aria-label="Go back"
