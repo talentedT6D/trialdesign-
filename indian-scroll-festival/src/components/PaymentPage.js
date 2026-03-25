@@ -98,8 +98,6 @@ const CategoryCard = ({ cat, category, setCategory }) => (
   </button>
 );
 
-const API_URL = process.env.REACT_APP_API_URL || "";
-
 const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -118,43 +116,31 @@ const PaymentPage = () => {
     setLoading(true);
     setError("");
 
-    try {
-      // Step 1: Create Razorpay order via backend
-      const orderRes = await fetch(`${API_URL}/api/create-order`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
-      const orderData = await orderRes.json();
+    const options = {
+      key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+      amount: 100, // ₹1 for testing (change to 49900 for ₹499 in production)
+      currency: "INR",
+      name: "Indian Scroll Festival",
+      description: "Submission Fee",
+      prefill: {
+        name: name || "",
+        email: email || "",
+        contact: contact || "",
+      },
+      theme: {
+        color: "#cc2200",
+      },
+      handler: async function (response) {
+        // Payment successful — now upload video + save to Supabase
+        try {
+          const paymentId = response.razorpay_payment_id;
 
-      if (!orderData.success) {
-        setError("Failed to initiate payment. Please try again.");
-        setLoading(false);
-        return;
-      }
-
-      // Step 2: Open Razorpay Checkout
-      const options = {
-        key: process.env.REACT_APP_RAZORPAY_KEY_ID,
-        amount: orderData.amount,
-        currency: orderData.currency,
-        name: "Indian Scroll Festival",
-        description: "Submission Fee",
-        order_id: orderData.order_id,
-        prefill: {
-          name: name,
-          email: email,
-          contact: contact,
-        },
-        theme: {
-          color: "#cc2200",
-        },
-        handler: async function (response) {
-          // Step 3: Upload video to Supabase Storage
+          // Step 1: Upload video to Supabase Storage
           let videoUrl = null;
           const file = getFile();
           if (file) {
             const fileExt = file.name.split(".").pop();
-            const fileName = `${response.razorpay_payment_id}.${fileExt}`;
+            const fileName = `${paymentId}.${fileExt}`;
             const { data: uploadData, error: uploadError } = await supabase.storage
               .from("submissions")
               .upload(fileName, file, {
@@ -163,7 +149,7 @@ const PaymentPage = () => {
               });
 
             if (uploadError) {
-              setError("Video upload failed. Contact support — payment was successful.");
+              setError("Video upload failed. Contact support with payment ID: " + paymentId);
               setLoading(false);
               return;
             }
@@ -174,66 +160,59 @@ const PaymentPage = () => {
             videoUrl = urlData.publicUrl;
           }
 
-          // Step 4: Verify payment + save to Supabase via backend
-          try {
-            const verifyRes = await fetch(`${API_URL}/api/verify-payment`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature,
-                formData: {
-                  name,
-                  email,
-                  contact,
-                  howHeard,
-                  submissionTitle,
-                  category,
-                  videoUrl,
-                },
-              }),
-            });
+          // Step 2: Insert form data into Supabase
+          const { error: insertError } = await supabase.from("submissions").insert({
+            name: name || "",
+            email: email || "",
+            contact: contact || "",
+            how_heard: howHeard || null,
+            submission_title: submissionTitle || "",
+            category,
+            video_url: videoUrl,
+            payment_id: paymentId,
+            order_id: response.razorpay_order_id || `direct_${Date.now()}`,
+            amount: 1, // Change to 499 for production
+            status: "confirmed",
+          });
 
-            const verifyData = await verifyRes.json();
-
-            if (verifyData.success) {
-              clearFile();
-              navigate("/confirmation", {
-                state: {
-                  name,
-                  email,
-                  submissionTitle,
-                  category,
-                  paymentId: verifyData.payment_id,
-                },
-              });
-            } else {
-              setError("Payment verification failed. Contact support if amount was deducted.");
-              setLoading(false);
-            }
-          } catch {
-            setError("Verification error. Contact support if amount was deducted.");
+          if (insertError) {
+            setError("Save failed. Contact support with payment ID: " + paymentId);
             setLoading(false);
+            return;
           }
-        },
-        modal: {
-          ondismiss: function () {
-            setLoading(false);
-          },
-        },
-      };
 
+          // Step 3: Success — go to confirmation
+          clearFile();
+          navigate("/confirmation", {
+            state: {
+              name,
+              email,
+              submissionTitle,
+              category,
+              paymentId,
+            },
+          });
+        } catch {
+          setError("Something went wrong after payment. Contact support.");
+          setLoading(false);
+        }
+      },
+      modal: {
+        ondismiss: function () {
+          setLoading(false);
+        },
+      },
+    };
+
+    try {
       const rzp = new window.Razorpay(options);
-      rzp.on("payment.failed", function (response) {
-        setError(
-          response.error?.description || "Payment failed. Please try again."
-        );
+      rzp.on("payment.failed", function (resp) {
+        setError(resp.error?.description || "Payment failed. Please try again.");
         setLoading(false);
       });
       rzp.open();
     } catch {
-      setError("Something went wrong. Please try again.");
+      setError("Could not open payment. Please try again.");
       setLoading(false);
     }
   };
