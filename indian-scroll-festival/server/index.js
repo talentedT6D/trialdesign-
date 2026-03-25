@@ -95,6 +95,7 @@ app.post("/api/verify-payment", async (req, res) => {
       how_heard: formData.howHeard || null,
       submission_title: formData.submissionTitle,
       category: formData.category,
+      video_url: formData.videoUrl || null,
       payment_id: razorpay_payment_id,
       order_id: razorpay_order_id,
       amount: 499,

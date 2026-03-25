@@ -1,15 +1,17 @@
 import React, { useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useFileContext } from "../context/FileContext";
 
 const SubmissionForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { setFile: setContextFile, getFile } = useFileContext();
   const userInfo = location.state || {};
   const [name] = useState(userInfo.name || "");
   const [email] = useState(userInfo.email || "");
   const [contact] = useState(userInfo.contact || "");
   const [howHeard] = useState(userInfo.howHeard || "");
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState(getFile() || null);
   const [submissionTitle, setSubmissionTitle] = useState(userInfo.submissionTitle || "");
   const [error, setError] = useState("");
   const [dragging, setDragging] = useState(false);
@@ -19,9 +21,11 @@ const SubmissionForm = () => {
     const selectedFile = e.target.files[0];
     if (selectedFile && selectedFile.size <= 200 * 1024 * 1024) {
       setFile(selectedFile);
+      setContextFile(selectedFile);
       setError("");
     } else {
       setFile(null);
+      setContextFile(null);
       setError("File size must be under 200MB.");
     }
   };
@@ -32,9 +36,11 @@ const SubmissionForm = () => {
     const droppedFile = e.dataTransfer.files[0];
     if (droppedFile && droppedFile.size <= 200 * 1024 * 1024) {
       setFile(droppedFile);
+      setContextFile(droppedFile);
       setError("");
     } else {
       setFile(null);
+      setContextFile(null);
       setError("File size must be under 200MB.");
     }
   };

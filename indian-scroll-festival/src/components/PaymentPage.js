@@ -1,5 +1,12 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { createClient } from "@supabase/supabase-js";
+import { useFileContext } from "../context/FileContext";
+
+const supabase = createClient(
+  process.env.REACT_APP_SUPABASE_URL,
+  process.env.REACT_APP_SUPABASE_ANON_KEY
+);
 
 const categoryIcons = {
   Comedy: (
@@ -96,6 +103,7 @@ const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { getFile, clearFile } = useFileContext();
   const { name, email, contact, howHeard, submissionTitle } = location.state || {};
   const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(false);
@@ -141,7 +149,32 @@ const PaymentPage = () => {
           color: "#cc2200",
         },
         handler: async function (response) {
-          // Step 3: Verify payment + save to Supabase via backend
+          // Step 3: Upload video to Supabase Storage
+          let videoUrl = null;
+          const file = getFile();
+          if (file) {
+            const fileExt = file.name.split(".").pop();
+            const fileName = `${response.razorpay_payment_id}.${fileExt}`;
+            const { data: uploadData, error: uploadError } = await supabase.storage
+              .from("submissions")
+              .upload(fileName, file, {
+                cacheControl: "3600",
+                upsert: false,
+              });
+
+            if (uploadError) {
+              setError("Video upload failed. Contact support — payment was successful.");
+              setLoading(false);
+              return;
+            }
+
+            const { data: urlData } = supabase.storage
+              .from("submissions")
+              .getPublicUrl(uploadData.path);
+            videoUrl = urlData.publicUrl;
+          }
+
+          // Step 4: Verify payment + save to Supabase via backend
           try {
             const verifyRes = await fetch(`${API_URL}/api/verify-payment`, {
               method: "POST",
@@ -157,6 +190,7 @@ const PaymentPage = () => {
                   howHeard,
                   submissionTitle,
                   category,
+                  videoUrl,
                 },
               }),
             });
@@ -164,6 +198,7 @@ const PaymentPage = () => {
             const verifyData = await verifyRes.json();
 
             if (verifyData.success) {
+              clearFile();
               navigate("/confirmation", {
                 state: {
                   name,
