@@ -63,7 +63,7 @@ const CategoryCard = ({ cat, category, setCategory }) => (
   <button
     onClick={() => setCategory(cat)}
     style={{
-      width: "140px",
+      flex: 1,
       padding: "18px 12px",
       background: category === cat ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.3)",
       border: category === cat ? "2px solid rgba(255,255,255,0.5)" : "1px solid rgba(255,255,255,0.15)",
@@ -74,6 +74,7 @@ const CategoryCard = ({ cat, category, setCategory }) => (
       alignItems: "center",
       gap: "8px",
       transition: "all 0.2s ease",
+      boxSizing: "border-box",
     }}
   >
     <span
@@ -223,7 +224,7 @@ const PaymentPage = () => {
             ))}
           </div>
 
-          {/* Category Cards Grid - Row 2: Food, Emotional */}
+          {/* Category Cards Grid - Row 2: Food, Emotional (centered, matching row 1 card widths) */}
           <div
             style={{
               display: "flex",
@@ -231,6 +232,8 @@ const PaymentPage = () => {
               gap: "16px",
               position: "relative",
               zIndex: 2,
+              width: "calc((100% - 32px) * 2 / 3 + 16px)",
+              margin: "0 auto",
             }}
           >
             {categories.slice(3).map((cat) => (
@@ -258,7 +261,8 @@ const PaymentPage = () => {
               ? "linear-gradient(180deg, #ffd700 0%, #e6c200 100%)"
               : "rgba(200,180,160,0.4)",
             color: category ? "#000000" : "rgba(80,50,40,0.6)",
-            fontSize: "clamp(24px, 3.5vw, 36px)",
+            fontSize: "clamp(20px, 2.8vw, 30px)",
+            overflow: "hidden",
             fontFamily: "'obviously-wide', 'Bebas Neue', sans-serif",
             fontWeight: 900,
             letterSpacing: "0.03em",
