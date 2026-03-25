@@ -3,7 +3,8 @@ const cors = require("cors");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const { createClient } = require("@supabase/supabase-js");
-require("dotenv").config();
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, ".env") });
 
 const app = express();
 app.use(cors());

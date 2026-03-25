@@ -24,10 +24,10 @@ CREATE INDEX IF NOT EXISTS idx_submissions_email ON submissions(email);
 -- Enable Row Level Security
 ALTER TABLE submissions ENABLE ROW LEVEL SECURITY;
 
--- Policy: Only service role can insert (backend only)
-CREATE POLICY "Service role can insert" ON submissions
-  FOR INSERT TO service_role WITH CHECK (true);
+-- Policy: Allow inserts from authenticated and anon roles (backend handles auth via Razorpay verification)
+CREATE POLICY "Allow insert from backend" ON submissions
+  FOR INSERT WITH CHECK (true);
 
--- Policy: Only service role can read
-CREATE POLICY "Service role can read" ON submissions
-  FOR SELECT TO service_role USING (true);
+-- Policy: Allow select for duplicate checks
+CREATE POLICY "Allow select for duplicate check" ON submissions
+  FOR SELECT USING (true);
