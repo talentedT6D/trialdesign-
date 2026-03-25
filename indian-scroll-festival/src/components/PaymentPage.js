@@ -1,14 +1,102 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
+const categoryIcons = {
+  Comedy: (
+    <svg width="48" height="48" viewBox="0 0 64 64" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      {/* Happy mask */}
+      <circle cx="22" cy="30" r="16" />
+      <circle cx="17" cy="26" r="2" fill="rgba(255,255,255,0.85)" />
+      <circle cx="27" cy="26" r="2" fill="rgba(255,255,255,0.85)" />
+      <path d="M15 34 Q22 42 29 34" />
+      {/* Sad mask */}
+      <circle cx="42" cy="30" r="16" />
+      <circle cx="37" cy="26" r="2" fill="rgba(255,255,255,0.85)" />
+      <circle cx="47" cy="26" r="2" fill="rgba(255,255,255,0.85)" />
+      <path d="M35 38 Q42 32 49 38" />
+    </svg>
+  ),
+  Edits: (
+    <svg width="48" height="48" viewBox="0 0 64 64" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      {/* Scissors */}
+      <circle cx="20" cy="48" r="6" />
+      <circle cx="44" cy="48" r="6" />
+      <line x1="24" y1="44" x2="40" y2="16" />
+      <line x1="40" y1="44" x2="24" y2="16" />
+    </svg>
+  ),
+  AI: (
+    <svg width="48" height="48" viewBox="0 0 64 64" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      {/* Image/landscape icon with sparkle */}
+      <rect x="8" y="12" width="48" height="40" rx="4" />
+      <circle cx="22" cy="28" r="5" />
+      <path d="M8 44 L24 32 L36 40 L48 28 L56 36" />
+      {/* Sparkle */}
+      <path d="M46 14 L48 8 L50 14 L56 16 L50 18 L48 24 L46 18 L40 16 Z" fill="rgba(255,255,255,0.85)" stroke="none" />
+    </svg>
+  ),
+  Food: (
+    <svg width="48" height="48" viewBox="0 0 64 64" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      {/* Plate/tray */}
+      <rect x="10" y="30" width="44" height="6" rx="2" />
+      <rect x="14" y="36" width="36" height="10" rx="2" />
+      {/* Sushi/food items */}
+      <ellipse cx="24" cy="26" rx="6" ry="5" />
+      <ellipse cx="38" cy="26" rx="6" ry="5" />
+      <line x1="24" y1="21" x2="24" y2="26" />
+      <line x1="38" y1="21" x2="38" y2="26" />
+    </svg>
+  ),
+  Emotional: (
+    <svg width="48" height="48" viewBox="0 0 64 64" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      {/* Two people hugging */}
+      <circle cx="24" cy="16" r="7" />
+      <circle cx="40" cy="16" r="7" />
+      <path d="M12 52 L12 36 Q12 28 24 28 Q30 28 32 32" />
+      <path d="M52 52 L52 36 Q52 28 40 28 Q34 28 32 32" />
+      <path d="M20 36 Q32 44 44 36" />
+    </svg>
+  ),
+};
+
+const CategoryCard = ({ cat, category, setCategory }) => (
+  <button
+    onClick={() => setCategory(cat)}
+    style={{
+      width: "140px",
+      padding: "18px 12px",
+      background: category === cat ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.3)",
+      border: category === cat ? "2px solid rgba(255,255,255,0.5)" : "1px solid rgba(255,255,255,0.15)",
+      borderRadius: "16px",
+      cursor: "pointer",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      gap: "8px",
+      transition: "all 0.2s ease",
+    }}
+  >
+    <span
+      style={{
+        fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
+        fontSize: "1.05rem",
+        color: "#fff",
+        letterSpacing: "0.04em",
+      }}
+    >
+      {cat}
+    </span>
+    {categoryIcons[cat]}
+  </button>
+);
+
 const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { name, email, submissionTitle } = location.state || {};
   const [category, setCategory] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
 
-  const categories = ["Comedy", "Edits", "Emotional", "Food", "AI"];
+  const categories = ["Comedy", "Edits", "AI", "Food", "Emotional"];
 
   const handleSubmit = () => {
     if (!category) return;
@@ -51,7 +139,6 @@ const PaymentPage = () => {
             borderRadius: "24px",
             padding: "30px 32px 40px",
             width: "535px",
-            minHeight: "600px",
             maxWidth: "90vw",
             position: "relative",
             boxShadow: "0 8px 40px rgba(0,0,0,0.5)",
@@ -93,7 +180,7 @@ const PaymentPage = () => {
                   fontStyle: "normal",
                   letterSpacing: "0em",
                   lineHeight: "0.95",
-                  margin: "0 0 30px 0",
+                  margin: "0 0 24px 0",
                   textShadow: "none",
                   position: "relative",
                   zIndex: 2,
@@ -104,92 +191,51 @@ const PaymentPage = () => {
             </div>
           </div>
 
-          {/* Custom Category Dropdown */}
-          <div style={{ position: "relative", zIndex: 3 }}>
-            {/* Dropdown trigger */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              style={{
-                width: "100%",
-                padding: "20px 24px",
-                background: "rgba(0,0,0,0.65)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: isOpen ? "16px 16px 0 0" : "16px",
-                color: category ? "#fff" : "rgba(255,255,255,0.7)",
-                fontSize: "1.1rem",
-                fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
-                textAlign: "left",
-                letterSpacing: "0.05em",
-                outline: "none",
-                boxSizing: "border-box",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                position: "relative",
-              }}
-            >
-              <span>{category || "Category"}</span>
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#fff"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                style={{
-                  position: "absolute",
-                  right: "20px",
-                  transition: "transform 0.2s",
-                  transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-                }}
-              >
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </button>
+          {/* Subtitle */}
+          <p
+            style={{
+              fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
+              fontSize: "1.15rem",
+              color: "rgba(255,255,255,0.85)",
+              textAlign: "center",
+              letterSpacing: "0.04em",
+              margin: "0 0 24px 0",
+              position: "relative",
+              zIndex: 2,
+            }}
+          >
+            Pick From A Category Below
+          </p>
 
-            {/* Dropdown options */}
-            {isOpen && (
-              <div
-                style={{
-                  width: "100%",
-                  background: "rgba(0,0,0,0.85)",
-                  borderRadius: "0 0 16px 16px",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  borderTop: "none",
-                  overflow: "hidden",
-                }}
-              >
-                {categories.map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => {
-                      setCategory(cat);
-                      setIsOpen(false);
-                    }}
-                    style={{
-                      width: "100%",
-                      padding: "14px 24px",
-                      background: "transparent",
-                      border: "none",
-                      color: "rgba(255,255,255,0.7)",
-                      fontSize: "1.1rem",
-                      fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
-                      textAlign: "center",
-                      letterSpacing: "0.05em",
-                      cursor: "pointer",
-                      borderBottom: "1px solid rgba(255,255,255,0.05)",
-                    }}
-                    onMouseEnter={(e) => (e.target.style.background = "rgba(255,255,255,0.05)")}
-                    onMouseLeave={(e) => (e.target.style.background = "transparent")}
-                  >
-                    {cat}
-                  </button>
-                ))}
-              </div>
-            )}
+          {/* Category Cards Grid - Row 1: Comedy, Edits, AI */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: "16px",
+              position: "relative",
+              zIndex: 2,
+              marginBottom: "16px",
+            }}
+          >
+            {categories.slice(0, 3).map((cat) => (
+              <CategoryCard key={cat} cat={cat} category={category} setCategory={setCategory} />
+            ))}
+          </div>
+
+          {/* Category Cards Grid - Row 2: Food, Emotional */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: "16px",
+              position: "relative",
+              zIndex: 2,
+            }}
+          >
+            {categories.slice(3).map((cat) => (
+              <CategoryCard key={cat} cat={cat} category={category} setCategory={setCategory} />
+            ))}
           </div>
         </div>
 
@@ -246,14 +292,6 @@ const PaymentPage = () => {
           </svg>
         </button>
       </div>
-
-      {/* Placeholder styles */}
-      <style>{`
-        input::placeholder {
-          color: #FFFFFF;
-          text-shadow: 0 0 12.8px #FF0504;
-        }
-      `}</style>
     </div>
   );
 };
