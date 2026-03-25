@@ -98,7 +98,7 @@ const CategoryCard = ({ cat, category, setCategory }) => (
   </button>
 );
 
-// const API_URL = process.env.REACT_APP_API_URL || ""; // Re-enable with Razorpay
+const API_URL = process.env.REACT_APP_API_URL || "";
 
 const PaymentPage = () => {
   const location = useLocation();
@@ -119,66 +119,119 @@ const PaymentPage = () => {
     setError("");
 
     try {
-      // TEST MODE: Skip Razorpay, directly test Supabase
-      const testPaymentId = `test_${Date.now()}`;
-
-      // Step 1: Upload video to Supabase Storage
-      let videoUrl = null;
-      const file = getFile();
-      if (file) {
-        const fileExt = file.name.split(".").pop();
-        const fileName = `${testPaymentId}.${fileExt}`;
-        const { data: uploadData, error: uploadError } = await supabase.storage
-          .from("submissions")
-          .upload(fileName, file, {
-            cacheControl: "3600",
-            upsert: false,
-          });
-
-        if (uploadError) {
-          setError("Video upload failed: " + uploadError.message);
-          setLoading(false);
-          return;
-        }
-
-        const { data: urlData } = supabase.storage
-          .from("submissions")
-          .getPublicUrl(uploadData.path);
-        videoUrl = urlData.publicUrl;
-      }
-
-      // Step 2: Insert directly into Supabase
-      const { error: insertError } = await supabase.from("submissions").insert({
-        name: name || "Test User",
-        email: email || "test@test.com",
-        contact: contact || "0000000000",
-        how_heard: howHeard || null,
-        submission_title: submissionTitle || "Test Submission",
-        category,
-        video_url: videoUrl,
-        payment_id: testPaymentId,
-        order_id: `order_test_${Date.now()}`,
-        amount: 499,
-        status: "test",
+      // Step 1: Create Razorpay order via backend
+      const orderRes = await fetch(`${API_URL}/api/create-order`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
       });
+      const orderData = await orderRes.json();
 
-      if (insertError) {
-        setError("Supabase insert failed: " + insertError.message);
+      if (!orderData.success) {
+        setError("Failed to initiate payment. Please try again.");
         setLoading(false);
         return;
       }
 
-      // Success!
-      clearFile();
-      navigate("/confirmation", {
-        state: {
-          name,
-          email,
-          submissionTitle,
-          category,
-          paymentId: testPaymentId,
+      // Step 2: Open Razorpay Checkout
+      const options = {
+        key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: "Indian Scroll Festival",
+        description: "Submission Fee",
+        order_id: orderData.order_id,
+        prefill: {
+          name: name,
+          email: email,
+          contact: contact,
         },
+        theme: {
+          color: "#cc2200",
+        },
+        handler: async function (response) {
+          // Step 3: Upload video to Supabase Storage
+          let videoUrl = null;
+          const file = getFile();
+          if (file) {
+            const fileExt = file.name.split(".").pop();
+            const fileName = `${response.razorpay_payment_id}.${fileExt}`;
+            const { data: uploadData, error: uploadError } = await supabase.storage
+              .from("submissions")
+              .upload(fileName, file, {
+                cacheControl: "3600",
+                upsert: false,
+              });
+
+            if (uploadError) {
+              setError("Video upload failed. Contact support — payment was successful.");
+              setLoading(false);
+              return;
+            }
+
+            const { data: urlData } = supabase.storage
+              .from("submissions")
+              .getPublicUrl(uploadData.path);
+            videoUrl = urlData.publicUrl;
+          }
+
+          // Step 4: Verify payment + save to Supabase via backend
+          try {
+            const verifyRes = await fetch(`${API_URL}/api/verify-payment`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                formData: {
+                  name,
+                  email,
+                  contact,
+                  howHeard,
+                  submissionTitle,
+                  category,
+                  videoUrl,
+                },
+              }),
+            });
+
+            const verifyData = await verifyRes.json();
+
+            if (verifyData.success) {
+              clearFile();
+              navigate("/confirmation", {
+                state: {
+                  name,
+                  email,
+                  submissionTitle,
+                  category,
+                  paymentId: verifyData.payment_id,
+                },
+              });
+            } else {
+              setError("Payment verification failed. Contact support if amount was deducted.");
+              setLoading(false);
+            }
+          } catch {
+            setError("Verification error. Contact support if amount was deducted.");
+            setLoading(false);
+          }
+        },
+        modal: {
+          ondismiss: function () {
+            setLoading(false);
+          },
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.on("payment.failed", function (response) {
+        setError(
+          response.error?.description || "Payment failed. Please try again."
+        );
+        setLoading(false);
       });
+      rzp.open();
     } catch {
       setError("Something went wrong. Please try again.");
       setLoading(false);

@@ -29,7 +29,7 @@ const supabase = createClient(
 app.post("/api/create-order", async (req, res) => {
   try {
     const options = {
-      amount: 49900, // ₹499 in paise
+      amount: 100, // ₹1 for testing (change to 49900 for ₹499 in production)
       currency: "INR",
       receipt: `isf_${Date.now()}`,
     };

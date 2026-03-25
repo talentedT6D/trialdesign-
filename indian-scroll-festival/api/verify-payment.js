@@ -67,7 +67,7 @@ module.exports = async (req, res) => {
       video_url: formData.videoUrl || null,
       payment_id: razorpay_payment_id,
       order_id: razorpay_order_id,
-      amount: 499,
+      amount: 1, // Testing amount (change to 499 for production)
       status: "confirmed",
       created_at: new Date().toISOString(),
     });
