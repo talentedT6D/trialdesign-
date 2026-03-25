@@ -98,7 +98,7 @@ const CategoryCard = ({ cat, category, setCategory }) => (
   </button>
 );
 
-const API_URL = process.env.REACT_APP_API_URL || "";
+// const API_URL = process.env.REACT_APP_API_URL || ""; // Re-enable with Razorpay
 
 const PaymentPage = () => {
   const location = useLocation();
