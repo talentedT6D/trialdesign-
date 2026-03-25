@@ -148,7 +148,8 @@ const ConfirmationPage = () => {
             borderRadius: "50px",
             background: "linear-gradient(180deg, #ffd700 0%, #e6c200 100%)",
             color: "#000000",
-            fontSize: "clamp(24px, 3vw, 36px)",
+            whiteSpace: "nowrap",
+            fontSize: "clamp(20px, 2.8vw, 30px)",
             fontFamily: "'obviously-wide', 'Bebas Neue', sans-serif",
             fontWeight: 900,
             letterSpacing: "0.03em",
@@ -189,22 +190,23 @@ const ConfirmationPage = () => {
 /* Theater seat SVG icon */
 const SeatIcon = () => (
   <svg
-    width="48"
-    height="36"
-    viewBox="0 0 48 36"
+    width="52"
+    height="44"
+    viewBox="0 0 52 44"
     fill="none"
     stroke="#ffd700"
-    strokeWidth="2"
+    strokeWidth="2.5"
     strokeLinecap="round"
     strokeLinejoin="round"
   >
-    {/* Seat back (arch) */}
-    <path d="M8 20 Q8 4 24 4 Q40 4 40 20" />
-    {/* Seat bottom */}
-    <rect x="6" y="20" width="36" height="8" rx="3" />
-    {/* Armrests */}
-    <line x1="6" y1="28" x2="6" y2="34" />
-    <line x1="42" y1="28" x2="42" y2="34" />
+    {/* Seat back (rounded arch) */}
+    <path d="M10 28 L10 14 Q10 4 26 4 Q42 4 42 14 L42 28" fill="none" />
+    {/* Seat cushion */}
+    <path d="M6 28 L46 28 L46 34 Q46 38 42 38 L10 38 Q6 38 6 34 Z" fill="#ffd700" stroke="#ffd700" />
+    {/* Armrest left */}
+    <line x1="6" y1="38" x2="6" y2="42" />
+    {/* Armrest right */}
+    <line x1="46" y1="38" x2="46" y2="42" />
   </svg>
 );
 
