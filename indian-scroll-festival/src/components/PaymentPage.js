@@ -224,10 +224,11 @@ const PaymentPage = () => {
         background: "url('/images/F02.2 (1) (1).png') center/cover no-repeat",
       }}
     >
-      {/* Festival logo — top left */}
+      {/* Festival logo */}
       <img
         src="/images/festival-logo.png"
         alt="Indian Scroll Festival 2026"
+        className="festival-logo"
         style={{
           position: "absolute",
           top: "clamp(20px, 5vw, 72px)",
@@ -420,9 +421,9 @@ const PaymentPage = () => {
         </button>
       </div>
 
-      {/* Social icons — bottom right */}
+      {/* Social icons */}
       <div
-        className="absolute flex items-center gap-4"
+        className="absolute flex items-center gap-4 social-icons"
         style={{ bottom: "clamp(16px, 4vw, 30px)", right: "clamp(16px, 4vw, 30px)", zIndex: 30 }}
       >
         <button className="bg-transparent border-none cursor-pointer p-0" aria-label="Instagram">
@@ -438,6 +439,25 @@ const PaymentPage = () => {
           </svg>
         </button>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .festival-logo {
+            position: static !important;
+            display: block !important;
+            margin: 16px auto 0 !important;
+            width: 60px !important;
+            left: auto !important;
+            top: auto !important;
+          }
+          .social-icons {
+            position: static !important;
+            justify-content: center !important;
+            width: 100% !important;
+            padding: 16px 0 20px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 };

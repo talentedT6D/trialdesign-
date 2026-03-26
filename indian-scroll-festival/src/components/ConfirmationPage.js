@@ -39,6 +39,7 @@ const ConfirmationPage = () => {
         <img
           src="/images/festival-logo.png"
           alt="Indian Scroll Festival 2026"
+          className="festival-logo-confirm"
           style={{
             width: "clamp(70px, 12vw, 100px)",
             height: "auto",
@@ -90,9 +91,9 @@ const ConfirmationPage = () => {
         </button>
       </div>
 
-      {/* Social icons — bottom right */}
+      {/* Social icons */}
       <div
-        className="absolute flex items-center gap-4"
+        className="absolute flex items-center gap-4 social-icons"
         style={{ bottom: "clamp(16px, 4vw, 30px)", right: "clamp(16px, 4vw, 30px)", zIndex: 30 }}
       >
         <button className="bg-transparent border-none cursor-pointer p-0" aria-label="Instagram">
@@ -108,6 +109,20 @@ const ConfirmationPage = () => {
           </svg>
         </button>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .festival-logo-confirm {
+            width: 60px !important;
+          }
+          .social-icons {
+            position: static !important;
+            justify-content: center !important;
+            width: 100% !important;
+            padding: 16px 0 20px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 };
