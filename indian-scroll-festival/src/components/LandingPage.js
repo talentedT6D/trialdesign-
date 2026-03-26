@@ -10,9 +10,11 @@ const LandingPage = () => {
   const [contact, setContact] = useState(prev.contact || "");
   const [howHeard, setHowHeard] = useState(prev.howHeard || "");
   const [error, setError] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
   const handleNext = () => {
-    if (!name || !email || !contact) {
+    setSubmitted(true);
+    if (!name || !email || !contact || !howHeard) {
       setError("Please fill in all required fields.");
       return;
     }
@@ -136,27 +138,33 @@ const LandingPage = () => {
           <div style={{ display: "flex", flexDirection: "column", gap: "18px", position: "relative", zIndex: 2 }}>
             <input
               type="text"
-              placeholder="Name"
+              placeholder={submitted && !name ? "Name *" : "Name"}
               value={name}
               onChange={(e) => setName(e.target.value)}
-              required
-              style={inputStyle}
+              style={{
+                ...inputStyle,
+                border: submitted && !name ? "1px solid rgba(255,0,0,0.6)" : inputStyle.border,
+              }}
             />
             <input
               type="email"
-              placeholder="Email ID"
+              placeholder={submitted && !email ? "Email ID *" : "Email ID"}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
-              style={inputStyle}
+              style={{
+                ...inputStyle,
+                border: submitted && !email ? "1px solid rgba(255,0,0,0.6)" : inputStyle.border,
+              }}
             />
             <input
               type="tel"
-              placeholder="Contact"
+              placeholder={submitted && !contact ? "Contact *" : "Contact"}
               value={contact}
               onChange={(e) => setContact(e.target.value)}
-              required
-              style={inputStyle}
+              style={{
+                ...inputStyle,
+                border: submitted && !contact ? "1px solid rgba(255,0,0,0.6)" : inputStyle.border,
+              }}
             />
             <div style={{ position: "relative", zIndex: 2 }}>
               <select
@@ -169,10 +177,11 @@ const LandingPage = () => {
                   cursor: "pointer",
                   color: howHeard ? "#fff" : "#FFFFFF",
                   textShadow: howHeard ? "none" : "0 0 12.8px #FF0504",
+                  border: submitted && !howHeard ? "1px solid rgba(255,0,0,0.6)" : inputStyle.border,
                 }}
               >
                 <option value="" disabled style={{ background: "#1a0a0a", color: "rgba(255,255,255,0.7)" }}>
-                  How Did You Get To Know About Us?
+                  {submitted && !howHeard ? "How Did You Get To Know About Us? *" : "How Did You Get To Know About Us?"}
                 </option>
                 <option value="Instagram" style={{ background: "#1a0a0a", color: "#fff" }}>Instagram</option>
                 <option value="Twitter" style={{ background: "#1a0a0a", color: "#fff" }}>Twitter</option>

@@ -110,7 +110,10 @@ const PaymentPage = () => {
   const categories = ["Comedy", "Edits", "AI", "Food", "Emotional"];
 
   const handleSubmit = async () => {
-    if (!category) return;
+    if (!category) {
+      setError("Please pick a category.");
+      return;
+    }
     if (loading) return;
 
     setLoading(true);

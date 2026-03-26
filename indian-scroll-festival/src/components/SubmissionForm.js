@@ -45,7 +45,10 @@ const SubmissionForm = () => {
     }
   };
 
+  const [submitted, setSubmitted] = useState(false);
+
   const handleSubmit = () => {
+    setSubmitted(true);
     if (!file || !submissionTitle) {
       setError("Please fill all fields and upload a file.");
       return;
@@ -171,11 +174,13 @@ const SubmissionForm = () => {
             {/* Submission Title */}
             <input
               type="text"
-              placeholder="Submission Title"
+              placeholder={submitted && !submissionTitle ? "Submission Title *" : "Submission Title"}
               value={submissionTitle}
               onChange={(e) => setSubmissionTitle(e.target.value)}
-              required
-              style={inputStyle}
+              style={{
+                ...inputStyle,
+                border: submitted && !submissionTitle ? "1px solid rgba(255,0,0,0.6)" : inputStyle.border,
+              }}
             />
 
             {/* Upload Area */}
@@ -190,7 +195,7 @@ const SubmissionForm = () => {
                 padding: "30px 20px",
                 textAlign: "center",
                 cursor: "pointer",
-                border: dragging ? "1px solid rgba(255,215,0,0.5)" : "1px solid rgba(255,255,255,0.08)",
+                border: dragging ? "1px solid rgba(255,215,0,0.5)" : (submitted && !file ? "1px solid rgba(255,0,0,0.6)" : "1px solid rgba(255,255,255,0.08)"),
               }}
             >
               <input
@@ -218,7 +223,7 @@ const SubmissionForm = () => {
                     fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
                     letterSpacing: "0.05em",
                   }}>
-                    Upload Submission
+                    {submitted && !file ? "Upload Submission *" : "Upload Submission"}
                   </p>
                   <p style={{
                     color: "rgba(255,255,255,0.4)",
