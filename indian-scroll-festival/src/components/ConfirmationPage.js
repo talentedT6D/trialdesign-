@@ -9,7 +9,7 @@ const ConfirmationPage = () => {
     <div
       className="relative min-h-screen overflow-hidden"
       style={{
-        background: "url('/images/F02.2 (1) (1).png') center/cover no-repeat",
+        background: "url('/images/Submission confirmation BG.png') center/cover no-repeat",
         backgroundColor: "#1a0505",
       }}
     >
