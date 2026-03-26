@@ -96,18 +96,18 @@ const ConfirmationPage = () => {
         className="absolute flex items-center gap-4 social-icons"
         style={{ bottom: "clamp(16px, 4vw, 30px)", right: "clamp(16px, 4vw, 30px)", zIndex: 30 }}
       >
-        <button className="bg-transparent border-none cursor-pointer p-0" aria-label="Instagram">
+        <a href="https://www.instagram.com/indianscrollfestival/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ffd700" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
             <circle cx="12" cy="12" r="5" />
             <circle cx="17.5" cy="6.5" r="1.5" fill="#ffd700" stroke="none" />
           </svg>
-        </button>
-        <button className="bg-transparent border-none cursor-pointer p-0" aria-label="X">
+        </a>
+        <a href="https://x.com/indiascrollfest" target="_blank" rel="noopener noreferrer" aria-label="X">
           <svg width="30" height="30" viewBox="0 0 24 24" fill="#ffd700">
             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
           </svg>
-        </button>
+        </a>
       </div>
 
       <style>{`
