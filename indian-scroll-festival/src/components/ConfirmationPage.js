@@ -40,7 +40,7 @@ const ConfirmationPage = () => {
           src="/images/festival-logo.png"
           alt="Indian Scroll Festival 2026"
           style={{
-            width: "100px",
+            width: "clamp(70px, 12vw, 100px)",
             height: "auto",
             objectFit: "contain",
             marginBottom: "20px",
@@ -65,10 +65,10 @@ const ConfirmationPage = () => {
           className="cursor-pointer border-none"
           style={{
             marginTop: "30px",
-            width: "480px",
-            maxWidth: "85vw",
-            height: "60px",
-            padding: "0 40px",
+            width: "100%",
+            maxWidth: "480px",
+            height: "clamp(50px, 8vw, 60px)",
+            padding: "0 clamp(20px, 4vw, 40px)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -93,7 +93,7 @@ const ConfirmationPage = () => {
       {/* Social icons — bottom right */}
       <div
         className="absolute flex items-center gap-4"
-        style={{ bottom: "30px", right: "30px", zIndex: 30 }}
+        style={{ bottom: "clamp(16px, 4vw, 30px)", right: "clamp(16px, 4vw, 30px)", zIndex: 30 }}
       >
         <button className="bg-transparent border-none cursor-pointer p-0" aria-label="Instagram">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ffd700" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

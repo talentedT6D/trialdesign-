@@ -57,7 +57,7 @@ const SubmissionForm = () => {
 
   const inputStyle = {
     width: "100%",
-    padding: "20px 24px",
+    padding: "clamp(14px, 2.5vw, 20px) clamp(16px, 3vw, 24px)",
     background: "rgba(0,0,0,0.65)",
     border: "1px solid rgba(255,255,255,0.08)",
     borderRadius: "16px",
@@ -83,10 +83,10 @@ const SubmissionForm = () => {
         alt="Indian Scroll Festival 2026"
         style={{
           position: "absolute",
-          top: "72px",
-          left: "72px",
-          width: "100px",
-          height: "180px",
+          top: "clamp(20px, 5vw, 72px)",
+          left: "clamp(20px, 5vw, 72px)",
+          width: "clamp(60px, 10vw, 100px)",
+          height: "auto",
           objectFit: "contain",
           zIndex: 30,
         }}
@@ -102,10 +102,10 @@ const SubmissionForm = () => {
           style={{
             background: "rgba(0, 0, 0, 0.5)",
             borderRadius: "24px",
-            padding: "30px 32px 40px",
-            width: "535px",
-            minHeight: "600px",
-            maxWidth: "90vw",
+            padding: "clamp(20px, 4vw, 30px) clamp(20px, 4vw, 32px) clamp(28px, 5vw, 40px)",
+            width: "100%",
+            maxWidth: "535px",
+            minHeight: "auto",
             position: "relative",
             boxShadow: "0 8px 40px rgba(0,0,0,0.5)",
             overflow: "hidden",
@@ -140,7 +140,7 @@ const SubmissionForm = () => {
               <h2
                 style={{
                   fontFamily: "'obviously-condensed', 'Bebas Neue', sans-serif",
-                  fontSize: "100px",
+                  fontSize: "clamp(48px, 12vw, 100px)",
                   color: "#FFFFFF",
                   fontWeight: 500,
                   fontStyle: "normal",
@@ -267,9 +267,9 @@ const SubmissionForm = () => {
           className="cursor-pointer border-none"
           style={{
             marginTop: "28px",
-            width: "535px",
-            maxWidth: "90vw",
-            height: "69px",
+            width: "100%",
+            maxWidth: "535px",
+            height: "clamp(54px, 9vw, 69px)",
             padding: "0",
             display: "flex",
             alignItems: "center",
@@ -278,7 +278,7 @@ const SubmissionForm = () => {
             borderRadius: "50px",
             background: "linear-gradient(180deg, #ffd700 0%, #e6c200 100%)",
             color: "#000000",
-            fontSize: "42px",
+            fontSize: "clamp(28px, 6vw, 42px)",
             fontFamily: "'obviously-wide', 'Bebas Neue', sans-serif",
             fontWeight: 900,
             letterSpacing: "0.1em",
@@ -293,7 +293,7 @@ const SubmissionForm = () => {
       {/* Social icons — bottom right */}
       <div
         className="absolute flex items-center gap-4"
-        style={{ bottom: "30px", right: "30px", zIndex: 30 }}
+        style={{ bottom: "clamp(16px, 4vw, 30px)", right: "clamp(16px, 4vw, 30px)", zIndex: 30 }}
       >
         <button className="bg-transparent border-none cursor-pointer p-0" aria-label="Instagram">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ffd700" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

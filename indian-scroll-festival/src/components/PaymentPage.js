@@ -71,7 +71,7 @@ const CategoryCard = ({ cat, category, setCategory }) => (
     onClick={() => setCategory(cat)}
     style={{
       flex: 1,
-      padding: "18px 12px",
+      padding: "clamp(12px, 2.5vw, 18px) clamp(8px, 1.5vw, 12px)",
       background: category === cat ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.3)",
       border: category === cat ? "2px solid rgba(255,255,255,0.5)" : "1px solid rgba(255,255,255,0.15)",
       borderRadius: "16px",
@@ -87,7 +87,7 @@ const CategoryCard = ({ cat, category, setCategory }) => (
     <span
       style={{
         fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
-        fontSize: "1.05rem",
+        fontSize: "clamp(0.85rem, 2.5vw, 1.05rem)",
         color: "#fff",
         letterSpacing: "0.04em",
       }}
@@ -230,10 +230,10 @@ const PaymentPage = () => {
         alt="Indian Scroll Festival 2026"
         style={{
           position: "absolute",
-          top: "72px",
-          left: "72px",
-          width: "100px",
-          height: "180px",
+          top: "clamp(20px, 5vw, 72px)",
+          left: "clamp(20px, 5vw, 72px)",
+          width: "clamp(60px, 10vw, 100px)",
+          height: "auto",
           objectFit: "contain",
           zIndex: 30,
         }}
@@ -249,9 +249,9 @@ const PaymentPage = () => {
           style={{
             background: "rgba(0, 0, 0, 0.5)",
             borderRadius: "24px",
-            padding: "30px 32px 40px",
-            width: "535px",
-            maxWidth: "90vw",
+            padding: "clamp(20px, 4vw, 30px) clamp(16px, 3.5vw, 32px) clamp(28px, 5vw, 40px)",
+            width: "100%",
+            maxWidth: "535px",
             position: "relative",
             boxShadow: "0 8px 40px rgba(0,0,0,0.5)",
             overflow: "hidden",
@@ -286,7 +286,7 @@ const PaymentPage = () => {
               <h2
                 style={{
                   fontFamily: "'obviously-condensed', 'Bebas Neue', sans-serif",
-                  fontSize: "100px",
+                  fontSize: "clamp(48px, 12vw, 100px)",
                   color: "#FFFFFF",
                   fontWeight: 500,
                   fontStyle: "normal",
@@ -324,7 +324,7 @@ const PaymentPage = () => {
             style={{
               display: "flex",
               justifyContent: "center",
-              gap: "16px",
+              gap: "clamp(8px, 2vw, 16px)",
               position: "relative",
               zIndex: 2,
               marginBottom: "16px",
@@ -340,10 +340,10 @@ const PaymentPage = () => {
             style={{
               display: "flex",
               justifyContent: "center",
-              gap: "16px",
+              gap: "clamp(8px, 2vw, 16px)",
               position: "relative",
               zIndex: 2,
-              width: "calc((100% - 32px) * 2 / 3 + 16px)",
+              width: "67%",
               margin: "0 auto",
             }}
           >
@@ -366,8 +366,8 @@ const PaymentPage = () => {
               fontSize: "0.95rem",
               fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
               letterSpacing: "0.03em",
-              width: "535px",
-              maxWidth: "90vw",
+              width: "100%",
+              maxWidth: "535px",
               boxSizing: "border-box",
             }}
           >
@@ -382,10 +382,10 @@ const PaymentPage = () => {
           className="cursor-pointer border-none"
           style={{
             marginTop: error ? "12px" : "28px",
-            width: "535px",
-            maxWidth: "90vw",
-            height: "69px",
-            padding: "0 40px",
+            width: "100%",
+            maxWidth: "535px",
+            height: "clamp(54px, 9vw, 69px)",
+            padding: "0 clamp(16px, 4vw, 40px)",
             whiteSpace: "nowrap",
             display: "flex",
             alignItems: "center",
@@ -423,7 +423,7 @@ const PaymentPage = () => {
       {/* Social icons — bottom right */}
       <div
         className="absolute flex items-center gap-4"
-        style={{ bottom: "30px", right: "30px", zIndex: 30 }}
+        style={{ bottom: "clamp(16px, 4vw, 30px)", right: "clamp(16px, 4vw, 30px)", zIndex: 30 }}
       >
         <button className="bg-transparent border-none cursor-pointer p-0" aria-label="Instagram">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ffd700" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
