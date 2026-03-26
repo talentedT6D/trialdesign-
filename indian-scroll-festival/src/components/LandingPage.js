@@ -218,7 +218,7 @@ const LandingPage = () => {
             borderRadius: "50px",
             background: "linear-gradient(180deg, #ffd700 0%, #e6c200 100%)",
             color: "#000000",
-            fontSize: "51px",
+            fontSize: "42px",
             fontFamily: "'obviously-wide', 'Bebas Neue', sans-serif",
             fontWeight: 900,
             letterSpacing: "0.1em",
