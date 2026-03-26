@@ -13,32 +13,43 @@ const ConfirmationPage = () => {
         backgroundColor: "#1a0505",
       }}
     >
-      {/* Confirmation image as full background */}
-      <img
-        src="/images/confirmatrion.png"
-        alt="Submission Confirmed"
-        style={{
-          width: "100%",
-          maxWidth: "900px",
-          height: "auto",
-          display: "block",
-          margin: "0 auto",
-          paddingTop: "40px",
-        }}
-      />
-
-      {/* REFER A FRIEND button */}
+      {/* Main content */}
       <div
-        className="flex justify-center"
-        style={{ padding: "30px 16px 40px" }}
+        className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4"
       >
+        {/* Festival Logo centered at top */}
+        <img
+          src="/images/festival-logo.png"
+          alt="Indian Scroll Festival 2026"
+          style={{
+            width: "100px",
+            height: "auto",
+            objectFit: "contain",
+            marginBottom: "20px",
+          }}
+        />
+
+        {/* Confirmation image (title + seats + text) */}
+        <img
+          src="/images/confirmatrion.png"
+          alt="Submission Confirmed"
+          style={{
+            width: "100%",
+            maxWidth: "600px",
+            height: "auto",
+            display: "block",
+          }}
+        />
+
+        {/* REFER A FRIEND button */}
         <button
           onClick={handleRefer}
           className="cursor-pointer border-none"
           style={{
-            width: "535px",
-            maxWidth: "90vw",
-            height: "69px",
+            marginTop: "30px",
+            width: "480px",
+            maxWidth: "85vw",
+            height: "60px",
             padding: "0 40px",
             display: "flex",
             alignItems: "center",
@@ -47,17 +58,17 @@ const ConfirmationPage = () => {
             background: "linear-gradient(180deg, #ffd700 0%, #e6c200 100%)",
             color: "#000000",
             whiteSpace: "nowrap",
-            fontSize: "clamp(20px, 2.8vw, 30px)",
+            fontSize: "clamp(18px, 2.5vw, 26px)",
             fontFamily: "'obviously-wide', 'Bebas Neue', sans-serif",
             fontWeight: 900,
             letterSpacing: "0.03em",
             lineHeight: "1",
             textAlign: "center",
-            boxShadow: "0 0 30px rgba(255,215,0,0.6), 0 0 60px rgba(255,215,0,0.3), 0 4px 80px rgba(255,200,0,0.4)",
+            boxShadow: "0 0 30px rgba(255,215,0,0.5), 0 0 60px rgba(255,215,0,0.2)",
             border: "none",
           }}
         >
-          <span style={{ marginTop: "-4px" }}>REFER A FRIEND</span>
+          <span style={{ marginTop: "-3px" }}>REFER A FRIEND</span>
         </button>
       </div>
 
