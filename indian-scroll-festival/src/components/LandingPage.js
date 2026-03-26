@@ -157,13 +157,46 @@ const LandingPage = () => {
               required
               style={inputStyle}
             />
-            <input
-              type="text"
-              placeholder="How Did You Get To Know About Us?"
-              value={howHeard}
-              onChange={(e) => setHowHeard(e.target.value)}
-              style={inputStyle}
-            />
+            <div style={{ position: "relative", zIndex: 2 }}>
+              <select
+                value={howHeard}
+                onChange={(e) => setHowHeard(e.target.value)}
+                style={{
+                  ...inputStyle,
+                  appearance: "none",
+                  WebkitAppearance: "none",
+                  cursor: "pointer",
+                  color: howHeard ? "#fff" : "rgba(255,255,255,0.7)",
+                }}
+              >
+                <option value="" disabled style={{ background: "#1a0a0a", color: "rgba(255,255,255,0.7)" }}>
+                  How Did You Get To Know About Us?
+                </option>
+                <option value="Instagram" style={{ background: "#1a0a0a", color: "#fff" }}>Instagram</option>
+                <option value="Twitter" style={{ background: "#1a0a0a", color: "#fff" }}>Twitter</option>
+                <option value="Other" style={{ background: "#1a0a0a", color: "#fff" }}>Other</option>
+              </select>
+              {/* Dropdown arrow */}
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="rgba(255,255,255,0.5)"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{
+                  position: "absolute",
+                  right: "20px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  pointerEvents: "none",
+                }}
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </div>
           </div>
         </div>
 
