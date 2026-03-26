@@ -9,7 +9,8 @@ const ConfirmationPage = () => {
     <div
       className="relative min-h-screen overflow-hidden"
       style={{
-        background: "#1a0505",
+        background: "url('/images/F02.2 (1) (1).png') center/cover no-repeat",
+        backgroundColor: "#1a0505",
       }}
     >
       {/* Confirmation image as full background */}
