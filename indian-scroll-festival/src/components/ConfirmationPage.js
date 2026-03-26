@@ -1,8 +1,26 @@
 import React from "react";
 
 const ConfirmationPage = () => {
-  const handleRefer = () => {
-    window.open("https://www.indianscrollfestival.com/", "_blank");
+  const shareUrl = "https://indianscrollfestival.com/";
+  const shareText = "Check out the Indian Scroll Festival 2026 — India's First Vertical Film Festival! Submit your film now.";
+
+  const handleRefer = async () => {
+    // Use Web Share API if available (mobile/supported browsers)
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "Indian Scroll Festival 2026",
+          text: shareText,
+          url: shareUrl,
+        });
+      } catch {
+        // User cancelled or share failed — ignore
+      }
+    } else {
+      // Fallback: open WhatsApp share
+      const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + shareUrl)}`;
+      window.open(whatsappUrl, "_blank");
+    }
   };
 
   return (
