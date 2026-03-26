@@ -9,131 +9,28 @@ const ConfirmationPage = () => {
     <div
       className="relative min-h-screen overflow-hidden"
       style={{
-        background: "url('/images/F02.2 (1) (1).png') center/cover no-repeat",
+        background: "#1a0505",
       }}
     >
-      {/* Main content */}
+      {/* Confirmation image as full background */}
+      <img
+        src="/images/confirmatrion.png"
+        alt="Submission Confirmed"
+        style={{
+          width: "100%",
+          maxWidth: "900px",
+          height: "auto",
+          display: "block",
+          margin: "0 auto",
+          paddingTop: "40px",
+        }}
+      />
+
+      {/* REFER A FRIEND button */}
       <div
-        className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4"
-        style={{ paddingTop: "40px", paddingBottom: "40px" }}
+        className="flex justify-center"
+        style={{ padding: "30px 16px 40px" }}
       >
-        {/* Spotlight / arch glow behind the content */}
-        <div
-          style={{
-            position: "absolute",
-            top: "0",
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: "500px",
-            height: "100%",
-            background: "radial-gradient(ellipse 50% 70% at 50% 30%, rgba(255,80,40,0.35) 0%, rgba(255,30,0,0.15) 40%, transparent 70%)",
-            pointerEvents: "none",
-            zIndex: 0,
-          }}
-        />
-
-        {/* Arch shape */}
-        <div
-          style={{
-            position: "absolute",
-            top: "0",
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: "420px",
-            height: "85%",
-            borderRadius: "210px 210px 0 0",
-            background: "radial-gradient(ellipse 100% 80% at 50% 20%, rgba(255,100,50,0.25) 0%, rgba(200,30,0,0.1) 50%, transparent 80%)",
-            pointerEvents: "none",
-            zIndex: 0,
-          }}
-        />
-
-        {/* Festival Logo centered at top */}
-        <img
-          src="/images/festival-logo.png"
-          alt="Indian Scroll Festival 2026"
-          style={{
-            width: "120px",
-            height: "auto",
-            objectFit: "contain",
-            position: "relative",
-            zIndex: 2,
-            marginBottom: "30px",
-          }}
-        />
-
-        {/* SUBMISSION CONFIRMED */}
-        <h1
-          style={{
-            fontFamily: "'obviously-condensed', 'Bebas Neue', sans-serif",
-            fontSize: "clamp(60px, 10vw, 120px)",
-            color: "#ffd700",
-            fontWeight: 700,
-            lineHeight: "0.9",
-            textAlign: "center",
-            margin: "0 0 40px 0",
-            position: "relative",
-            zIndex: 2,
-            textShadow: "0 0 40px rgba(255,215,0,0.4)",
-          }}
-        >
-          SUBMISSION
-          <br />
-          CONFIRMED
-        </h1>
-
-        {/* Theater Seats - Row 1 (6 seats) */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "12px",
-            marginBottom: "10px",
-            position: "relative",
-            zIndex: 2,
-          }}
-        >
-          {[...Array(6)].map((_, i) => (
-            <SeatIcon key={`r1-${i}`} />
-          ))}
-        </div>
-
-        {/* Theater Seats - Row 2 (4 seats) */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "12px",
-            marginBottom: "24px",
-            position: "relative",
-            zIndex: 2,
-          }}
-        >
-          {[...Array(4)].map((_, i) => (
-            <SeatIcon key={`r2-${i}`} />
-          ))}
-        </div>
-
-        {/* WE'LL SEE YOU ON THE BIG SCREEN */}
-        <p
-          style={{
-            fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
-            fontSize: "1.1rem",
-            color: "rgba(255,255,255,0.8)",
-            textAlign: "center",
-            letterSpacing: "0.06em",
-            lineHeight: "1.4",
-            margin: "0 0 36px 0",
-            position: "relative",
-            zIndex: 2,
-          }}
-        >
-          WE'LL SEE YOU ON
-          <br />
-          THE BIG SCREEN.
-        </p>
-
-        {/* REFER A FRIEND button */}
         <button
           onClick={handleRefer}
           className="cursor-pointer border-none"
@@ -157,8 +54,6 @@ const ConfirmationPage = () => {
             textAlign: "center",
             boxShadow: "0 0 30px rgba(255,215,0,0.6), 0 0 60px rgba(255,215,0,0.3), 0 4px 80px rgba(255,200,0,0.4)",
             border: "none",
-            position: "relative",
-            zIndex: 2,
           }}
         >
           <span style={{ marginTop: "-4px" }}>REFER A FRIEND</span>
@@ -186,28 +81,5 @@ const ConfirmationPage = () => {
     </div>
   );
 };
-
-/* Theater seat SVG icon */
-const SeatIcon = () => (
-  <svg
-    width="52"
-    height="44"
-    viewBox="0 0 52 44"
-    fill="none"
-    stroke="#ffd700"
-    strokeWidth="2.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    {/* Seat back (rounded arch) */}
-    <path d="M10 28 L10 14 Q10 4 26 4 Q42 4 42 14 L42 28" fill="none" />
-    {/* Seat cushion */}
-    <path d="M6 28 L46 28 L46 34 Q46 38 42 38 L10 38 Q6 38 6 34 Z" fill="#ffd700" stroke="#ffd700" />
-    {/* Armrest left */}
-    <line x1="6" y1="38" x2="6" y2="42" />
-    {/* Armrest right */}
-    <line x1="46" y1="38" x2="46" y2="42" />
-  </svg>
-);
 
 export default ConfirmationPage;
