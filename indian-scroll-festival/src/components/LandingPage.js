@@ -166,7 +166,8 @@ const LandingPage = () => {
                   appearance: "none",
                   WebkitAppearance: "none",
                   cursor: "pointer",
-                  color: howHeard ? "#fff" : "rgba(255,255,255,0.7)",
+                  color: howHeard ? "#fff" : "#FFFFFF",
+                  textShadow: howHeard ? "none" : "0 0 12.8px #FF0504",
                 }}
               >
                 <option value="" disabled style={{ background: "#1a0a0a", color: "rgba(255,255,255,0.7)" }}>
