@@ -138,29 +138,29 @@ const PaymentPage = () => {
         try {
           const paymentId = response.razorpay_payment_id;
 
-          // Step 1: Upload video to Supabase Storage
+          // Step 1: Upload video to Supabase Storage (non-blocking)
           let videoUrl = null;
           const file = getFile();
           if (file) {
-            const fileExt = file.name.split(".").pop();
-            const fileName = `${paymentId}.${fileExt}`;
-            const { data: uploadData, error: uploadError } = await supabase.storage
-              .from("submissions")
-              .upload(fileName, file, {
-                cacheControl: "3600",
-                upsert: false,
-              });
+            try {
+              const fileExt = file.name.split(".").pop();
+              const fileName = `${paymentId}.${fileExt}`;
+              const { data: uploadData, error: uploadError } = await supabase.storage
+                .from("submissions")
+                .upload(fileName, file, {
+                  cacheControl: "3600",
+                  upsert: false,
+                });
 
-            if (uploadError) {
-              setError("Video upload failed. Contact support with payment ID: " + paymentId);
-              setLoading(false);
-              return;
+              if (!uploadError && uploadData) {
+                const { data: urlData } = supabase.storage
+                  .from("submissions")
+                  .getPublicUrl(uploadData.path);
+                videoUrl = urlData.publicUrl;
+              }
+            } catch {
+              // Video upload failed but payment succeeded — continue
             }
-
-            const { data: urlData } = supabase.storage
-              .from("submissions")
-              .getPublicUrl(uploadData.path);
-            videoUrl = urlData.publicUrl;
           }
 
           // Step 2: Insert form data into Supabase
