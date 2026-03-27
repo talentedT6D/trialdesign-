@@ -134,36 +134,11 @@ const PaymentPage = () => {
         color: "#cc2200",
       },
       handler: async function (response) {
-        // Payment successful — now upload video + save to Supabase
+        // Payment successful — save data immediately, upload video in background
         try {
           const paymentId = response.razorpay_payment_id;
 
-          // Step 1: Upload video to Supabase Storage (non-blocking)
-          let videoUrl = null;
-          const file = getFile();
-          if (file) {
-            try {
-              const fileExt = file.name.split(".").pop();
-              const fileName = `${paymentId}.${fileExt}`;
-              const { data: uploadData, error: uploadError } = await supabase.storage
-                .from("submissions")
-                .upload(fileName, file, {
-                  cacheControl: "3600",
-                  upsert: false,
-                });
-
-              if (!uploadError && uploadData) {
-                const { data: urlData } = supabase.storage
-                  .from("submissions")
-                  .getPublicUrl(uploadData.path);
-                videoUrl = urlData.publicUrl;
-              }
-            } catch {
-              // Video upload failed but payment succeeded — continue
-            }
-          }
-
-          // Step 2: Insert form data into Supabase
+          // Step 1: Save form data to Supabase IMMEDIATELY (no waiting for video)
           const { error: insertError } = await supabase.from("submissions").insert({
             name: name || "",
             email: email || "",
@@ -171,7 +146,7 @@ const PaymentPage = () => {
             how_heard: howHeard || null,
             submission_title: submissionTitle || "",
             category,
-            video_url: videoUrl,
+            video_url: null,
             payment_id: paymentId,
             order_id: response.razorpay_order_id || `direct_${Date.now()}`,
             amount: 1, // Change to 499 for production
@@ -184,7 +159,30 @@ const PaymentPage = () => {
             return;
           }
 
-          // Step 3: Success — go to confirmation
+          // Step 2: Upload video in BACKGROUND (don't wait)
+          const file = getFile();
+          if (file) {
+            const fileExt = file.name.split(".").pop();
+            const fileName = `${paymentId}.${fileExt}`;
+            supabase.storage
+              .from("submissions")
+              .upload(fileName, file, { cacheControl: "3600", upsert: false })
+              .then(({ data: uploadData }) => {
+                if (uploadData) {
+                  const { data: urlData } = supabase.storage
+                    .from("submissions")
+                    .getPublicUrl(uploadData.path);
+                  // Update the record with video URL
+                  supabase.from("submissions")
+                    .update({ video_url: urlData.publicUrl })
+                    .eq("payment_id", paymentId)
+                    .then(() => {});
+                }
+              })
+              .catch(() => {});
+          }
+
+          // Step 3: Go to confirmation IMMEDIATELY
           clearFile();
           navigate("/confirmation", {
             state: {

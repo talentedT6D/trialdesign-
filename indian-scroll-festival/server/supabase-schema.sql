@@ -28,6 +28,10 @@ CREATE POLICY "Allow insert from backend" ON submissions
 CREATE POLICY "Allow select for duplicate check" ON submissions
   FOR SELECT USING (true);
 
+-- Policy: Allow update for video URL after background upload
+CREATE POLICY "Allow update for video url" ON submissions
+  FOR UPDATE USING (true) WITH CHECK (true);
+
 -- =============================================
 -- STEP 2: Create storage bucket for video uploads
 -- =============================================
