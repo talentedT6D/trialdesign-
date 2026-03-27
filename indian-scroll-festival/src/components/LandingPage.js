@@ -9,18 +9,20 @@ const LandingPage = () => {
   const [email, setEmail] = useState(prev.email || "");
   const [contact, setContact] = useState(prev.contact || "");
   const [howHeard, setHowHeard] = useState(prev.howHeard || "");
+  const [howHeardOther, setHowHeardOther] = useState(prev.howHeardOther || "");
   const [error, setError] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   const handleNext = () => {
     setSubmitted(true);
+    const finalHowHeard = howHeard === "Other" ? (howHeardOther || "Other") : howHeard;
     if (!name || !email || !contact || !howHeard) {
       setError("Please fill in all required fields.");
       return;
     }
     setError("");
     navigate("/submission", {
-      state: { name, email, contact, howHeard },
+      state: { name, email, contact, howHeard: finalHowHeard },
     });
   };
 
@@ -208,6 +210,16 @@ const LandingPage = () => {
                 <polyline points="6 9 12 15 18 9" />
               </svg>
             </div>
+            {howHeard === "Other" && (
+              <input
+                type="text"
+                placeholder="Please specify..."
+                value={howHeardOther}
+                onChange={(e) => setHowHeardOther(e.target.value.slice(0, 20))}
+                maxLength={20}
+                style={inputStyle}
+              />
+            )}
           </div>
         </div>
 
