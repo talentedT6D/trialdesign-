@@ -8,6 +8,7 @@ const LandingPage = () => {
   const [name, setName] = useState(prev.name || "");
   const [email, setEmail] = useState(prev.email || "");
   const [contact, setContact] = useState(prev.contact || "");
+  const [igHandle, setIgHandle] = useState(prev.igHandle || "");
   const [howHeard, setHowHeard] = useState(prev.howHeard || "");
   const [howHeardOther, setHowHeardOther] = useState(prev.howHeardOther || "");
   const [error, setError] = useState("");
@@ -16,13 +17,13 @@ const LandingPage = () => {
   const handleNext = () => {
     setSubmitted(true);
     const finalHowHeard = howHeard === "Other" ? (howHeardOther || "Other") : howHeard;
-    if (!name || !email || !contact || !howHeard) {
+    if (!name || !email || !contact || !igHandle || !howHeard) {
       setError("Please fill in all required fields.");
       return;
     }
     setError("");
     navigate("/submission", {
-      state: { name, email, contact, howHeard: finalHowHeard },
+      state: { name, email, contact, igHandle, howHeard: finalHowHeard },
     });
   };
 
@@ -166,6 +167,16 @@ const LandingPage = () => {
               style={{
                 ...inputStyle,
                 border: submitted && !contact ? "1px solid rgba(255,0,0,0.6)" : inputStyle.border,
+              }}
+            />
+            <input
+              type="text"
+              placeholder={submitted && !igHandle ? "IG Handle *" : "IG Handle"}
+              value={igHandle}
+              onChange={(e) => setIgHandle(e.target.value)}
+              style={{
+                ...inputStyle,
+                border: submitted && !igHandle ? "1px solid rgba(255,0,0,0.6)" : inputStyle.border,
               }}
             />
             <div style={{ position: "relative", zIndex: 2 }}>

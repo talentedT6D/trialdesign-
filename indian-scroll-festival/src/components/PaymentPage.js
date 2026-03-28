@@ -102,7 +102,7 @@ const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { getFile, clearFile } = useFileContext();
-  const { name, email, contact, howHeard, submissionTitle } = location.state || {};
+  const { name, email, contact, igHandle, howHeard, submissionTitle } = location.state || {};
   const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -143,6 +143,7 @@ const PaymentPage = () => {
             name: name || "",
             email: email || "",
             contact: contact || "",
+            ig_handle: igHandle || null,
             how_heard: howHeard || null,
             submission_title: submissionTitle || "",
             category,
@@ -264,7 +265,7 @@ const PaymentPage = () => {
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
             <div style={{ display: "flex", flexDirection: "column", width: "fit-content" }}>
               <button
-                onClick={() => navigate("/submission", { state: { name, email, contact, howHeard, submissionTitle } })}
+                onClick={() => navigate("/submission", { state: { name, email, contact, igHandle, howHeard, submissionTitle } })}
                 className="bg-transparent border-none cursor-pointer p-0"
                 style={{ position: "relative", zIndex: 2, alignSelf: "flex-start", marginBottom: "4px" }}
                 aria-label="Go back"
