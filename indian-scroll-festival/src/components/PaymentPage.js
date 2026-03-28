@@ -121,7 +121,7 @@ const PaymentPage = () => {
 
     const options = {
       key: process.env.REACT_APP_RAZORPAY_KEY_ID,
-      amount: 49900, // ₹499
+      amount: 100, // ₹1 for testing
       currency: "INR",
       name: "Indian Scroll Festival",
       description: "Submission Fee",
@@ -150,7 +150,7 @@ const PaymentPage = () => {
             video_url: null,
             payment_id: paymentId,
             order_id: response.razorpay_order_id || `direct_${Date.now()}`,
-            amount: 499,
+            amount: 1,
             status: "confirmed",
           });
 
