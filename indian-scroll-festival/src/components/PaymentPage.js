@@ -121,6 +121,56 @@ const PaymentPage = () => {
     setLoading(true);
     setError("");
 
+    // Step 1: Upload video FIRST (before payment)
+    let videoUrl = null;
+    let uploadedPath = null;
+    const file = getFile();
+    if (file) {
+      setUploading(true);
+      setUploadProgress(0);
+
+      // Simulate progress since Supabase JS client doesn't expose upload progress
+      const progressInterval = setInterval(() => {
+        setUploadProgress((p) => (p < 90 ? p + 2 : p));
+      }, 500);
+
+      try {
+        const fileExt = file.name.split(".").pop();
+        const fileName = `temp_${Date.now()}.${fileExt}`;
+        const { data: uploadData, error: uploadError } = await supabase.storage
+          .from("submissions")
+          .upload(fileName, file, { cacheControl: "3600", upsert: false });
+
+        clearInterval(progressInterval);
+
+        if (uploadError || !uploadData) {
+          setError("Video upload failed. Please try again.");
+          setLoading(false);
+          setUploading(false);
+          return;
+        }
+
+        uploadedPath = uploadData.path;
+        const { data: urlData } = supabase.storage
+          .from("submissions")
+          .getPublicUrl(uploadData.path);
+        videoUrl = urlData.publicUrl;
+        setUploadProgress(100);
+
+        // Small pause to show 100%
+        await new Promise((r) => setTimeout(r, 300));
+      } catch {
+        clearInterval(progressInterval);
+        setError("Video upload failed. Please try again.");
+        setLoading(false);
+        setUploading(false);
+        return;
+      }
+
+      setUploading(false);
+    }
+
+    // Step 2: Open Razorpay Checkout
     const options = {
       key: process.env.REACT_APP_RAZORPAY_KEY_ID,
       amount: 100, // ₹1 for testing
@@ -139,7 +189,7 @@ const PaymentPage = () => {
         try {
           const paymentId = response.razorpay_payment_id;
 
-          // Step 1: Save form data to Supabase immediately
+          // Step 3: Save form data + already-uploaded video URL to Supabase
           const { error: insertError } = await supabase.from("submissions").insert({
             name: name || "",
             email: email || "",
@@ -148,7 +198,7 @@ const PaymentPage = () => {
             how_heard: howHeard || null,
             submission_title: submissionTitle || "",
             category,
-            video_url: null,
+            video_url: videoUrl,
             payment_id: paymentId,
             order_id: response.razorpay_order_id || `direct_${Date.now()}`,
             amount: 1,
@@ -161,51 +211,7 @@ const PaymentPage = () => {
             return;
           }
 
-          // Step 2: Upload video and WAIT (show progress bar)
-          const file = getFile();
-          if (file) {
-            setUploading(true);
-            setUploadProgress(0);
-
-            // Simulate progress since Supabase JS client doesn't expose upload progress
-            const progressInterval = setInterval(() => {
-              setUploadProgress((p) => (p < 90 ? p + 2 : p));
-            }, 500);
-
-            try {
-              const fileExt = file.name.split(".").pop();
-              const fileName = `${paymentId}.${fileExt}`;
-              const { data: uploadData, error: uploadError } = await supabase.storage
-                .from("submissions")
-                .upload(fileName, file, { cacheControl: "3600", upsert: false });
-
-              clearInterval(progressInterval);
-
-              if (!uploadError && uploadData) {
-                const { data: urlData } = supabase.storage
-                  .from("submissions")
-                  .getPublicUrl(uploadData.path);
-
-                // Update the record with video URL
-                await supabase.from("submissions")
-                  .update({ video_url: urlData.publicUrl })
-                  .eq("payment_id", paymentId);
-
-                setUploadProgress(100);
-              } else {
-                // Upload failed but data is saved — continue
-                setUploadProgress(100);
-              }
-            } catch {
-              clearInterval(progressInterval);
-              setUploadProgress(100);
-            }
-
-            // Small delay to show 100% before redirect
-            await new Promise((r) => setTimeout(r, 500));
-          }
-
-          // Step 3: Go to confirmation
+          // Step 4: Go to confirmation
           clearFile();
           navigate("/confirmation", {
             state: {
@@ -219,20 +225,34 @@ const PaymentPage = () => {
         } catch {
           setError("Something went wrong after payment. Contact support.");
           setLoading(false);
-          setUploading(false);
         }
       },
       modal: {
-        ondismiss: function () {
+        ondismiss: async function () {
+          // Payment cancelled — delete the uploaded video
+          if (uploadedPath) {
+            try {
+              await supabase.storage.from("submissions").remove([uploadedPath]);
+            } catch {
+              // ignore cleanup errors
+            }
+          }
           setLoading(false);
-          setUploading(false);
         },
       },
     };
 
     try {
       const rzp = new window.Razorpay(options);
-      rzp.on("payment.failed", function (resp) {
+      rzp.on("payment.failed", async function (resp) {
+        // Payment failed — delete the uploaded video
+        if (uploadedPath) {
+          try {
+            await supabase.storage.from("submissions").remove([uploadedPath]);
+          } catch {
+            // ignore
+          }
+        }
         setError(resp.error?.description || "Payment failed. Please try again.");
         setLoading(false);
       });
