@@ -106,6 +106,8 @@ const PaymentPage = () => {
   const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const categories = ["Comedy", "Edits", "AI", "Food", "Emotional"];
 
@@ -134,11 +136,10 @@ const PaymentPage = () => {
         color: "#cc2200",
       },
       handler: async function (response) {
-        // Payment successful — save data immediately, upload video in background
         try {
           const paymentId = response.razorpay_payment_id;
 
-          // Step 1: Save form data to Supabase IMMEDIATELY (no waiting for video)
+          // Step 1: Save form data to Supabase immediately
           const { error: insertError } = await supabase.from("submissions").insert({
             name: name || "",
             email: email || "",
@@ -160,30 +161,51 @@ const PaymentPage = () => {
             return;
           }
 
-          // Step 2: Upload video in BACKGROUND (don't wait)
+          // Step 2: Upload video and WAIT (show progress bar)
           const file = getFile();
           if (file) {
-            const fileExt = file.name.split(".").pop();
-            const fileName = `${paymentId}.${fileExt}`;
-            supabase.storage
-              .from("submissions")
-              .upload(fileName, file, { cacheControl: "3600", upsert: false })
-              .then(({ data: uploadData }) => {
-                if (uploadData) {
-                  const { data: urlData } = supabase.storage
-                    .from("submissions")
-                    .getPublicUrl(uploadData.path);
-                  // Update the record with video URL
-                  supabase.from("submissions")
-                    .update({ video_url: urlData.publicUrl })
-                    .eq("payment_id", paymentId)
-                    .then(() => {});
-                }
-              })
-              .catch(() => {});
+            setUploading(true);
+            setUploadProgress(0);
+
+            // Simulate progress since Supabase JS client doesn't expose upload progress
+            const progressInterval = setInterval(() => {
+              setUploadProgress((p) => (p < 90 ? p + 2 : p));
+            }, 500);
+
+            try {
+              const fileExt = file.name.split(".").pop();
+              const fileName = `${paymentId}.${fileExt}`;
+              const { data: uploadData, error: uploadError } = await supabase.storage
+                .from("submissions")
+                .upload(fileName, file, { cacheControl: "3600", upsert: false });
+
+              clearInterval(progressInterval);
+
+              if (!uploadError && uploadData) {
+                const { data: urlData } = supabase.storage
+                  .from("submissions")
+                  .getPublicUrl(uploadData.path);
+
+                // Update the record with video URL
+                await supabase.from("submissions")
+                  .update({ video_url: urlData.publicUrl })
+                  .eq("payment_id", paymentId);
+
+                setUploadProgress(100);
+              } else {
+                // Upload failed but data is saved — continue
+                setUploadProgress(100);
+              }
+            } catch {
+              clearInterval(progressInterval);
+              setUploadProgress(100);
+            }
+
+            // Small delay to show 100% before redirect
+            await new Promise((r) => setTimeout(r, 500));
           }
 
-          // Step 3: Go to confirmation IMMEDIATELY
+          // Step 3: Go to confirmation
           clearFile();
           navigate("/confirmation", {
             state: {
@@ -197,11 +219,13 @@ const PaymentPage = () => {
         } catch {
           setError("Something went wrong after payment. Contact support.");
           setLoading(false);
+          setUploading(false);
         }
       },
       modal: {
         ondismiss: function () {
           setLoading(false);
+          setUploading(false);
         },
       },
     };
@@ -356,6 +380,60 @@ const PaymentPage = () => {
           </div>
         </div>
 
+        {/* Upload progress bar */}
+        {uploading && (
+          <div
+            style={{
+              marginTop: "16px",
+              width: "100%",
+              maxWidth: "535px",
+            }}
+          >
+            <div
+              style={{
+                fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
+                color: "#ffd700",
+                fontSize: "0.95rem",
+                textAlign: "center",
+                marginBottom: "8px",
+                letterSpacing: "0.05em",
+              }}
+            >
+              UPLOADING VIDEO... {uploadProgress}%
+            </div>
+            <div
+              style={{
+                width: "100%",
+                height: "10px",
+                background: "rgba(0,0,0,0.5)",
+                borderRadius: "5px",
+                overflow: "hidden",
+                border: "1px solid rgba(255,215,0,0.3)",
+              }}
+            >
+              <div
+                style={{
+                  width: `${uploadProgress}%`,
+                  height: "100%",
+                  background: "linear-gradient(90deg, #ffd700 0%, #ff8c00 100%)",
+                  transition: "width 0.3s ease",
+                }}
+              />
+            </div>
+            <div
+              style={{
+                fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
+                color: "rgba(255,255,255,0.6)",
+                fontSize: "0.8rem",
+                textAlign: "center",
+                marginTop: "8px",
+              }}
+            >
+              Please don't close this page.
+            </div>
+          </div>
+        )}
+
         {/* Error message */}
         {error && (
           <div
@@ -418,7 +496,7 @@ const PaymentPage = () => {
           }}
         >
           <span style={{ marginTop: "-4px" }}>
-            {loading ? "PROCESSING..." : "PAY 499 AND SUBMIT"}
+            {uploading ? "UPLOADING..." : loading ? "PROCESSING..." : "PAY 499 AND SUBMIT"}
           </span>
         </button>
       </div>
