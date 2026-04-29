@@ -9,14 +9,14 @@ const Header = () => {
         <div className="w-10 h-10 flex items-center justify-center">
           <span
             className="text-2xl font-bold"
-            style={{ fontFamily: "Bebas Neue, sans-serif", color: "#ffd700" }}
+            style={{ fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif", color: "#ffd700" }}
           >
             ISF
           </span>
         </div>
         <span
           className="text-sm tracking-widest uppercase"
-          style={{ color: "#ffd700", fontFamily: "Bebas Neue, sans-serif" }}
+          style={{ color: "#ffd700", fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif" }}
         >
           Indian Scroll Festival
         </span>
@@ -26,14 +26,14 @@ const Header = () => {
         <Link
           to="/"
           className="text-sm tracking-wider uppercase hover:text-yellow-400 transition-colors"
-          style={{ color: "#ffd700", fontFamily: "Bebas Neue, sans-serif" }}
+          style={{ color: "#ffd700", fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif" }}
         >
           Home
         </Link>
         <Link
           to="/submission"
           className="text-sm tracking-wider uppercase hover:text-yellow-400 transition-colors"
-          style={{ color: "#ffd700", fontFamily: "Bebas Neue, sans-serif" }}
+          style={{ color: "#ffd700", fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif" }}
         >
           Submit
         </Link>

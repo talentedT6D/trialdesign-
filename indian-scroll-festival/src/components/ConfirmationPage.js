@@ -1,140 +1,128 @@
-import React, { useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import React from "react";
 
 const ConfirmationPage = () => {
-  const location = useLocation();
-  const { name, submissionTitle, paymentId } = location.state || {};
-  const [copied, setCopied] = useState(false);
+  const shareUrl = "https://indianscrollfestival.com/";
+  const shareText = "Check out the Indian Scroll Festival 2026 — India's First Vertical Film Festival! Submit your film now.";
 
-  const referralLink = `${window.location.origin}?ref=${paymentId || "ISF2026"}`;
-
-  const handleCopyReferral = () => {
-    navigator.clipboard.writeText(referralLink).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    });
+  const handleRefer = async () => {
+    // Use Web Share API if available (mobile/supported browsers)
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "Indian Scroll Festival 2026",
+          text: shareText,
+          url: shareUrl,
+        });
+      } catch {
+        // User cancelled or share failed — ignore
+      }
+    } else {
+      // Fallback: open WhatsApp share
+      const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + shareUrl)}`;
+      window.open(whatsappUrl, "_blank");
+    }
   };
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center px-4"
+      className="relative min-h-screen overflow-hidden"
       style={{
-        background:
-          "linear-gradient(180deg, #0a0a0a 0%, #1a0000 20%, #8b0000 45%, #ff4500 75%, #ffd700 100%)",
+        background: "url('/images/Submission confirmation BG.png') center/cover no-repeat",
+        backgroundColor: "#1a0505",
       }}
     >
-      {/* Logo */}
-      <div className="mb-6 flex justify-center">
-        <div
-          className="w-16 h-16 border-2 flex items-center justify-center"
-          style={{ borderColor: "#ffd700" }}
-        >
-          <span
-            className="text-3xl font-bold"
-            style={{ fontFamily: "Bebas Neue, sans-serif", color: "#ffd700" }}
-          >
-            ISF
-          </span>
-        </div>
-      </div>
-
-      <h2
-        className="text-5xl md:text-7xl mb-2 text-center"
-        style={{
-          fontFamily: "Bebas Neue",
-          color: "#ffd700",
-          textShadow: "0 0 30px rgba(255,215,0,0.5)",
-        }}
-      >
-        SUBMISSION
-      </h2>
-      <h2
-        className="text-5xl md:text-7xl mb-6 text-center"
-        style={{
-          fontFamily: "Bebas Neue",
-          color: "#ffd700",
-          textShadow: "0 0 30px rgba(255,215,0,0.5)",
-        }}
-      >
-        CONFIRMED
-      </h2>
-
-      <p className="text-white/80 text-lg text-center max-w-md mb-2">
-        Your film will be featured on the big screen!
-      </p>
-
-      {/* Submission Details */}
+      {/* Main content */}
       <div
-        className="w-full max-w-md mt-6 p-6"
-        style={{ background: "rgba(0,0,0,0.5)", border: "2px solid #ff0000" }}
+        className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4"
       >
-        <div className="space-y-3">
-          {name && (
-            <div className="flex justify-between text-white/70">
-              <span>Filmmaker</span>
-              <span className="text-white font-semibold">{name}</span>
-            </div>
-          )}
-          {submissionTitle && (
-            <div className="flex justify-between text-white/70">
-              <span>Film Title</span>
-              <span className="text-white font-semibold">
-                {submissionTitle}
-              </span>
-            </div>
-          )}
-          {paymentId && (
-            <div className="flex justify-between text-white/70">
-              <span>Payment ID</span>
-              <span className="text-white font-semibold text-sm">
-                {paymentId}
-              </span>
-            </div>
-          )}
-          <div className="flex justify-between text-white/70">
-            <span>Status</span>
-            <span
-              className="font-bold"
-              style={{ color: "#00ff00" }}
-            >
-              Confirmed
-            </span>
-          </div>
-        </div>
-      </div>
+        {/* Festival Logo centered at top */}
+        <img
+          src="/images/festival-logo.png"
+          alt="Indian Scroll Festival 2026"
+          className="festival-logo-confirm"
+          style={{
+            width: "clamp(70px, 12vw, 100px)",
+            height: "auto",
+            objectFit: "contain",
+            marginBottom: "20px",
+          }}
+        />
 
-      {/* Refer a Friend */}
-      <div className="w-full max-w-md mt-6">
-        <p
-          className="text-center mb-3 text-xl"
-          style={{ fontFamily: "Bebas Neue", color: "#ffd700" }}
+        {/* Confirmation image (title + seats + text) */}
+        <img
+          src="/images/confirmatrion.png"
+          alt="Submission Confirmed"
+          style={{
+            width: "100%",
+            maxWidth: "600px",
+            height: "auto",
+            display: "block",
+          }}
+        />
+
+        {/* REFER A FRIEND button */}
+        <button
+          onClick={handleRefer}
+          className="cursor-pointer border-none"
+          style={{
+            marginTop: "30px",
+            width: "100%",
+            maxWidth: "480px",
+            height: "clamp(50px, 8vw, 60px)",
+            padding: "0 clamp(20px, 4vw, 40px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: "50px",
+            background: "linear-gradient(180deg, #ffd700 0%, #e6c200 100%)",
+            color: "#000000",
+            whiteSpace: "nowrap",
+            fontSize: "clamp(18px, 2.5vw, 26px)",
+            fontFamily: "'obviously-wide', 'Bebas Neue', sans-serif",
+            fontWeight: 900,
+            letterSpacing: "0.03em",
+            lineHeight: "1",
+            textAlign: "center",
+            boxShadow: "0 0 30px rgba(255,215,0,0.5), 0 0 60px rgba(255,215,0,0.2)",
+            border: "none",
+          }}
         >
-          REFER A FRIEND
-        </p>
-        <div className="flex gap-2">
-          <input
-            type="text"
-            readOnly
-            value={referralLink}
-            className="input-festival flex-1 text-sm"
-          />
-          <button
-            className="btn-festival px-6 text-sm"
-            onClick={handleCopyReferral}
-          >
-            {copied ? "COPIED!" : "COPY"}
-          </button>
-        </div>
+          <span style={{ marginTop: "-3px" }}>REFER A FRIEND</span>
+        </button>
       </div>
 
-      <Link to="/" className="mt-8">
-        <button className="btn-festival px-10 py-3 text-lg">
-          BACK TO HOME
-        </button>
-      </Link>
+      {/* Social icons */}
+      <div
+        className="absolute flex items-center gap-4 social-icons"
+        style={{ bottom: "clamp(16px, 4vw, 30px)", right: "clamp(16px, 4vw, 30px)", zIndex: 30 }}
+      >
+        <a href="https://www.instagram.com/indianscrollfestival/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ffd700" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+            <circle cx="12" cy="12" r="5" />
+            <circle cx="17.5" cy="6.5" r="1.5" fill="#ffd700" stroke="none" />
+          </svg>
+        </a>
+        <a href="https://x.com/indiascrollfest" target="_blank" rel="noopener noreferrer" aria-label="X">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="#ffd700">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+          </svg>
+        </a>
+      </div>
 
-      {/* Zigzag border */}
-      <div className="w-full mt-auto zigzag-border" />
+      <style>{`
+        @media (max-width: 768px) {
+          .festival-logo-confirm {
+            width: 60px !important;
+          }
+          .social-icons {
+            position: static !important;
+            justify-content: center !important;
+            width: 100% !important;
+            padding: 16px 0 20px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 };
