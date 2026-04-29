@@ -108,8 +108,31 @@ const PaymentPage = () => {
   const [error, setError] = useState("");
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [promoCode, setPromoCode] = useState("");
+  const [promoValid, setPromoValid] = useState(false);
 
   const categories = ["Comedy", "Edits", "AI", "Food", "Emotional"];
+
+  // Hash-based promo validation (code is never stored as plaintext)
+  const validatePromo = async (code) => {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(code);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+    return hashHex === "8cded609a38270f75a967f8e9c3c78898c2e3d23c19f7dfcff5431ab3d42f088";
+  };
+
+  const handlePromoChange = async (e) => {
+    const code = e.target.value;
+    setPromoCode(code);
+    if (code.length > 0) {
+      const valid = await validatePromo(code);
+      setPromoValid(valid);
+    } else {
+      setPromoValid(false);
+    }
+  };
 
   const handleSubmit = async () => {
     if (!category) {
@@ -170,7 +193,43 @@ const PaymentPage = () => {
       setUploading(false);
     }
 
-    // Step 2: Open Razorpay Checkout
+    // Step 2: If promo code is valid, skip payment
+    if (promoValid) {
+      try {
+        const { error: insertError } = await supabase.from("submissions").insert({
+          name: name || "",
+          email: email || "",
+          contact: contact || "",
+          ig_handle: igHandle || null,
+          how_heard: howHeard || null,
+          submission_title: submissionTitle || "",
+          category,
+          video_url: videoUrl,
+          payment_id: `promo_${Date.now()}`,
+          order_id: `promo_${Date.now()}`,
+          amount: 0,
+          status: "confirmed_promo",
+        });
+
+        if (insertError) {
+          setError("Save failed. Please try again.");
+          setLoading(false);
+          return;
+        }
+
+        clearFile();
+        navigate("/confirmation", {
+          state: { name, email, submissionTitle, category, paymentId: "PROMO" },
+        });
+        return;
+      } catch {
+        setError("Something went wrong. Please try again.");
+        setLoading(false);
+        return;
+      }
+    }
+
+    // Step 3: Open Razorpay Checkout
     const options = {
       key: process.env.REACT_APP_RAZORPAY_KEY_ID,
       amount: 49900, // ₹499
@@ -400,6 +459,51 @@ const PaymentPage = () => {
           </div>
         </div>
 
+        {/* Promo Code */}
+        <div
+          style={{
+            marginTop: "16px",
+            width: "100%",
+            maxWidth: "535px",
+            position: "relative",
+          }}
+        >
+          <input
+            type="text"
+            placeholder="Promo Code (optional)"
+            value={promoCode}
+            onChange={handlePromoChange}
+            style={{
+              width: "100%",
+              padding: "14px 20px",
+              background: "rgba(0,0,0,0.5)",
+              border: promoValid ? "1px solid #00cc00" : "1px solid rgba(255,255,255,0.08)",
+              borderRadius: "12px",
+              color: promoValid ? "#00cc00" : "#fff",
+              fontSize: "0.95rem",
+              fontFamily: "'obviously-narrow', 'Bebas Neue', sans-serif",
+              textAlign: "center",
+              letterSpacing: "0.05em",
+              outline: "none",
+              boxSizing: "border-box",
+            }}
+          />
+          {promoValid && (
+            <span
+              style={{
+                position: "absolute",
+                right: "16px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                color: "#00cc00",
+                fontSize: "1.2rem",
+              }}
+            >
+              ✓
+            </span>
+          )}
+        </div>
+
         {/* Upload progress bar */}
         {uploading && (
           <div
@@ -516,7 +620,7 @@ const PaymentPage = () => {
           }}
         >
           <span style={{ marginTop: "-4px" }}>
-            {uploading ? "UPLOADING..." : loading ? "PROCESSING..." : "PAY 499 AND SUBMIT"}
+            {uploading ? "UPLOADING..." : loading ? "PROCESSING..." : promoValid ? "SUBMIT FREE" : "PAY 499 AND SUBMIT"}
           </span>
         </button>
       </div>
