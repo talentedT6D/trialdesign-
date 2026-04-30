@@ -198,6 +198,7 @@ const LandingPage = () => {
                 </option>
                 <option value="Instagram" style={{ background: "#1a0a0a", color: "#fff" }}>Instagram</option>
                 <option value="Twitter" style={{ background: "#1a0a0a", color: "#fff" }}>Twitter</option>
+                <option value="LIT School" style={{ background: "#1a0a0a", color: "#fff" }}>LIT School</option>
                 <option value="Other" style={{ background: "#1a0a0a", color: "#fff" }}>Other</option>
               </select>
               {/* Dropdown arrow */}
