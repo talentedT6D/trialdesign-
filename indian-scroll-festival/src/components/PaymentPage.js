@@ -110,8 +110,12 @@ const PaymentPage = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [promoCode, setPromoCode] = useState("");
   const [promoValid, setPromoValid] = useState(false);
+  const [promoType, setPromoType] = useState(null);
 
   const categories = ["Comedy", "Edits", "AI", "Food", "Emotional"];
+
+  const BASE_PRICE = 499;
+  const finalPrice = promoType === "free" ? 0 : promoType === "discount50" ? 449 : BASE_PRICE;
 
   // Hash-based promo validation (code is never stored as plaintext)
   const validatePromo = async (code) => {
@@ -120,16 +124,20 @@ const PaymentPage = () => {
     const hashBuffer = await crypto.subtle.digest("SHA-256", data);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
-    return hashHex === "8cded609a38270f75a967f8e9c3c78898c2e3d23c19f7dfcff5431ab3d42f088";
+    if (hashHex === "8cded609a38270f75a967f8e9c3c78898c2e3d23c19f7dfcff5431ab3d42f088") return "free";
+    if (hashHex === "9c563598531cb1b2ddbddfdca1e6d95e10345f2d3605a1cfdc11190d549cc86d") return "discount50";
+    return null;
   };
 
   const handlePromoChange = async (e) => {
     const code = e.target.value;
     setPromoCode(code);
     if (code.length > 0) {
-      const valid = await validatePromo(code);
-      setPromoValid(valid);
+      const type = await validatePromo(code);
+      setPromoType(type);
+      setPromoValid(!!type);
     } else {
+      setPromoType(null);
       setPromoValid(false);
     }
   };
@@ -193,8 +201,8 @@ const PaymentPage = () => {
       setUploading(false);
     }
 
-    // Step 2: If promo code is valid, skip payment
-    if (promoValid) {
+    // Step 2: If promo code grants free entry, skip payment
+    if (promoType === "free") {
       try {
         const { error: insertError } = await supabase.from("submissions").insert({
           name: name || "",
@@ -232,7 +240,7 @@ const PaymentPage = () => {
     // Step 3: Open Razorpay Checkout
     const options = {
       key: process.env.REACT_APP_RAZORPAY_KEY_ID,
-      amount: 49900, // ₹499
+      amount: finalPrice * 100,
       currency: "INR",
       name: "Indian Scroll Festival",
       description: "Submission Fee",
@@ -260,7 +268,7 @@ const PaymentPage = () => {
             video_url: videoUrl,
             payment_id: paymentId,
             order_id: response.razorpay_order_id || `direct_${Date.now()}`,
-            amount: 499,
+            amount: finalPrice,
             status: "confirmed",
           });
 
@@ -620,7 +628,7 @@ const PaymentPage = () => {
           }}
         >
           <span style={{ marginTop: "-4px" }}>
-            {uploading ? "UPLOADING..." : loading ? "PROCESSING..." : promoValid ? "SUBMIT FREE" : "PAY 499 AND SUBMIT"}
+            {uploading ? "UPLOADING..." : loading ? "PROCESSING..." : promoType === "free" ? "SUBMIT FREE" : `PAY ${finalPrice} AND SUBMIT`}
           </span>
         </button>
       </div>
