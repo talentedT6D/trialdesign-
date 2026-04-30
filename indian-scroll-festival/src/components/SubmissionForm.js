@@ -324,9 +324,7 @@ const SubmissionForm = () => {
                     boxSizing: "border-box",
                   }}
                 />
-                <input
-                  type="text"
-                  placeholder="How'd You Hear About Us?"
+                <select
                   value={howHeard}
                   onChange={(e) => setHowHeard(e.target.value)}
                   style={{
@@ -335,15 +333,27 @@ const SubmissionForm = () => {
                     background: "rgba(0,0,0,0.85)",
                     border: "none",
                     borderRadius: "16px",
-                    color: "#fff",
+                    color: howHeard ? "#fff" : "rgba(255,255,255,0.6)",
                     fontSize: "1.05rem",
                     fontFamily: "'Obviously', 'Bebas Neue', sans-serif",
                     textAlign: "center",
+                    textAlignLast: "center",
                     letterSpacing: "0.05em",
                     outline: "none",
                     boxSizing: "border-box",
+                    appearance: "none",
+                    WebkitAppearance: "none",
+                    MozAppearance: "none",
                   }}
-                />
+                >
+                  <option value="" disabled>
+                    How Did You Get To Know About Us?
+                  </option>
+                  <option value="Instagram">Instagram</option>
+                  <option value="Twitter">Twitter</option>
+                  <option value="LIT school">LIT school</option>
+                  <option value="Other">Other</option>
+                </select>
               </div>
             </div>
 
