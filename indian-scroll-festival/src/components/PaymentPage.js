@@ -125,6 +125,7 @@ const PaymentPage = () => {
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
     if (hashHex === "8cded609a38270f75a967f8e9c3c78898c2e3d23c19f7dfcff5431ab3d42f088") return "free";
+    if (hashHex === "99041e13cb3bb09a46435ee497e166b31cc3a51f1f0ebd58f4f84a65c1537e19") return "free";
     if (hashHex === "9c563598531cb1b2ddbddfdca1e6d95e10345f2d3605a1cfdc11190d549cc86d") return "discount50";
     return null;
   };
