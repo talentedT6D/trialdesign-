@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js";
 import { useFileContext } from "../context/FileContext";
 import CountdownTimer from "./CountdownTimer";
+import { isSubmissionsClosed } from "./submissionStatus";
 
 const supabase = createClient(
   process.env.REACT_APP_SUPABASE_URL,
@@ -146,6 +147,10 @@ const PaymentPage = () => {
   };
 
   const handleSubmit = async () => {
+    if (isSubmissionsClosed()) {
+      setError("Submissions are now closed.");
+      return;
+    }
     if (!category) {
       setError("Please pick a category.");
       return;

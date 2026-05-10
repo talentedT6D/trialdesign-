@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useFileContext } from "../context/FileContext";
 import CountdownTimer from "./CountdownTimer";
+import { isSubmissionsClosed } from "./submissionStatus";
 
 const SubmissionForm = () => {
   const navigate = useNavigate();
@@ -50,6 +51,10 @@ const SubmissionForm = () => {
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = () => {
+    if (isSubmissionsClosed()) {
+      setError("Submissions are now closed.");
+      return;
+    }
     setSubmitted(true);
     if (!file || !submissionTitle) {
       setError("Please fill all fields and upload a file.");

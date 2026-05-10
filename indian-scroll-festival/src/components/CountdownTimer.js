@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-
-const DEADLINE = new Date("2026-05-10T23:59:00+05:30").getTime();
+import { DEADLINE, isSubmissionsClosed } from "./submissionStatus";
 
 const CountdownTimer = () => {
   const [now, setNow] = useState(Date.now());
@@ -11,7 +10,7 @@ const CountdownTimer = () => {
   }, []);
 
   const diff = DEADLINE - now;
-  const closed = diff <= 0;
+  const closed = isSubmissionsClosed();
 
   let label;
   if (closed) {

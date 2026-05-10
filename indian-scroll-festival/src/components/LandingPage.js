@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import CountdownTimer from "./CountdownTimer";
+import { isSubmissionsClosed } from "./submissionStatus";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -16,6 +17,10 @@ const LandingPage = () => {
   const [submitted, setSubmitted] = useState(false);
 
   const handleNext = () => {
+    if (isSubmissionsClosed()) {
+      setError("Submissions are now closed.");
+      return;
+    }
     setSubmitted(true);
     const finalHowHeard = howHeard === "Other" ? (howHeardOther || "Other") : howHeard;
     if (!name || !email || !contact || !igHandle || !howHeard) {
