@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useFileContext } from "../context/FileContext";
+import CountdownTimer from "./CountdownTimer";
 
 const SubmissionForm = () => {
   const navigate = useNavigate();
@@ -81,6 +82,7 @@ const SubmissionForm = () => {
         background: "url('/images/F02.2 (1) (1).png') center/cover no-repeat",
       }}
     >
+      <CountdownTimer />
       {/* Festival logo */}
       <img
         src="/images/festival-logo.png"

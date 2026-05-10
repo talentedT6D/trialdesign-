@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import CountdownTimer from "./CountdownTimer";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -49,6 +50,7 @@ const LandingPage = () => {
         background: "url('/images/F02.2 (1) (1).png') center/cover no-repeat",
       }}
     >
+      <CountdownTimer />
       {/* Festival logo */}
       <img
         src="/images/festival-logo.png"

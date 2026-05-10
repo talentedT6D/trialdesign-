@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js";
 import { useFileContext } from "../context/FileContext";
+import CountdownTimer from "./CountdownTimer";
 
 const supabase = createClient(
   process.env.REACT_APP_SUPABASE_URL,
@@ -338,6 +339,7 @@ const PaymentPage = () => {
         background: "url('/images/F02.2 (1) (1).png') center/cover no-repeat",
       }}
     >
+      <CountdownTimer />
       {/* Festival logo */}
       <img
         src="/images/festival-logo.png"
