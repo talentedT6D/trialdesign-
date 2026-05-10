@@ -17,18 +17,19 @@ const CountdownTimer = () => {
   if (closed) {
     label = "SUBMISSIONS CLOSED";
   } else {
-    const totalMinutes = Math.floor(diff / 60000);
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
-    label = `CLOSES IN ${hours}H ${minutes}M`;
+    const totalSeconds = Math.floor(diff / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    label = `CLOSES IN ${hours}H ${minutes}M ${seconds}S`;
   }
 
   return (
     <div
       style={{
-        position: "fixed",
-        top: "16px",
-        left: "16px",
+        position: "absolute",
+        top: "clamp(20px, 5vw, 72px)",
+        right: "clamp(20px, 5vw, 72px)",
         zIndex: 1000,
         padding: "8px 14px",
         background: closed ? "rgba(120,0,0,0.85)" : "rgba(0,0,0,0.7)",
@@ -49,9 +50,6 @@ const CountdownTimer = () => {
         <>
           <span style={{ color: "#fff", marginRight: "8px" }}>⏳</span>
           {label}
-          <span style={{ color: "rgba(255,255,255,0.7)", marginLeft: "8px", fontSize: "0.75rem" }}>
-            (11:59 PM today)
-          </span>
         </>
       )}
     </div>
